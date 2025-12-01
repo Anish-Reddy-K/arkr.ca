@@ -1,0 +1,546 @@
+/* ============================
+   1. CSS Reset & Base Styles
+   ============================ */
+:root {
+    --bg-color: #1a1a1a;
+    --text-color: #ffffff;
+    --text-muted: #a7a7a7;
+    --gradient-pink: #f960eb;
+    --gradient-orange: #ff854d;
+    --gradient-yellow: #fff41f;
+    --main-gradient: linear-gradient(to right, var(--gradient-pink), var(--gradient-orange), var(--gradient-yellow));
+    --glow-shadow: 0 0 20px rgba(249, 96, 235, 0.4); /* Pinkish glow base */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Allow text selection on readable content if needed, but user requested oldindex behavior which disabled it. 
+   Keeping default cursor override from oldindex for now unless it hinders UX on inputs. */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    position: relative;
+    overflow-x: hidden;
+    cursor: default;
+}
+
+/* Interaction elements cursor override */
+a, button, .resume-btn, .nav-links a, 
+.social-sidebar a, .social-sidebar a svg,
+.card, .activity-item {
+    cursor: pointer !important;
+}
+
+/* Prevent dragging */
+a, button, img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+}
+
+img {
+    pointer-events: none;
+}
+
+/* Utility Class for Text Gradient */
+.text-gradient {
+    background: var(--main-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent; /* Fallback */
+}
+
+/* ============================
+   2. Layout & Common Elements
+   ============================ */
+main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+section {
+    min-height: 80vh; /* Slightly less than full 100vh for flow */
+    padding: 6rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+section h2 {
+    font-family: 'Radley', serif;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    /* Apply Gradient to Headings */
+    background: var(--main-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
+}
+
+/* ============================
+   3. Header & Navigation
+   ============================ */
+header {
+    position: fixed;
+    width: auto;
+    top: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(26, 26, 26, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid transparent; /* No border by default */
+    border-radius: 50px;
+    padding: 0.8rem 2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    position: relative; /* For pseudo-element */
+    z-index: 1; /* Ensure content is above pseudo-element */
+}
+
+/* Gradient Border for scrolled header */
+.header-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50px;
+    padding: 2px; /* border width */
+    background: var(--main-gradient);
+    -webkit-mask: 
+       linear-gradient(#fff 0 0) content-box, 
+       linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease, box-shadow 0.3s ease;
+    z-index: -1; /* Place behind actual content */
+}
+
+.header-scrolled .header-container::before {
+    opacity: 1; /* Show border on scroll */
+    box-shadow: var(--glow-shadow); /* Use the pinkish glow base */
+}
+
+.header-scrolled .header-container {
+    background: rgba(26, 26, 26, 0.9);
+    box-shadow: 0 0 20px rgba(249, 96, 235, 0.2); /* Soft pink glow */
+    border-color: transparent; /* Actual border should be transparent */
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-links a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    opacity: 0.8;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    opacity: 1;
+    color: var(--gradient-pink); 
+    text-shadow: 0 0 10px rgba(249, 96, 235, 0.4);
+}
+
+.resume-btn {
+    background: var(--main-gradient); /* Solid gradient background */
+    color: var(--bg-color); /* Text color for contrast */
+    padding: 0.8rem 1.5rem; /* Equal padding */
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border: none; /* No extra border */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 0 0 rgba(0,0,0,0); /* No shadow by default */
+}
+
+.resume-btn:hover {
+    box-shadow: 0 0 20px rgba(249, 96, 235, 0.6); /* Gradient glow on hover */
+    transform: translateY(-2px);
+}
+
+/* ============================
+   4. Stamp Logo (Bottom Right)
+   ============================ */
+.stamp-logo {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 100px; /* Increased size */
+    height: auto;
+    z-index: 900;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.stamp-logo:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* ============================
+   5. Home Section
+   ============================ */
+#home {
+    text-align: center;
+    padding-top: 8rem;
+    min-height: 100vh;
+}
+
+#home h1 {
+    font-family: 'Radley', serif;
+    font-size: 5rem;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+    font-weight: 300;
+    line-height: 1.2;
+}
+
+/* Gradient on "Anish!" or specific parts if desired. 
+   The requirement says "Hello, I am Anish!" text, where hello scrolls. */
+   
+#hello-text {
+    font-style: italic;
+    display: inline-block;
+    min-width: 200px; /* Prevent layout shift */
+    text-align: right;
+    margin-right: 0.5rem;
+}
+
+/* Apply gradient to the name "Anish!" */
+.highlight-name {
+    background: var(--main-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+}
+
+.subtitle {
+    font-size: 1.3rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    font-weight: 400;
+}
+
+.fade {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* ============================
+   6. Cards (Experience & Projects)
+   ============================ */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    width: 100%;
+}
+
+.card {
+    background: rgba(30, 30, 30, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Gradient Border Glow Effect on Hover */
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 2px; /* border width */
+    background: var(--main-gradient);
+    -webkit-mask: 
+       linear-gradient(#fff 0 0) content-box, 
+       linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    background: rgba(40, 40, 40, 0.8);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 20px rgba(249, 96, 235, 0.1);
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.card .role {
+    color: var(--gradient-orange);
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.card p {
+    color: #ccc;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+.card-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: auto;
+}
+
+.card-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.card-links a:hover {
+    opacity: 1;
+    color: var(--gradient-yellow);
+}
+
+/* ============================
+   7. Activities (Memory Wall)
+   ============================ */
+.memory-wall {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.activity-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    color: #e0e0e0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.activity-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--gradient-pink);
+    box-shadow: 0 0 15px rgba(249, 96, 235, 0.3);
+    transform: scale(1.05);
+    color: #fff;
+}
+
+/* ============================
+   8. Footer
+   ============================ */
+footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 3rem 2rem;
+    margin-top: 4rem;
+    background: #111;
+}
+
+.footer-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.footer-left img {
+    width: 60px;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.footer-left img:hover {
+    opacity: 1;
+}
+
+.footer-center {
+    text-align: center;
+}
+
+.location-coords {
+    color: #888;
+    font-family: monospace;
+    font-size: 1.1rem;
+    cursor: pointer !important;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.location-coords:hover {
+    color: transparent;
+    text-shadow: 0 0 0 #fff; /* HACK to hide text but keep spacing? No, let's swap text */
+}
+
+/* Tooltip approach for hover reveal */
+.location-reveal {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+}
+
+.location-reveal .coords {
+    display: inline-block;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.location-reveal .city {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    opacity: 0;
+    width: 100%;
+    text-align: center;
+    color: var(--gradient-yellow);
+    font-weight: bold;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    white-space: nowrap;
+}
+
+.location-reveal:hover .coords {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.location-reveal:hover .city {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+
+.footer-right {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.social-icon {
+    color: #fff;
+    opacity: 0.7;
+    transition: all 0.3s;
+    width: 24px;
+    height: 24px;
+}
+
+.social-icon:hover {
+    opacity: 1;
+    color: var(--gradient-pink);
+    transform: translateY(-3px);
+    filter: drop-shadow(0 0 5px var(--gradient-pink));
+}
+
+/* ============================
+   9. Responsive
+   ============================ */
+@media (max-width: 768px) {
+    #home h1 {
+        font-size: 3.5rem;
+    }
+    
+    header {
+        width: 90%;
+    }
+    
+    .header-container {
+        padding: 0.8rem 1rem;
+    }
+
+    .nav-links {
+        display: none; /* Mobile menu needed? For simplicity, maybe just scroll or horizontal scroll */
+    }
+    
+    /* Simple Mobile Nav fix: hide standard links, maybe show simple icons or stack */
+    /* For this scope, let's keep it simple: scrollable x if many items or wrap */
+    nav {
+        gap: 1rem;
+        overflow-x: auto;
+        justify-content: space-between;
+        width: 100%;
+    }
+    
+    .nav-links {
+        display: flex;
+        gap: 1rem;
+    }
+    
+    .nav-links a {
+        font-size: 0.9rem;
+    }
+    
+    .stamp-logo {
+        width: 50px;
+        top: 1rem;
+        right: 1rem;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+}
