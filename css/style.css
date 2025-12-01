@@ -160,13 +160,38 @@ nav {
     opacity: 0.9;
 }
 
+/* Individual Nav Link Colors matching Gradient Flow */
 .nav-links a:hover, .nav-links a.active {
-    background: var(--primary-gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: var(--primary-pink);
     opacity: 1;
+    background: none;
+    -webkit-text-fill-color: initial;
+    background-clip: border-box;
+    -webkit-background-clip: border-box;
+}
+
+/* Home - Pink */
+.nav-links a:nth-child(1):hover, .nav-links a:nth-child(1).active {
+    color: #f960eb;
+}
+
+/* Experience - Pink/Orange Transition */
+.nav-links a:nth-child(2):hover, .nav-links a:nth-child(2).active {
+    color: #fc729c;
+}
+
+/* Projects - Orange */
+.nav-links a:nth-child(3):hover, .nav-links a:nth-child(3).active {
+    color: #ff854d;
+}
+
+/* Activities - Orange/Yellow Transition */
+.nav-links a:nth-child(4):hover, .nav-links a:nth-child(4).active {
+    color: #ffbd36;
+}
+
+/* Blog - Yellow */
+.nav-links a:nth-child(5):hover, .nav-links a:nth-child(5).active {
+    color: #fff41f;
 }
 
 .resume-btn {
