@@ -1,8 +1,155 @@
+:root {
+    --primary-gradient: linear-gradient(90deg, #f960eb, #ff854d, #fff41f);
+    --primary-pink: #f960eb;
+}
+
 body {
     background-color: #1a1a1a;
     margin: 0;
     padding: 0;
     scroll-behavior: smooth; /* For smooth scrolling to top */
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #ffffff;
+    line-height: 1.6;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* ============================
+    1. CSS Reset & Base Styles
+    ============================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: default !important;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Interaction elements cursor override */
+a, button, .resume-btn, .nav-links a, 
+.social-sidebar a, .social-sidebar a svg,
+.scroll-indicator, .scroll-indicator *, .scroll-circle,
+.toggle-switch, .toggle-slider, .ai-send-btn {
+    cursor: pointer !important;
+}
+
+/* Prevent dragging */
+a, button {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+}
+
+/* ============================
+   2. Layout & Common Elements
+   ============================ */
+main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+}
+
+section {
+    min-height: 100vh;
+    padding: 8rem 2rem;
+}
+
+section h1, section h2 {
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--primary-pink); /* Fallback */
+}
+
+/* ============================
+    3. Header & Navigation
+    ============================ */
+header {
+    position: fixed;
+    width: auto;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 100%;
+    background: rgba(37, 37, 37, 0);
+    backdrop-filter: blur(0);
+    border-radius: 16px;
+    padding: 0.8rem 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.header-scrolled .header-container {
+    background: rgba(37, 37, 37, 0.8);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 0 20px rgba(249, 96, 235, 0.4);
+}
+
+/* Navigation styles */
+nav {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    padding-left: 0.8rem;
+}
+
+.nav-links a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+    opacity: 0.9;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--primary-pink);
+    opacity: 1;
+}
+
+.resume-btn {
+    background: var(--primary-gradient);
+    color: #1a1a1a;
+    padding: 0.4rem 0.6rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    margin-left: 2rem;
+    margin-right: 0;
+    border: 1px solid transparent;
+    white-space: nowrap; /* Prevent content from wrapping */
+}
+
+.resume-btn:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 0 12px rgba(249, 96, 235, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 /* Badge Styles */
