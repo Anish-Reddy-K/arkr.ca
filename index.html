@@ -61,6 +61,35 @@
         </section>
     </main>
 
+    <!-- Spotify Widget -->
+    <div id="spotify-widget" class="hidden">
+        <div class="spotify-disc-container">
+            <img src="" alt="Album Art" id="spotify-album-art">
+        </div>
+        <!-- SVG Text Overlay -->
+        <svg class="spotify-text-overlay" viewBox="0 0 300 300">
+            <defs>
+                <linearGradient id="spotify-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#f960eb" />
+                    <stop offset="50%" stop-color="#ff854d" />
+                    <stop offset="100%" stop-color="#fff41f" />
+                </linearGradient>
+                <!-- Top arc for "NOW PLAYING" -->
+                <path id="curve-top" d="M 40,150 A 110,110 0 0,1 260,150" fill="transparent" />
+                <!-- Bottom arc for Song Info (Adjusted radius to 125 to match gap) -->
+                <path id="curve-bottom" d="M 25,150 A 125,125 0 0,0 275,150" fill="transparent" />
+            </defs>
+            <text width="300">
+                <textPath xlink:href="#curve-top" startOffset="50%" text-anchor="middle" class="spotify-text-top" fill="url(#spotify-gradient)">
+                    LISTENING TO
+                </textPath>
+                <textPath xlink:href="#curve-bottom" startOffset="50%" text-anchor="middle" class="spotify-text-bottom" id="spotify-track-info">
+                    Song Name - Artist
+                </textPath>
+            </text>
+        </svg>
+    </div>
+
     <a href="#" id="badge-link">
         <img src="images/badge.png" alt="Badge" id="badge-img">
     </a>
