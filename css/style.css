@@ -63,11 +63,7 @@ section {
 section h1, section h2 {
     margin-bottom: 2rem;
     font-size: 2.5rem;
-    background: var(--primary-gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: var(--primary-pink); /* Fallback */
+    color: #ffffff; /* Default white for sections, gradient for #hello-text only */
 }
 
 /* ============================
@@ -174,39 +170,93 @@ nav {
 }
 
 .resume-btn {
-    background: transparent;
-    color: #ffffff;
+    background-color: #fff41f; /* Solid yellow fill */
+    color: #1a1a1a; /* Dark text for contrast */
     padding: 0.4rem 0.6rem;
-    border-radius: 10px; /* Adjusted for less circular look */
+    border-radius: 10px;
     text-decoration: none;
     font-weight: 500;
     transition: all 0.2s ease;
     margin-left: 2rem;
     margin-right: 0;
-    border: none; /* Removed standard border */
-    position: relative;
+    border: none; /* No border needed with full background */
     white-space: nowrap;
-    isolation: isolate; /* Create new stacking context */
-}
-
-/* Gradient Border with Rounded Corners */
-.resume-btn::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 10px; /* Adjusted for less circular look */
-    padding: 2px; /* Border thickness */
-    background: var(--primary-gradient);
-    -webkit-mask:
-       linear-gradient(#fff 0 0) content-box,
-       linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
 }
 .resume-btn:hover {
-    box-shadow: 0 0 12px rgba(249, 96, 235, 0.5); /* Keep the pink shadow */
-    /* border is now handled by border-image, filter:brightness removed */
+    box-shadow: 0 0 12px rgba(255, 244, 31, 0.5); /* Yellow glow with opacity */
+}
+
+/* ============================
+   5. Home Section (from old_index.html)
+   ============================ */
+#home {
+    text-align: center;
+    padding-top: 100 rem; /* Adjusted to move content further down */
+}
+
+#home h1 {
+    font-family: 'Radley', serif;
+    font-size: 5rem;
+    margin-bottom: 2rem;
+    font-weight: 300;
+    color: #ffffff; /* Ensure "I am Anish!" is white */
+}
+
+#hello-text {
+    font-style: italic;
+    opacity: 1;
+    transition: opacity 0.8s ease-in-out; /* Increased duration for smoother fade */
+    display: inline-block; /* Allows min-width */
+    min-width: 180px; /* Fixed width to prevent layout shifts */
+    text-align: right; /* Aligns content to the right within its box */
+
+    /* Apply gradient to #hello-text only */
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#hello-text.fade {
+    opacity: 0;
+}
+
+.location {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    color: #a7a7a7;
+    margin-bottom: 3rem;
+}
+
+/* AI Input - Copying from old_index.html, but will remove later if it's meant to be separated */
+.ai-input-container {
+    position: fixed;
+    left: 50%;
+    bottom: 2rem;
+    transform: translateX(-50%);
+    z-index: 90;
+    width: 100%;
+    max-width: 600px;
+    padding: 0 1rem;
+}
+
+.ai-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: rgba(37, 37, 37, 0.6);
+    backdrop-filter: blur(8px);
+    border-radius: 30px;
+    padding: 0;
+    border: 1px solid rgba(249, 96, 235, 0.1); /* Changed color from #cea3ff to pink */
+    transition: all 0.3s ease;
+    overflow: hidden;
+    width: 250px;
+    margin: 0 auto;
+    height: 40px;
 }
 
 /* Badge Styles */
