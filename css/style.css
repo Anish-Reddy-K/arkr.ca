@@ -1,0 +1,36 @@
+body {
+    background-color: #1a1a1a;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth; /* For smooth scrolling to top */
+}
+
+/* Badge Styles */
+#badge-link {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    display: block;
+}
+
+#badge-link:hover {
+    transform: scale(1.1);
+}
+
+#badge-img {
+    width: 250px; /* Adjusted size */
+    height: auto;
+    display: block;
+    animation: rotateClockwise 60s linear infinite; /* Apply rotation */
+}
+
+@keyframes rotateClockwise {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
