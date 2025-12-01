@@ -323,9 +323,9 @@ nav {
 
     left: 20px;
 
-    width: 260px; /* Increased slightly for text clearance */
+    width: 250px; /* Matched to badge */
 
-    height: 260px;
+    height: 250px;
 
     display: flex;
 
@@ -336,8 +336,6 @@ nav {
     z-index: 1000;
 
     transition: opacity 0.5s ease, transform 0.5s ease;
-
-    background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 70%); /* Subtle glow backing */
 
 }
 
@@ -357,9 +355,9 @@ nav {
 
 .spotify-disc-container {
 
-    width: 160px; /* Inner spinning disc */
+    width: 250px; /* Full size */
 
-    height: 160px;
+    height: 250px;
 
     border-radius: 50%;
 
@@ -377,6 +375,38 @@ nav {
 
 #spotify-album-art {
 
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+    animation: rotateClockwise 60s linear infinite; /* Match badge speed */
+
+}
+
+
+
+/* Ring Overlay for Text Background */
+
+
+
+.spotify-ring-overlay {
+
+
+
+    position: absolute;
+
+
+
+    top: 0;
+
+
+
+    left: 0;
+
 
 
     width: 100%;
@@ -387,19 +417,47 @@ nav {
 
 
 
-    object-fit: cover;
+    z-index: 2;
 
 
 
-    display: block;
+            /* Thicker dark band fading from edge inwards */
 
 
 
-    animation: rotateClockwise 60s linear infinite; /* Match badge speed */
+            background: radial-gradient(
 
 
 
-}
+                circle,
+
+
+
+                transparent 40%, 
+
+
+
+                rgba(0,0,0,0.6) 50%, 
+
+
+
+                rgba(0,0,0,0.9) 80%, 
+
+
+
+                #1a1a1a 100%
+
+
+
+            );
+
+
+
+            pointer-events: none;
+
+
+
+        }
 
 
 
@@ -411,15 +469,7 @@ nav {
 
 
 
-
-
-
-
 .spotify-text-overlay {
-
-
-
-
 
 
 
@@ -427,15 +477,7 @@ nav {
 
 
 
-
-
-
-
     top: 0;
-
-
-
-
 
 
 
@@ -443,15 +485,7 @@ nav {
 
 
 
-
-
-
-
     width: 100%;
-
-
-
-
 
 
 
@@ -459,15 +493,7 @@ nav {
 
 
 
-
-
-
-
-    z-index: 2;
-
-
-
-
+    z-index: 3;
 
 
 
@@ -475,27 +501,11 @@ nav {
 
 
 
-
-
-
-
     animation: rotateClockwise 60s linear infinite; /* Rotate text with disc */
 
 
 
-
-
-
-
 }
-
-
-
-
-
-
-
-
 
 
 
@@ -507,31 +517,7 @@ nav {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     fill: #ffffff; /* Consistent white color */
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -539,79 +525,19 @@ nav {
 
 
 
+    font-size: 16px; /* Adjusted for ring fit */
 
 
 
+    font-weight: 600;
 
 
 
-
-
-
-
-
-
-    font-size: 20px; /* Uniform size */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    font-weight: 500;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    letter-spacing: 2px; /* Uniform spacing */
-
-
-
-
-
-
-
-
-
-
-
-
+    letter-spacing: 3px; /* Uniform spacing */
 
 
 
     text-transform: uppercase;
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -623,91 +549,11 @@ nav {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .spotify-text-top {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    fill: url(#spotify-gradient); /* Use SVG gradient */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    fill: #ffffff; /* Changed to white */
 
 
 

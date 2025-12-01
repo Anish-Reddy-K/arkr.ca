@@ -165,19 +165,6 @@ const updateSpotifyWidget = (song) => {
         const text = truncateText(rawText, 30); // Truncate to fit curved path
         spotifyTrackInfo.textContent = text;
     }
-
-    // Reset Animations
-    const textOverlay = qs('.spotify-text-overlay');
-    if (spotifyAlbumArt) {
-        spotifyAlbumArt.style.animation = 'none';
-        spotifyAlbumArt.offsetHeight; /* Trigger Reflow */
-        spotifyAlbumArt.style.animation = null; 
-    }
-    if (textOverlay) {
-        textOverlay.style.animation = 'none';
-        textOverlay.offsetHeight; /* Trigger Reflow */
-        textOverlay.style.animation = null;
-    }
 };
 
 const simulateSpotify = () => {
