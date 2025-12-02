@@ -61,6 +61,18 @@ function getNowPlaying($accessToken) {
     return json_decode($response, true);
 }
 
+function getRecentlyPlayed($accessToken) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, 'https://api.spotify.com/v1/me/player/recently-played?limit=1');
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Authorization: Bearer ' . $accessToken,
+    ]);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+    $response = curl_exec($ch);
+    return json_decode($response, true);
+}
+
 // Main Logic
 $accessToken = getAccessToken($clientId, $clientSecret, $refreshToken);
 
@@ -70,14 +82,28 @@ if (!$accessToken) {
 }
 
 $data = getNowPlaying($accessToken);
+$status = "LISTENING TO";
+$track = null;
 
-if ($data && $data['is_playing']) {
-    // Simplify the response for the frontend
+if ($data && isset($data['item'])) {
     $track = $data['item'];
+} else {
+    // Fallback to recently played
+    $recent = getRecentlyPlayed($accessToken);
+    if ($recent && isset($recent['items'][0]['track'])) {
+        $track = $recent['items'][0]['track'];
+        $status = "LAST PLAYED";
+    }
+}
+
+if ($track) {
+    // Simplify the response for the frontend
     $artistNames = array_map(function($artist) { return $artist['name']; }, $track['artists']);
     
     echo json_encode([
-        'isPlaying' => true,
+        'isPlaying' => true, // Always show widget if we have track data
+        'isLive' => ($status === "LISTENING TO"), // Distinguish live vs recent
+        'status' => $status,
         'title' => $track['name'],
         'artist' => implode(', ', $artistNames),
         'albumArt' => $track['album']['images'][0]['url'], // Largest image

@@ -127,6 +127,7 @@ if (badgeLink) {
 const spotifyWidget = qs('#spotify-widget');
 const spotifyAlbumArt = qs('#spotify-album-art');
 const spotifyTrackInfo = qs('#spotify-track-info'); // SVG Text Path
+const spotifyStatusText = qs('#spotify-status-text'); // Status Text Path
 
 const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
@@ -142,9 +143,29 @@ const updateSpotifyWidget = (song) => {
         spotifyWidget.classList.remove('hidden');
         if (spotifyAlbumArt) spotifyAlbumArt.src = song.albumArt;
         
+        // Update Status Text
+        if (spotifyStatusText && song.status) {
+            spotifyStatusText.textContent = song.status;
+        }
+        
         if (spotifyTrackInfo) {
-            const rawText = `${song.title} • ${song.artist}`;
-            const text = truncateText(rawText, 30);
+            let displayTitle = song.title;
+            let displayArtist = song.artist;
+
+            // Define individual max lengths. Total combined string, including "...", should fit in ~25 characters.
+            const maxTitleLength = 12; 
+            const maxArtistLength = 10;
+            const finalCombinedLength = 25; // Adjusted to be more conservative for visual fit
+
+            if (displayTitle.length > maxTitleLength) {
+                displayTitle = truncateText(displayTitle, maxTitleLength);
+            }
+            if (displayArtist.length > maxArtistLength) {
+                displayArtist = truncateText(displayArtist, maxArtistLength);
+            }
+            
+            const rawText = `${displayTitle} • ${displayArtist}`;
+            const text = truncateText(rawText, finalCombinedLength); // Final truncation for SVG path fit
             spotifyTrackInfo.textContent = text;
         }
     } else {
