@@ -38,7 +38,7 @@ A single-page personal portfolio website for Anish Reddy Kanamatha Reddy (arkr.c
 - **Center/Feature:** Coordinates `43°28'N, 80°31'W` which reveal "Waterloo, ON" on hover.
 
 ### Global Elements
-- **Stamp:** `images/mainlogo.png` fixed at the Bottom Left.
+- **Stamp:** `assets/mainlogo.png` fixed at the Bottom Left.
 - **Spotify Widget:** Fixed at the Bottom Right.
 - **Scroll:** Smooth scrolling between sections.
 
