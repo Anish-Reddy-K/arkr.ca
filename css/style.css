@@ -197,11 +197,6 @@ nav {
     color: #ffbd36;
 }
 
-/* Blog - Yellow */
-.nav-links a:nth-child(5):hover, .nav-links a:nth-child(5).active {
-    color: #fff41f;
-}
-
 .resume-btn {
     background-color: #fff41f; /* Solid yellow fill */
     color: #1a1a1a; /* Dark text for contrast */
@@ -680,7 +675,15 @@ nav {
 
 
 
+
+
+
+
 .project-card li::before {
+
+
+
+
 
 
 
@@ -688,7 +691,15 @@ nav {
 
 
 
+
+
+
+
     position: absolute;
+
+
+
+
 
 
 
@@ -696,7 +707,15 @@ nav {
 
 
 
+
+
+
+
     top: 0.6rem; /* Align with first line of text */
+
+
+
+
 
 
 
@@ -704,7 +723,15 @@ nav {
 
 
 
+
+
+
+
     height: 6px;
+
+
+
+
 
 
 
@@ -712,7 +739,23 @@ nav {
 
 
 
-    background: #f0f0f0; /* Solid white background */
+
+
+
+
+    background-color: #fff41f; /* Yellow Neon Bullet */
+
+
+
+
+
+
+
+    box-shadow: 0 0 8px rgba(255, 244, 31, 0.4); /* Neon Glow for yellow */
+
+
+
+
 
 
 
@@ -1067,8 +1110,105 @@ nav {
     fill: #ffffff; /* Changed to white */
 }
 
-/* Hover Effect matching Badge */
-#spotify-widget:hover {
-    transform: scale(1.1);
-    cursor: pointer;
+/* ============================
+   10. Footer
+   ============================ */
+footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Brighter divider */
+    padding: 6rem 0; /* Precision adjustment: Divider ~20px above widgets */
+    text-align: center;
+    margin-top: 2rem;
+    background-color: #1a1a1a;
+    position: relative;
+    /* z-index removed */
+}
+
+.footer-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 2rem;
+}
+
+.footer-socials a {
+    color: #a7a7a7;
+    transition: color 0.3s ease, text-shadow 0.3s ease; /* Changed transition properties */
+    display: flex;
+}
+
+.footer-socials a:hover {
+    color: #ffffff;
+    /* Removed transform: translateY */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Subtle glow effect */
+}
+
+.footer-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.location-easter-egg {
+    position: relative;
+    cursor: default; /* Keep default cursor */
+    height: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Keep animation contained */
+}
+
+.location-easter-egg span {
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1); /* Slower, smoother ease */
+    display: block;
+}
+
+.location-easter-egg .coords {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+}
+
+.location-easter-egg .place {
+    position: absolute;
+    opacity: 0;
+    transform: translateY(20px); /* Start lower */
+    filter: blur(10px); /* Start blurry */
+    color: #ffffff;
+    font-weight: 500;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent; /* Gradient text for the reveal */
+}
+
+.location-easter-egg:hover .coords {
+    opacity: 0;
+    transform: translateY(-20px); /* Move up */
+    filter: blur(10px); /* Blur out */
+}
+
+.location-easter-egg:hover .place {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0); /* Focus in */
+}
+
+.est {
+    font-size: 0.8rem;
+    color: #444;
+    letter-spacing: 2px;
+    font-family: monospace;
 }
