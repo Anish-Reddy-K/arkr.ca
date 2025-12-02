@@ -1,0 +1,6 @@
+# System files
+.DS_Store
+Thumbs.db
+
+# Security: Ignore Spotify credentials
+api/config.php

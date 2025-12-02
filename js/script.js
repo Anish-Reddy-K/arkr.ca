@@ -122,31 +122,11 @@ if (badgeLink) {
 }
 
 // ============================
-// Spotify Widget Simulation
+// Spotify Live Widget
 // ============================
-const mockSongs = [
-    {
-        title: "Starboy",
-        artist: "The Weeknd",
-        albumArt: "images/album1.png"
-    },
-    {
-        title: "Midnight City",
-        artist: "M83",
-        albumArt: "images/album2.png"
-    },
-    {
-        title: "Instant Crush",
-        artist: "Daft Punk",
-        albumArt: "images/album1.png" // Reusing 1 for now or cycle
-    }
-];
-
 const spotifyWidget = qs('#spotify-widget');
 const spotifyAlbumArt = qs('#spotify-album-art');
 const spotifyTrackInfo = qs('#spotify-track-info'); // SVG Text Path
-
-let songIndex = 0;
 
 const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
@@ -156,30 +136,35 @@ const truncateText = (text, maxLength) => {
 };
 
 const updateSpotifyWidget = (song) => {
-    if (spotifyAlbumArt) spotifyAlbumArt.src = song.albumArt;
-    
-    // Update SVG Text Path
-    if (spotifyTrackInfo) {
-        // Format: Song Title • Artist
-        const rawText = `${song.title} • ${song.artist}`;
-        const text = truncateText(rawText, 30); // Truncate to fit curved path
-        spotifyTrackInfo.textContent = text;
+    if (!spotifyWidget) return;
+
+    if (song.isPlaying) {
+        spotifyWidget.classList.remove('hidden');
+        if (spotifyAlbumArt) spotifyAlbumArt.src = song.albumArt;
+        
+        if (spotifyTrackInfo) {
+            const rawText = `${song.title} • ${song.artist}`;
+            const text = truncateText(rawText, 30);
+            spotifyTrackInfo.textContent = text;
+        }
+    } else {
+        spotifyWidget.classList.add('hidden');
     }
 };
 
-const simulateSpotify = () => {
-    if (!spotifyWidget) return;
-
-    // Initial Load
-    updateSpotifyWidget(mockSongs[songIndex]);
-    spotifyWidget.classList.remove('hidden');
-
-    // Rotate songs every 30 seconds
-    setInterval(() => {
-        songIndex = (songIndex + 1) % mockSongs.length;
-        updateSpotifyWidget(mockSongs[songIndex]);
-    }, 30000);
+const fetchNowPlaying = async () => {
+    try {
+        // Call the PHP proxy
+        const response = await fetch('api/spotify.php');
+        const data = await response.json();
+        updateSpotifyWidget(data);
+    } catch (error) {
+        console.error('Error fetching Spotify data:', error);
+        // Optionally hide widget on error
+        if (spotifyWidget) spotifyWidget.classList.add('hidden');
+    }
 };
 
-// Start simulation
-simulateSpotify();
+// Start polling
+fetchNowPlaying(); // Initial check
+setInterval(fetchNowPlaying, 10000); // Poll every 10 seconds
