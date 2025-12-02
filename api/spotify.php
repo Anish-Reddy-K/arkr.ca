@@ -87,6 +87,9 @@ $track = null;
 
 if ($data && isset($data['item'])) {
     $track = $data['item'];
+    if (isset($data['is_playing']) && $data['is_playing'] === false) {
+        $status = "LAST PLAYED";
+    }
 } else {
     // Fallback to recently played
     $recent = getRecentlyPlayed($accessToken);
