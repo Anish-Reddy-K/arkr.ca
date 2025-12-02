@@ -283,7 +283,7 @@ nav {
 #badge-link {
     position: fixed;
     bottom: 20px;
-    right: 20px;
+    left: 20px;
     z-index: 1000;
     transition: transform 0.3s ease;
     display: block;
@@ -321,7 +321,7 @@ nav {
 
     bottom: 20px;
 
-    left: 20px;
+    right: 20px;
 
     width: 250px; /* Matched to badge */
 
@@ -334,6 +334,8 @@ nav {
     justify-content: center;
 
     z-index: 1000;
+
+    transition: transform 0.3s ease;
 
 }
 
@@ -360,8 +362,6 @@ nav {
     border-radius: 50%;
 
     overflow: hidden;
-
-    box-shadow: 0 0 25px rgba(0,0,0,0.6);
 
     position: relative;
 

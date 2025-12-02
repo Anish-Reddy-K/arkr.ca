@@ -1,20 +1,33 @@
 <?php
 // ==========================================
-// Spotify Now Playing Proxy
+// Spotify Now Playing Proxy with Caching
 // ==========================================
 
-error_reporting(0); // Suppress warnings to ensure clean JSON
+error_reporting(0); // Suppress warnings
 
-// Load credentials securely
+// Load credentials
 $config = require __DIR__ . '/config.php';
 
 $clientId = $config['clientId'];
 $clientSecret = $config['clientSecret'];
 $refreshToken = $config['refreshToken'];
 
+$CACHE_FILE = __DIR__ . '/spotify_cache.json';
+$CACHE_TIME = 10; // Cache duration in seconds
+
 // ==========================================
 
 header('Content-Type: application/json');
+
+// 1. Check Cache
+if (file_exists($CACHE_FILE) && (time() - filemtime($CACHE_FILE) < $CACHE_TIME)) {
+    $cachedData = file_get_contents($CACHE_FILE);
+    if ($cachedData) {
+        echo $cachedData;
+        exit;
+    }
+}
+
 function getAccessToken($clientId, $clientSecret, $refreshToken) {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, 'https://accounts.spotify.com/api/token');
@@ -29,13 +42,13 @@ function getAccessToken($clientId, $clientSecret, $refreshToken) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     
     $response = curl_exec($ch);
-    // curl_close($ch); // Removed deprecated call
+    curl_close($ch); 
     
     $data = json_decode($response, true);
     
     if (isset($data['error'])) {
-        // Debug: Output the exact error from Spotify
-        echo json_encode(['error' => 'Spotify Token Error: ' . $data['error'] . ' - ' . ($data['error_description'] ?? '')]);
+        // Don't cache errors, just return
+        echo json_encode(['error' => 'Spotify Token Error']);
         exit;
     }
 
@@ -52,10 +65,10 @@ function getNowPlaying($accessToken) {
     
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    // curl_close($ch); // Removed deprecated call
+    curl_close($ch);
 
     if ($httpCode === 204) {
-        return null; // No content (not playing anything)
+        return null; // No content
     }
     
     return json_decode($response, true);
@@ -70,6 +83,7 @@ function getRecentlyPlayed($accessToken) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     
     $response = curl_exec($ch);
+    curl_close($ch);
     return json_decode($response, true);
 }
 
@@ -99,20 +113,27 @@ if ($data && isset($data['item'])) {
     }
 }
 
+$output = [];
 if ($track) {
-    // Simplify the response for the frontend
     $artistNames = array_map(function($artist) { return $artist['name']; }, $track['artists']);
     
-    echo json_encode([
-        'isPlaying' => true, // Always show widget if we have track data
-        'isLive' => ($status === "LISTENING TO"), // Distinguish live vs recent
+    $output = [
+        'isPlaying' => true,
+        'isLive' => ($status === "LISTENING TO"),
         'status' => $status,
         'title' => $track['name'],
         'artist' => implode(', ', $artistNames),
-        'albumArt' => $track['album']['images'][0]['url'], // Largest image
+        'albumArt' => $track['album']['images'][0]['url'],
         'url' => $track['external_urls']['spotify']
-    ]);
+    ];
 } else {
-    echo json_encode(['isPlaying' => false]);
+    $output = ['isPlaying' => false];
 }
+
+$jsonOutput = json_encode($output);
+
+// Save to cache
+file_put_contents($CACHE_FILE, $jsonOutput);
+
+echo $jsonOutput;
 ?>
