@@ -55,10 +55,23 @@ section {
     padding: 8rem 2rem;
 }
 
-section h1, section h2 {
+section h1 {
     margin-bottom: 2rem;
     font-size: 2.5rem;
-    color: #ffffff; /* Default white for sections, gradient for #hello-text only */
+    color: #ffffff; /* Make h1 white */
+}
+
+section h2 {
+    margin-bottom: 4rem; /* Increased vertical gap */
+    font-size: 2.5rem;
+    display: inline-block; /* Shrink to fit text width */
+    /* Apply gradient */
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    background-size: 100%; /* Gradient stretches across text width */
 }
 
 /* ============================
@@ -429,7 +442,11 @@ nav {
 
 .experience-card .card-header {
 
-    margin-bottom: 1rem;
+
+
+    margin-bottom: 0; /* Removed margin to reduce gap */
+
+
 
 }
 
@@ -437,15 +454,29 @@ nav {
 
 .experience-card .header-line-1 {
 
+
+
     display: flex;
 
-    justify-content: space-between;
+
+
+    justify-content: space-between; /* Push date to right */
+
+
 
     align-items: baseline;
 
+
+
     margin-bottom: 0.2rem;
 
+
+
 }
+
+
+
+
 
 
 
@@ -473,29 +504,59 @@ nav {
 
 
 
+
+
+
+
 .experience-card .header-line-1 .date {
+
+
 
     color: #a7a7a7;
 
+
+
     font-size: 0.9rem;
+
+
 
     white-space: nowrap;
 
+
+
 }
+
+
+
+
 
 
 
 .experience-card .header-line-2 {
 
+
+
     display: flex;
 
-    justify-content: space-between;
+
+
+    justify-content: space-between; /* Push location to right */
+
+
 
     align-items: baseline;
 
-    margin-bottom: 1rem;
+
+
+    margin-bottom: 0.2rem; /* Reduced vertical gap before bullets */
+
+
 
 }
+
+
+
+
 
 
 
@@ -519,43 +580,107 @@ nav {
 
 
 
+
+
+
+
 .experience-card .header-line-2 .location {
+
+
 
     color: #a7a7a7;
 
+
+
     font-size: 0.9rem;
+
+
 
     white-space: nowrap;
 
+
+
 }
+
+
+
+
 
 
 
 .experience-card ul {
 
+
+
+
+
+
+
     list-style: none;
+
+
+
+
+
+
 
     padding-left: 0;
 
+
+
+
+
+
+
+    margin-top: 0; /* Remove default top margin */
+
+
+
+
+
+
+
 }
+
+
+
+
 
 
 
 .experience-card li {
 
+
+
     position: relative;
+
+
 
     padding-left: 1.5rem;
 
+
+
     margin-bottom: 0.5rem;
 
+
+
     color: #d1d1d1;
+
+
 
 }
 
 
 
-.experience-card li::before {
+
+
+
+
+.experience-card li::before,
+
+
+
+.project-card li::before {
 
 
 
@@ -571,31 +696,23 @@ nav {
 
 
 
-    top: 50%; /* Center vertically */
+    top: 0.6rem; /* Align with first line of text */
 
 
 
-    transform: translateY(-50%); /* Adjust for vertical centering */
+    width: 6px; /* Slightly smaller circle */
 
 
 
-    width: 8px; /* Size of the bullet */
+    height: 6px;
 
 
 
-    height: 8px; /* Size of the bullet */
+    border-radius: 50%; /* Circle */
 
 
 
-    border-radius: 50%; /* Make it a circle */
-
-
-
-    background: linear-gradient(180deg, #f960eb, #ff854d, #fff41f); /* Gradient fill */
-
-
-
-    margin-right: 8px; /* Space between bullet and text (not directly used by ::before) */
+    background: #f0f0f0; /* Solid white background */
 
 
 
@@ -659,11 +776,23 @@ nav {
 
 .project-card h3 {
 
-    font-size: 1.4rem;
+
+
+    font-family: 'Inter', sans-serif;
+
+
+
+    font-size: 1.8rem;
+
+
 
     margin-bottom: 0.5rem;
 
-    color: #ffffff;
+
+
+    color: #f0f0f0;
+
+
 
 }
 
@@ -673,11 +802,11 @@ nav {
 
 
 
-    color: #ffbd36; /* Yellow-ish */
+    color: #d1d1d1; /* Matching role color */
 
 
 
-    font-size: 0.9rem;
+    font-size: 1.2rem; /* Increased slightly to match role visual weight */
 
 
 
@@ -723,51 +852,7 @@ nav {
 
 
 
-.project-card li::before {
 
-
-
-    content: '';
-
-
-
-    position: absolute;
-
-
-
-    left: 0;
-
-
-
-    top: 50%; /* Center vertically */
-
-
-
-    transform: translateY(-50%); /* Adjust for vertical centering */
-
-
-
-    width: 8px; /* Size of the bullet */
-
-
-
-    height: 8px; /* Size of the bullet */
-
-
-
-    border-radius: 50%; /* Make it a circle */
-
-
-
-    background: linear-gradient(180deg, #f960eb, #ff854d, #fff41f); /* Gradient fill */
-
-
-
-    margin-right: 8px; /* Space between bullet and text (not directly used by ::before) */
-
-
-
-}
 
 
 
@@ -841,37 +926,62 @@ nav {
 
 }
 
-/* Awards Grid */
-.awards-section h3 {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-    color: #ffffff;
+/* ============================
+   9. Awards (Categorized Chips)
+   ============================ */
+.awards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05); /* Subtle separator */
 }
 
-.awards-grid {
+.award-category h4 {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #888;
+    margin-bottom: 1rem;
+}
+
+.award-chips {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 0.8rem;
 }
 
-.award-tag {
+.chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 0.5rem; /* Reduced padding */
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: #d1d1d1;
+    /* Removed background */
+    /* Removed transition as no background change */
+}
+
+.chip:hover {
+    color: #fff; /* Subtle text highlight on hover */
+    /* Removed background on hover */
+}
+
+/* Colored indicators */
+.chip::before {
+    content: '';
     display: inline-block;
-    padding: 0.5rem 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 50px;
-    background: rgba(255, 255, 255, 0.02);
-    color: #e0e0e0;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 8px;
 }
 
-.award-tag:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: #fff41f; /* Yellow tint */
-    color: #ffffff;
-    transform: scale(1.05);
-    box-shadow: 0 0 10px rgba(255, 244, 31, 0.2);
-}
+.chip.gold::before { background-color: #fff41f; box-shadow: 0 0 8px rgba(255, 244, 31, 0.4); }
+.chip.orange::before { background-color: #ff854d; box-shadow: 0 0 8px rgba(255, 133, 77, 0.4); } /* Changed from blue */
+.chip.pink::before { background-color: #f960eb; box-shadow: 0 0 8px rgba(249, 96, 235, 0.4); }
 
 /* ============================
    9. Spotify Widget
