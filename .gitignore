@@ -4,3 +4,4 @@ Thumbs.db
 
 # Security: Ignore Spotify credentials
 api/config.php
+api/spotify_cache.json
