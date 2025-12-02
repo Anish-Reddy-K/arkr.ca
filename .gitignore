@@ -2,6 +2,11 @@
 .DS_Store
 Thumbs.db
 
-# Security: Ignore Spotify credentials
+# Others
+GEMINI.md
+
+# Security
 api/config.php
+
+# Cache
 api/spotify_cache.json
