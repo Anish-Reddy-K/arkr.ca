@@ -462,7 +462,17 @@ document.addEventListener('DOMContentLoaded', () => {
             // Create and append user message to the chat display
             const userMessageDiv = document.createElement('div');
             userMessageDiv.classList.add('user-message');
-            userMessageDiv.textContent = inputValue;
+            // Create a span for the text content
+            const messageTextSpan = document.createElement('span');
+            messageTextSpan.textContent = inputValue;
+            userMessageDiv.appendChild(messageTextSpan);
+
+            // Create an icon element
+            const userIcon = document.createElement('i');
+            userIcon.classList.add('fas', 'fa-user'); // Font Awesome user icon
+            userIcon.classList.add('user-message-icon'); // Add a specific class for styling
+            userMessageDiv.appendChild(userIcon);
+            
             chatMessages.appendChild(userMessageDiv);
 
             // Expand the container if it's not already expanded

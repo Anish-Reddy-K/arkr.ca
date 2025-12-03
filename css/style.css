@@ -1901,7 +1901,9 @@ footer {
     overflow-y: auto; /* Enable scrolling for messages */
     display: flex; /* Kept display flex here as base for layout */
     flex-direction: column; /* Stack messages vertically */
-    /* All visual styling (opacity, visibility, transitions, padding, margin, border-radius, background-color) removed */
+    padding: 15px; /* Added padding to create space from container borders */
+    gap: 10px; /* Added gap to space messages from each other */
+    /* All visual styling (opacity, visibility, transitions, margin, border-radius, background-color) removed */
     /* Messages will be implicitly hidden/shown by the #text-input-container's max-height/overflow */
 }
 
@@ -1909,14 +1911,24 @@ footer {
 
 /* Individual User Message Style */
 .user-message {
-    /* ... existing properties ... */
+    display: flex; /* Make it a flex container to align text and icon */
+    align-items: center; /* Vertically align text and icon */
+    justify-content: flex-end; /* Push content to the right */
+    gap: 8px; /* Space between text and icon */
     margin-bottom: 10px;
     margin-left: auto; /* Push to the right */
-    align-self: flex-end; /* Align to the right */
+    align-self: flex-end; /* Align to the right within chat-messages */
     max-width: 80%; /* Limit width */
     word-wrap: break-word; /* Break long words */
     font-size: 0.9rem;
     line-height: 1.4;
+}
+
+.user-message-icon {
+    font-size: 1.2rem; /* Adjust size to match send button icon */
+    color: #fff41f; /* Use a color that matches the send button or theme */
+    min-width: 24px; /* Ensure consistent width for alignment */
+    text-align: center;
 }
 #user-input {
     flex-grow: 1;
