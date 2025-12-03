@@ -228,23 +228,24 @@ nav {
 
 #home h1 {
     font-family: 'Outfit', sans-serif;
-    font-size: 4.5rem;
-    margin-bottom: 2rem;
-    font-weight: 300;
-    color: #ffffff; /* Ensure "I am Anish!" is white */
-    line-height: 1.1; /* Tighter spacing for two lines */
+    font-size: 6rem; /* Large, impactful size for the name */
+    margin-bottom: 1.5rem;
+    font-weight: 300; /* Keep it thin/elegant */
+    color: #ffffff;
+    line-height: 1; /* Tight line height */
+    letter-spacing: -2px; /* Modern, sexy tight spacing */
 }
 
 #hello-text {
     font-family: 'Radley', serif;
     font-style: italic;
+    font-size: 2.5rem; /* Smaller contrast size */
+    display: block; /* Forces new line */
+    margin-bottom: 0.5rem; /* Vertical space between Hello and Name */
     opacity: 1;
-    transition: opacity 0.8s ease-in-out; /* Increased duration for smoother fade */
-    display: inline-block; /* Allows min-width */
-    min-width: 180px; /* Fixed width to prevent layout shifts */
-    text-align: right; /* Aligns content to the right within its box */
-
-    /* Apply gradient to #hello-text only */
+    transition: opacity 0.8s ease-in-out;
+    
+    /* Gradient Text */
     background: var(--primary-gradient);
     -webkit-background-clip: text;
     background-clip: text;
