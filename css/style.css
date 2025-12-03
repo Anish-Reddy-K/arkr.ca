@@ -1900,6 +1900,7 @@ footer {
     flex-grow: 1;
     overflow-y: auto; /* Enable scrolling for messages */
     display: flex; /* Kept display flex here as base for layout */
+    flex-direction: column; /* Stack messages vertically */
     opacity: 0; /* Hidden by default */
     visibility: hidden; /* Hidden by default */
     transition: opacity 0.3s ease-out, visibility 0.3s ease-out; /* Smooth fade for messages */
