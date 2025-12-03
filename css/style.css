@@ -292,20 +292,62 @@ nav {
     position: fixed;
     bottom: 20px;
     left: 20px;
+    width: 250px; /* Fixed size for container */
+    height: 250px;
     z-index: 1000;
-    transition: transform 0.3s ease;
+    display: block;
+    perspective: 1000px; /* Enable 3D space */
+    cursor: pointer;
+}
+
+/* The Flip Container */
+.badge-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+}
+
+/* Trigger Flip on Hover (Opposite Direction) */
+#badge-link:hover .badge-card-inner {
+    transform: rotateY(-180deg);
+}
+
+/* Common Face Styles */
+.badge-card-front, .badge-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 50%; /* Assuming circular badge */
+}
+
+/* Front Face */
+.badge-card-front {
+    z-index: 2;
+}
+
+/* Back Face */
+.badge-card-back {
+    transform: rotateY(-180deg); /* Pre-rotated to match the flip direction */
+}
+
+/* Image Styles */
+#badge-img-front, #badge-img-back {
+    width: 100%;
+    height: 100%;
     display: block;
 }
 
-#badge-link:hover {
-    transform: scale(1.1);
+#badge-img-front {
+    animation: rotateClockwise 60s linear infinite;
 }
 
-#badge-img {
-    width: 250px; /* Adjusted size */
-    height: auto;
-    display: block;
-    animation: rotateClockwise 60s linear infinite; /* Apply rotation */
+#badge-img-back {
+    /* Static image, no animation */
 }
 
 @keyframes rotateClockwise {
@@ -1036,11 +1078,9 @@ nav {
     right: 20px;
     width: 250px; /* Matched to badge */
     height: 250px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     z-index: 1000;
-    transition: transform 0.3s ease;
+    perspective: 1000px; /* Enable 3D space */
+    cursor: pointer; /* Indicate interactivity */
 }
 
 #spotify-widget.hidden {
@@ -1049,9 +1089,82 @@ nav {
     pointer-events: none;
 }
 
+/* The Flip Container */
+.spotify-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy flip */
+    transform-style: preserve-3d;
+}
+
+/* Trigger Flip on Hover or Class */
+#spotify-widget:hover .spotify-card-inner,
+.spotify-card-inner.flipped {
+    transform: rotateY(180deg);
+}
+
+/* Common Face Styles */
+.spotify-card-front, .spotify-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+/* Front Face (Default) */
+.spotify-card-front {
+    z-index: 2;
+    /* Existing contents handle the visual here */
+}
+
+/* Back Face (Tech Stack) */
+.spotify-card-back {
+    transform: rotateY(180deg);
+    background: rgba(26, 26, 26, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+/* Code Snippet Styling */
+.code-snippet {
+    text-align: left;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+    padding: 1.5rem;
+    color: #d1d1d1;
+    line-height: 1.6;
+}
+
+.code-snippet pre {
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+.code-snippet .key {
+    color: #f960eb; /* Pink */
+}
+
+.code-snippet .string {
+    color: #fff41f; /* Yellow */
+}
+
+.code-snippet .bool {
+    color: #ff854d; /* Orange */
+}
+
+/* Existing Inner Content Styles (Kept relative to new container if needed) */
 .spotify-disc-container {
-    width: 250px; /* Full size */
-    height: 250px;
+    width: 100%; 
+    height: 100%;
     border-radius: 50%;
     overflow: hidden;
     position: relative;
@@ -1110,10 +1223,7 @@ nav {
     fill: #ffffff; /* Changed to white */
 }
 
-/* Hover Effect matching Badge */
-#spotify-widget:hover {
-    transform: scale(1.1);
-}
+
 
 /* ============================
    10. Footer

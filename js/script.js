@@ -128,6 +128,7 @@ const spotifyWidget = qs('#spotify-widget');
 const spotifyAlbumArt = qs('#spotify-album-art');
 const spotifyTrackInfo = qs('#spotify-track-info'); // SVG Text Path
 const spotifyStatusText = qs('#spotify-status-text'); // Status Text Path
+const spotifyStatusBackText = qs('#spotify-status-back-text'); // Status Text on back of card
 
 const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
@@ -143,9 +144,19 @@ const updateSpotifyWidget = (song) => {
         spotifyWidget.classList.remove('hidden');
         if (spotifyAlbumArt) spotifyAlbumArt.src = song.albumArt;
         
-        // Update Status Text
+        // Update Status Text on front
         if (spotifyStatusText && song.status) {
             spotifyStatusText.textContent = song.status;
+        }
+
+        // Update Status Text on back
+        if (spotifyStatusBackText) {
+            const truncatedTitle = truncateText(song.title, 25); // Apply truncation
+            if (song.status === 'LISTENING TO') {
+                spotifyStatusBackText.textContent = `"Anish is currently listening to ${truncatedTitle} on Spotify."`;
+            } else {
+                spotifyStatusBackText.textContent = `"Anish last listened to ${truncatedTitle} on Spotify."`;
+            }
         }
         
         if (spotifyTrackInfo) {
@@ -169,6 +180,10 @@ const updateSpotifyWidget = (song) => {
             spotifyTrackInfo.textContent = text;
         }
     } else {
+        // Update Status Text on back to "Last Played" before hiding the widget
+        if (spotifyStatusBackText) {
+            spotifyStatusBackText.textContent = "Last Played";
+        }
         spotifyWidget.classList.add('hidden');
     }
 };
