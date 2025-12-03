@@ -10,3 +10,5 @@ api/config.php
 
 # Cache
 api/spotify_cache.json
+
+data/user_inputs.json
