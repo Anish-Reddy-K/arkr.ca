@@ -178,7 +178,10 @@ nav {
 }
 
 /* Home - Pink */
-.nav-links a:nth-child(1):hover, .nav-links a:nth-child(1).active {
+.nav-links a:nth-child(1):hover {
+    color: #f960eb;
+}
+.header-scrolled .nav-links a:nth-child(1).active {
     color: #f960eb;
 }
 
