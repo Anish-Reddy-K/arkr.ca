@@ -463,9 +463,7 @@ nav {
 
     gap: 4rem; /* Increased gap for better separation without boxes */
 
-    max-width: 900px;
-
-    margin: 0 auto;
+    /* Removed max-width and margin for left alignment */
 
 }
 
@@ -1059,11 +1057,7 @@ nav {
 
 
 
-    max-width: 900px; /* Constrain width like experience */
-
-
-
-    margin: 0 auto; /* Center it */
+    /* Removed max-width and margin for left alignment */
 
 
 
@@ -1388,20 +1382,19 @@ nav {
 }
 
 .award-chips {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid; /* Changed to grid to force one item per line */
+    grid-template-columns: 1fr; /* Single column */
     gap: 0.8rem;
 }
 
 .chip {
-    display: inline-flex;
+    display: flex; /* Changed to flex to maintain internal alignment if any */
     align-items: center;
     padding: 0 0.5rem; /* Reduced padding */
     border-radius: 6px;
     font-size: 0.85rem;
     color: #d1d1d1;
-    /* Removed background */
-    /* Removed transition as no background change */
+    margin-bottom: 0.5rem; /* Added spacing between chips */
 }
 
 .chip:hover {
