@@ -3,22 +3,12 @@
     --primary-pink: #f960eb;
 }
 
-@font-face {
-    font-family: 'Lucidity Condensed';
-    src: url('../assets/fonts/lucidity-condensed.eot');
-    src: url('../assets/fonts/lucidity-condensed.eot?#iefix') format('embedded-opentype'),
-         url('../assets/fonts/lucidity-condensed.woff2') format('woff2'),
-         url('../assets/fonts/lucidity-condensed.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
 body {
     background-color: #1a1a1a;
     margin: 0;
     padding: 0;
     scroll-behavior: smooth; /* For smooth scrolling to top */
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     color: #ffffff;
     line-height: 1.6;
     position: relative;
@@ -74,7 +64,7 @@ section h1 {
 section h2 {
     margin-bottom: 4rem; /* Increased vertical gap */
     font-size: 2.5rem;
-    font-family: 'Lucidity Condensed', sans-serif; /* Apply Lucidity Condensed */
+    font-family: 'Outfit', sans-serif; /* Apply Outfit */
     display: inline-block; /* Shrink to fit text width */
     /* Apply gradient */
     background: var(--primary-gradient);
@@ -237,7 +227,7 @@ nav {
 }
 
 #home h1 {
-    font-family: 'Lucidity Condensed', sans-serif;
+    font-family: 'Outfit', sans-serif;
     font-size: 5rem;
     margin-bottom: 2rem;
     font-weight: 300;
@@ -545,7 +535,15 @@ nav {
 
 
 
-    font-family: 'Inter', sans-serif;
+
+
+
+
+    font-family: 'Outfit', sans-serif;
+
+
+
+
 
 
 
@@ -553,11 +551,23 @@ nav {
 
 
 
+
+
+
+
     margin: 0;
 
 
 
+
+
+
+
     color: #f0f0f0; /* Brighter off-white */
+
+
+
+
 
 
 
@@ -995,7 +1005,7 @@ nav {
 
 
 
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', sans-serif;
 
 
 
@@ -1015,6 +1025,10 @@ nav {
 
 
 
+
+
+
+
 .project-card .tech-stack {
 
 
@@ -1027,7 +1041,7 @@ nav {
 
 
 
-    font-family: 'Inter', sans-serif; /* Consistent font */
+    font-family: 'Outfit', sans-serif; /* Consistent font */
 
 
 
@@ -1277,7 +1291,7 @@ nav {
 }
 
 .award-category h4 {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', sans-serif;
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -1468,7 +1482,7 @@ nav {
 
 .spotify-text-top, .spotify-text-bottom {
     fill: #ffffff; /* Consistent white color */
-    font-family: 'Inter', sans-serif; /* Match navbar font */
+    font-family: 'Outfit', sans-serif; /* Match navbar font */
     font-size: 16px; /* Adjusted for ring fit */
     font-weight: 600;
     letter-spacing: 3px; /* Uniform spacing */
@@ -1531,7 +1545,7 @@ footer {
     flex-direction: column;
     align-items: center;
     gap: 0.8rem; /* Increased gap */
-    font-family: 'Inter', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-size: 1.1rem; /* Increased font size */
     color: #666;
 }
