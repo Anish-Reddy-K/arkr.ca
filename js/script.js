@@ -516,26 +516,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         userInput.addEventListener('blur', () => {
-            const wasExpandedWithMessages = textInputContainer.classList.contains('expanded'); // Capture state before removal
+            // Defer the closing logic to allow time for a new focus event to register
+            setTimeout(() => {
+                // Check if the currently active element is still inside the text input container
+                if (!textInputContainer.contains(document.activeElement)) {
+                    // If not, then it's a click outside, proceed with closing
+                    const wasExpandedWithMessages = textInputContainer.classList.contains('expanded');
 
-            userInput.value = ''; // Clear message immediately
-            updateSendButtonState(); // Update button state immediately
+                    userInput.value = ''; // Clear message immediately
+                    updateSendButtonState(); // Update button state immediately
 
-            // // Clear chat messages when closing
-
-            if (wasExpandedWithMessages) {
-                // If it had messages, collapse width first, then height
-                textInputContainer.classList.remove('width-expanded'); // Start width transition (0.4s)
-
-                setTimeout(() => {
-                    textInputContainer.classList.remove('expanded'); // Then start max-height transition (0.5s)
-                }, 300); // Wait for width transition to complete (0.3s)
-
-            } else {
-                // If no messages, collapse both immediately (or as they were)
-                textInputContainer.classList.remove('width-expanded');
-                textInputContainer.classList.remove('expanded'); // Ensure height is reset even if it never expanded with messages
-            }
+                    if (wasExpandedWithMessages) {
+                        textInputContainer.classList.remove('width-expanded');
+                        setTimeout(() => {
+                            textInputContainer.classList.remove('expanded');
+                        }, 300);
+                    } else {
+                        textInputContainer.classList.remove('width-expanded');
+                        textInputContainer.classList.remove('expanded');
+                    }
+                }
+            }, 50); // A small delay (e.g., 50ms) to allow focus to shift
         });
 
         // Handle send button click
