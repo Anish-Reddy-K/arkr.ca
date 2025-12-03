@@ -689,7 +689,15 @@ nav {
 
 
 
+
+
+
+
     position: relative;
+
+
+
+
 
 
 
@@ -697,15 +705,51 @@ nav {
 
 
 
+
+
+
+
     margin-bottom: 0.5rem;
 
 
 
-    color: #d1d1d1;
+
+
+
+
+    color: #ffffff; /* Text color remains white, does not change on hover */
+
+
+
+
+
+
+
+    transition: color 0.3s ease; /* Maintain smooth transition for consistency, even if not changing color here */
+
+
+
+
 
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Default subtle dot */
 
 
 
@@ -753,7 +797,7 @@ nav {
 
 
 
-    top: 0.6rem; /* Align with first line of text */
+    top: 0.6rem;
 
 
 
@@ -761,7 +805,7 @@ nav {
 
 
 
-    width: 6px; /* Slightly smaller circle */
+    width: 6px;
 
 
 
@@ -777,7 +821,7 @@ nav {
 
 
 
-    border-radius: 50%; /* Circle */
+    border-radius: 50%;
 
 
 
@@ -785,7 +829,7 @@ nav {
 
 
 
-    background-color: #fff41f; /* Yellow Neon Bullet */
+    background-color: rgba(255, 244, 31, 0.2); /* Subtle default yellow dot */
 
 
 
@@ -793,7 +837,71 @@ nav {
 
 
 
-    box-shadow: 0 0 8px rgba(255, 244, 31, 0.4); /* Neon Glow for yellow */
+    box-shadow: none; /* No glow by default */
+
+
+
+
+
+
+
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for dot */
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Hover state for the dot */
+
+
+
+
+
+
+
+.experience-card li:hover::before,
+
+
+
+
+
+
+
+.project-card li:hover::before {
+
+
+
+
+
+
+
+    background-color: #fff41f; /* Bright yellow on hover */
+
+
+
+
+
+
+
+    box-shadow: 0 0 8px rgba(255, 244, 31, 0.4); /* Neon Glow for yellow on hover */
 
 
 
@@ -935,7 +1043,128 @@ nav {
 
 }
 
+/* ============================
+    Project Card Header & Status
+   ============================ */
+.project-card .card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    margin-bottom: 1.5rem; /* Increased spacing */
+}
 
+.project-card .header-line-1,
+.project-card .header-line-2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.project-card h3 {
+    margin: 0;
+}
+
+/* Override tech-stack to fit in header */
+.project-card .tech-stack {
+    margin: 0;
+    font-size: 1rem; /* Adjusted size for header context */
+    color: #d1d1d1;
+    font-weight: 500;
+}
+
+.project-header-links {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+}
+
+.project-header-links a {
+    color: #a7a7a7;
+    transition: all 0.3s ease;
+    display: flex; /* To center SVG */
+    align-items: center;
+    justify-content: center;
+    width: 16px; /* Adjusted icon size */
+    height: 16px; /* Adjusted icon size */
+}
+
+.project-header-links a:hover {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Subtle glow effect */
+    transform: scale(1.1); /* Expand effect */
+}
+
+.project-header-links svg {
+    width: 16px; /* Adjusted icon size */
+    height: 16px; /* Adjusted icon size */
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    height: fit-content;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: block;
+    position: relative;
+}
+
+/* Live - Green */
+.status-badge.live {
+    color: #39ff14;
+    /* border-color: rgba(57, 255, 20, 0.3); */
+}
+.status-badge.live .status-dot {
+    background-color: #39ff14;
+    box-shadow: 0 0 6px #39ff14; /* Subtle initial glow */
+    animation: blink-green 2s infinite ease-in-out; /* Smooth fade */
+}
+
+/* Dev - Orange/Yellow */
+.status-badge.dev {
+    color: #ffbd36;
+    /* border-color: rgba(255, 189, 54, 0.3); */
+}
+.status-badge.dev .status-dot {
+    background-color: #ffbd36;
+    box-shadow: 0 0 6px #ffbd36;
+    animation: blink-orange 2s infinite ease-in-out;
+}
+
+/* Offline - Red/Grey */
+.status-badge.offline {
+    color: #ff4d4d;
+    /* border-color: rgba(255, 77, 77, 0.3); */
+}
+.status-badge.offline .status-dot {
+    background-color: #ff4d4d;
+    box-shadow: 0 0 6px #ff4d4d;
+    animation: blink-red 2s infinite ease-in-out;
+}
+
+@keyframes blink-green {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+@keyframes blink-orange {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+@keyframes blink-red {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
 
 
 
