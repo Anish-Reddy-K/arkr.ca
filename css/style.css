@@ -367,12 +367,12 @@ nav {
 .footer-marquee-container {
     width: 100%;
     overflow: hidden;
-    padding: 1.5rem 0; /* Reduced from 2rem for tighter fit */
+    padding: 1.5rem 0 0; /* 1.5rem top, 0 bottom */
     position: relative;
     background: #1a1a1a; /* Match body bg */
     mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
     -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    border-top: 1px solid rgba(255, 255, 255, 0.05); /* Subtle top border if needed, or rely on footer border */
+    /* border-top removed */
     margin-bottom: 0px; /* Eliminate gap to footer border */
 }
 
@@ -1733,7 +1733,7 @@ footer {
     border-top: 1px solid rgba(255, 255, 255, 0.1); /* Brighter divider */
     padding: 5.5rem 0; /* Precision adjustment: Divider ~20px above widgets */
     text-align: center;
-    margin-top: 2rem;
+    margin-top: 0; /* Set to 0 to remove gap */
     background-color: #1a1a1a;
     position: relative;
     /* z-index removed */
