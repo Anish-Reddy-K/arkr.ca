@@ -109,22 +109,6 @@ const loadContent = async () => {
             `).join('');
         }
 
-        // 4. Load Sidebar Interests
-        const interestResponse = await fetch('data/interests.json');
-        const interestsData = await interestResponse.json();
-        const interestContainer = qs('#sidebar-interests');
-        
-        if (interestContainer && interestsData) {
-            // Limit to top 6 to fit nicely in sidebar
-            const sidebarItems = interestsData.slice(0, 6).map(item => `<li>${item}</li>`).join('');
-            interestContainer.innerHTML = `
-                <h4>Interests</h4>
-                <ul>
-                    ${sidebarItems}
-                </ul>
-            `;
-        }
-
     } catch (error) {
         console.error('Error loading content:', error);
     }

@@ -300,46 +300,6 @@ nav {
     pointer-events: none;
 }
 
-/* Sidebar Interests (Fixed Metadata) */
-.sidebar-interests {
-    position: fixed;
-    bottom: 300px; /* Positioned above the badge */
-    left: 20px;
-    z-index: 900; /* Below nav/widgets but visible */
-    text-align: left;
-    pointer-events: none; /* Don't block clicks */
-    display: none; /* Hidden on mobile by default via media query if needed, but keeping simple for now */
-}
-
-@media (min-width: 1000px) {
-    .sidebar-interests {
-        display: block;
-    }
-}
-
-.sidebar-interests h4 {
-    font-family: 'Manrope', sans-serif;
-    font-size: 0.7rem;
-    color: #555;
-    letter-spacing: 2px;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-}
-
-.sidebar-interests ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.sidebar-interests li {
-    font-family: 'Manrope', sans-serif;
-    font-size: 0.85rem;
-    color: #888;
-    margin-bottom: 0.4rem;
-    transition: color 0.3s ease;
-}
-
 .orb {
     position: absolute;
     border-radius: 50%;
