@@ -9,7 +9,39 @@ const qsa = selector => document.querySelectorAll(selector);
 // Prompts for AI input
 let prompts = [];
 let currentPromptIndex = 0;
-// const userInput = qs('#user-input'); // Moved this inside the function
+let aiConfig = null; // Global variable for AI configuration
+
+const loadAiConfig = async () => {
+    if (aiConfig) return; // Load only once
+    try {
+        const response = await fetch('data/ai_config.json');
+        aiConfig = await response.json();
+    } catch (error) {
+        console.error('Error loading AI config:', error);
+        aiConfig = {
+            responseMessage: "I'm sorry, I encountered an error. Please try again.",
+            streaming_speed_ms_per_char: 50
+        }; // Fallback
+    }
+};
+
+const streamMessage = async (message, targetElement, speed) => {
+    let i = 0;
+    targetElement.textContent = ''; // Ensure element is empty before streaming
+    const interval = setInterval(() => {
+        if (i < message.length) {
+            targetElement.textContent += message.charAt(i);
+            // Scroll to bottom after each character
+            const chatMessages = qs('#chat-messages');
+            if (chatMessages) {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            i++;
+        } else {
+            clearInterval(interval);
+        }
+    }, speed);
+};
 
 const loadAndRotatePrompts = async () => {
     console.log("Loading prompts and setting placeholder..."); // Debug log
@@ -210,7 +242,7 @@ const fetchVisitCount = async () => {
 // ============================ 
 // Initialization
 // ============================ 
-window.addEventListener('load', () => {
+window.addEventListener('load', async () => { // Made async to await loadAiConfig
     // Load Content
     loadContent();
 
@@ -223,6 +255,7 @@ window.addEventListener('load', () => {
     // Fetch Visit Count
     fetchVisitCount();
     loadAndRotatePrompts(); // Call new function
+    await loadAiConfig(); // Load AI config on page load
 });
 
 // ============================ 
@@ -492,6 +525,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Clear input after successful send
                     userInput.value = '';
                     updateSendButtonState(); // Update button state after clearing input
+
+                    // Simulate AI response
+                    const aiMessageDiv = document.createElement('div');
+                    aiMessageDiv.classList.add('ai-message');
+                    chatMessages.appendChild(aiMessageDiv);
+                    chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom immediately for placeholder
+
+                    // Add thinking delay before streaming
+                    setTimeout(async () => {
+                        if (!aiConfig) await loadAiConfig(); // Ensure config is loaded
+                        if (aiConfig) {
+                            await streamMessage(aiConfig.responseMessage, aiMessageDiv, aiConfig.streaming_speed_ms_per_char);
+                        } else {
+                            aiMessageDiv.textContent = "Error: Could not load AI configuration.";
+                            chatMessages.scrollTop = chatMessages.scrollHeight;
+                        }
+                    }, 1000); // 1 second thinking delay
                 } else {
                     console.error('Error saving input:', result.message);
                     // Optionally, show an error to the user

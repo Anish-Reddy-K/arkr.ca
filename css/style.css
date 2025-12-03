@@ -1918,6 +1918,19 @@ footer {
     word-wrap: break-word; /* Break long words */
     font-size: 0.9rem;
     line-height: 1.4;
+    color: #ffffff; /* User message text color */
+}
+
+/* Individual AI Message Style */
+.ai-message {
+    margin-bottom: 10px;
+    margin-right: auto; /* Push to the left */
+    align-self: flex-start; /* Align to the left within chat-messages */
+    max-width: 80%; /* Limit width */
+    word-wrap: break-word; /* Break long words */
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: #a7a7a7; /* AI message text color */
 }
 
 
