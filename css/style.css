@@ -1382,11 +1382,6 @@ nav {
     border-top: 1px solid rgba(255, 255, 255, 0.05); /* Subtle separator */
 }
 
-/* Specific rule for Activities section to reduce bottom padding */
-#activities {
-    padding-bottom: 4rem;
-}
-
 .award-category h4 {
     font-family: 'Outfit', sans-serif;
     font-size: 0.8rem;
@@ -1596,9 +1591,9 @@ nav {
    ============================ */
 footer {
     border-top: 1px solid rgba(255, 255, 255, 0.1); /* Brighter divider */
-    padding: 2.5rem 0; /* Reduced padding for a tighter fit */
+    padding: 5.5rem 0; /* Precision adjustment: Divider ~20px above widgets */
     text-align: center;
-    margin-top: 0; /* Removed top margin */
+    margin-top: 2rem;
     background-color: #1a1a1a;
     position: relative;
     /* z-index removed */
