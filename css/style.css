@@ -74,6 +74,7 @@ section h1 {
 section h2 {
     margin-bottom: 4rem; /* Increased vertical gap */
     font-size: 2.5rem;
+    font-family: 'Lucidity Condensed', sans-serif; /* Apply Lucidity Condensed */
     display: inline-block; /* Shrink to fit text width */
     /* Apply gradient */
     background: var(--primary-gradient);
