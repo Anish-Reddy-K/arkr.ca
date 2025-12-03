@@ -530,7 +530,7 @@ nav {
     backdrop-filter: blur(8px);
     z-index: -1; /* Behind input, above glow */
     transition: all 0.3s ease;
-    border: 1px solid transparent; /* Changed to transparent */
+    border: 1px solid rgba(249, 96, 235, 0.1);
 }
 
 .ai-input-wrapper:hover::after,
@@ -1315,9 +1315,12 @@ footer {
 .ai-input-wrapper:focus-within {
     width: 400px;
     box-shadow: 0 0 20px rgba(249, 96, 235, 0.4);
+    border: 1px solid rgba(249, 96, 235, 0.5);
+}
+
 .ai-input-wrapper:hover::after,
 .ai-input-wrapper:focus-within::after {
-    /* Removed border-color as requested, will rely on glow */
+    border-color: rgba(249, 96, 235, 0.3);
 }
 
 /* Gradient glow */
