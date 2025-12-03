@@ -516,14 +516,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         userInput.addEventListener('blur', () => {
-            // Only clear the input and update button state on blur
-            // The closing logic will be handled by a global click listener
-            userInput.value = ''; // Clear message immediately
-            updateSendButtonState(); // Update button state immediately
+            if (!textInputContainer.classList.contains('expanded')) {
+                textInputContainer.classList.remove('width-expanded');
+            }
         });
 
         // Handle send button click
         sendButton.addEventListener('click', handleUserInput);
+        // Prevent input from blurring when send button is moused down,
+        // to avoid premature collapse and ensure click event fires reliably.
+        sendButton.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+        });
 
         // Handle Enter key press in the input field
         userInput.addEventListener('keydown', (e) => {
@@ -540,10 +544,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Perform the closing animation immediately
                 textInputContainer.classList.remove('width-expanded');
                 textInputContainer.classList.remove('expanded');
-                
-                // Clear input and update button state
-                userInput.value = '';
-                updateSendButtonState();
             }
         });
 
