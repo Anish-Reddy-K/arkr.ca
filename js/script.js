@@ -109,35 +109,20 @@ const loadContent = async () => {
             `).join('');
         }
 
-        // 4. Load Interest Reveal Section
+        // 4. Load Sidebar Interests
         const interestResponse = await fetch('data/interests.json');
         const interestsData = await interestResponse.json();
-        const interestContainer = qs('#interests-content');
+        const interestContainer = qs('#sidebar-interests');
         
         if (interestContainer && interestsData) {
-            interestContainer.innerHTML = interestsData.map(interest => `
-                <span class="interest-item-scroll">${interest}</span>
-            `).join('');
-
-            // Setup Intersection Observer for "Focus on Scroll" effect
-            const observerOptions = {
-                root: null,
-                rootMargin: '-45% 0px -45% 0px', // Active zone is the middle 10% of the viewport
-                threshold: 0
-            };
-
-            const interestObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('in-focus');
-                    } else {
-                        entry.target.classList.remove('in-focus');
-                    }
-                });
-            }, observerOptions);
-
-            // Observe all new interest items
-            qsa('.interest-item-scroll').forEach(item => interestObserver.observe(item));
+            // Limit to top 6 to fit nicely in sidebar
+            const sidebarItems = interestsData.slice(0, 6).map(item => `<li>${item}</li>`).join('');
+            interestContainer.innerHTML = `
+                <h4>Interests</h4>
+                <ul>
+                    ${sidebarItems}
+                </ul>
+            `;
         }
 
     } catch (error) {

@@ -300,34 +300,44 @@ nav {
     pointer-events: none;
 }
 
-/* Scroll Reveal Interests (Vertical Stream) */
-.interests-content {
-    display: flex;
-    flex-direction: column; /* Vertical stack */
-    align-items: center;
-    gap: 6rem; /* Large gap for granular scrolling */
-    margin-top: 8rem; /* Space from hero text */
-    padding-bottom: 4rem; /* Space before next section */
-    position: relative;
-    z-index: 1;
+/* Sidebar Interests (Fixed Metadata) */
+.sidebar-interests {
+    position: fixed;
+    bottom: 300px; /* Positioned above the badge */
+    left: 20px;
+    z-index: 900; /* Below nav/widgets but visible */
+    text-align: left;
+    pointer-events: none; /* Don't block clicks */
+    display: none; /* Hidden on mobile by default via media query if needed, but keeping simple for now */
 }
 
-.interest-item-scroll {
-    font-family: 'Outfit', sans-serif;
-    font-size: 2rem; /* Readable but not shouting */
-    font-weight: 300;
-    color: #ffffff;
-    opacity: 0.1; /* Start very dim */
-    filter: blur(3px); /* Start slightly blurry */
-    transition: all 0.6s ease-out;
-    letter-spacing: 1px;
+@media (min-width: 1000px) {
+    .sidebar-interests {
+        display: block;
+    }
 }
 
-.interest-item-scroll.in-focus {
-    opacity: 0.8; /* Gentle highlight */
-    filter: blur(0);
-    transform: scale(1.1);
-    letter-spacing: 2px; /* Opens up when focused */
+.sidebar-interests h4 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.7rem;
+    color: #555;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.sidebar-interests ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-interests li {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 0.4rem;
+    transition: color 0.3s ease;
 }
 
 .orb {
