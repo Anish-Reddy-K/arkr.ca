@@ -423,3 +423,31 @@ const fetchNowPlaying = async () => {
 // Start polling
 fetchNowPlaying(); // Initial check
 setInterval(fetchNowPlaying, 10000); // Poll every 10 seconds
+
+// ============================ 
+// AI Input Logic (from webllm_widget.js)
+// ============================
+document.addEventListener('DOMContentLoaded', () => {
+    const userInput = qs('#user-input');
+    const sendButton = qs('#send-button');
+    const textInputContainer = qs('#text-input-container');
+
+    if (sendButton && userInput && textInputContainer) {
+        sendButton.addEventListener('click', () => {
+            if (userInput.value.trim() === '') {
+                // Input is empty, apply shake effect
+                textInputContainer.classList.add('shake');
+                // Remove shake effect after animation
+                setTimeout(() => {
+                    textInputContainer.classList.remove('shake');
+                }, 300); // Matches CSS animation duration
+            } else {
+                // Input is not empty, proceed with sending (or whatever its original function was)
+                // For now, we'll just log it.
+                console.log('Sending message:', userInput.value);
+                // Clear input after sending
+                userInput.value = ''; 
+            }
+        });
+    }
+});

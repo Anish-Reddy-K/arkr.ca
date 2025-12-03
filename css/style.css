@@ -1909,3 +1909,17 @@ footer {
     box-shadow: 0 0 10px rgba(255, 244, 31, 0.5);
 }
 
+@keyframes shake {
+    0% { transform: translateX(-50%) translateX(0); }
+    25% { transform: translateX(-50%) translateX(-5px); }
+    50% { transform: translateX(-50%) translateX(5px); }
+    75% { transform: translateX(-50%) translateX(-5px); }
+    100% { transform: translateX(-50%) translateX(0); }
+}
+
+.shake {
+    animation: shake 0.3s cubic-bezier(.36,.07,.19,.97) both;
+    transform: translateX(-50%); /* Ensure it stays centered after shake */
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.6); /* Red glow for error */
+}
+
