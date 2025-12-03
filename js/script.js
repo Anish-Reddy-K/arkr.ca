@@ -7,9 +7,120 @@ const qs = selector => document.querySelector(selector);
 const qsa = selector => document.querySelectorAll(selector);
 
 // ============================ 
+// Content Loading (JSON to HTML)
+// ============================ 
+const loadContent = async () => {
+    try {
+        // 1. Load Experience
+        const expResponse = await fetch('data/experience.json');
+        const experienceData = await expResponse.json();
+        const expContainer = qs('#experience-container');
+        if (expContainer && experienceData) {
+            expContainer.innerHTML = experienceData.map(item => `
+                <div class="experience-card">
+                    <div class="card-header">
+                        <div class="header-line-1">
+                            <h3 class="company-name">${item.company}</h3>
+                            <span class="date">${item.date}</span>
+                        </div>
+                        <div class="header-line-2">
+                            <span class="role">${item.role}</span>
+                            <span class="location">${item.location}</span>
+                        </div>
+                    </div>
+                    <ul>
+                        ${item.bullets.map(bullet => `<li>${bullet}</li>`).join('')}
+                    </ul>
+                </div>
+            `).join('');
+        }
+
+        // 2. Load Projects
+        const projResponse = await fetch('data/projects.json');
+        const projectsData = await projResponse.json();
+        const projContainer = qs('#projects-container');
+        if (projContainer && projectsData) {
+            projContainer.innerHTML = projectsData.map(project => {
+                // SVG Icons
+                const githubIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>`;
+                const linkIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>`;
+
+                const githubLinkHtml = project.showGithub 
+                    ? `<a href="${project.githubLink}" target="_blank" aria-label="View Code">${githubIcon}</a>` 
+                    : '';
+                const externalLinkHtml = project.showLink 
+                    ? `<a href="${project.externalLink}" target="_blank" aria-label="View Project">${linkIcon}</a>` 
+                    : '';
+
+                return `
+                <div class="project-card">
+                    <div class="card-header">
+                        <div class="header-line-1">
+                            <h3>${project.title}</h3>
+                            <div class="status-badge ${project.status}">
+                                <span class="status-dot"></span>
+                                ${project.statusText}
+                            </div>
+                        </div>
+                        <div class="header-line-2">
+                            <span class="tech-stack">${project.techStack}</span>
+                            <div class="project-header-links">
+                                ${githubLinkHtml}
+                                ${externalLinkHtml}
+                            </div>
+                        </div>
+                    </div>
+                    <ul>
+                        ${project.bullets.map(bullet => `<li>${bullet}</li>`).join('')}
+                    </ul>
+                </div>
+                `;
+            }).join('');
+        }
+
+        // 3. Load Activities & Awards
+        const actResponse = await fetch('data/activities.json');
+        const actData = await actResponse.json();
+        
+        // Activities List
+        const actContainer = qs('#activities-container');
+        if (actContainer && actData.activities) {
+            actContainer.innerHTML = actData.activities.map(item => `
+                <div class="activity-item">
+                    <div class="activity-header">
+                        <h3>${item.title}</h3>
+                        <span class="date">${item.date}</span>
+                    </div>
+                    <p>${item.description}</p>
+                </div>
+            `).join('');
+        }
+
+        // Awards List
+        const awardsContainer = qs('#awards-container');
+        if (awardsContainer && actData.awards) {
+            awardsContainer.innerHTML = actData.awards.map(cat => `
+                <div class="award-category">
+                    <h4>${cat.category}</h4>
+                    <div class="award-chips">
+                        ${cat.items.map(chip => `<span class="chip ${chip.color}">${chip.text}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+    } catch (error) {
+        console.error('Error loading content:', error);
+    }
+};
+
+// ============================ 
 // Initialization
 // ============================ 
 window.addEventListener('load', () => {
+    // Load Content
+    loadContent();
+
     // Reset scroll position on page refresh
     if (window.location.hash) {
         window.scrollTo(0, 0);

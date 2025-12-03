@@ -1,0 +1,44 @@
+[
+    {
+        "company": "Geotab",
+        "date": "May 2025 — Present",
+        "role": "Data Analyst Intern",
+        "location": "Waterloo, ON",
+        "bullets": [
+            "Automated Root Cause Analysis (RCA) with a new Data Quality Agent, reducing manual investigation time by 30%.",
+            "Increased data trust by deploying real-time anomaly detection and data quality dashboards for continuous data health.",
+            "Developed a Data Lineage System across pipelines, enhancing governance and speeding up impact analysis."
+        ]
+    },
+    {
+        "company": "OCAS",
+        "date": "Apr 2024 — Apr 2025",
+        "role": "Machine Learning Engineer Intern",
+        "location": "Waterloo, ON",
+        "bullets": [
+            "Engineered end-to-end AI advisor from prototype to beta using Llama & Azure OpenAI to enhance college program discovery.",
+            "Built semantic search pipeline for 10,000+ college programs using BERT embeddings & Azure Vector DB, delivering 3x more relevant matches & reducing search latency by 85%."
+        ]
+    },
+    {
+        "company": "SMART Centre",
+        "date": "Sep 2023 — Apr 2024",
+        "role": "AI/ML Engineer Intern",
+        "location": "Waterloo, ON",
+        "bullets": [
+            "Fine-tuned & optimized a dialogue model for microcontroller deployment, achieving natural conversations with minimal latency.",
+            "Optimized trained SLM for edge deployment using quantization & pruning, reducing inference latency by 80% on microcontroller.",
+            "Built an efficient inference pipeline for conversational SLM on embedded system, enabling real-time natural dialogue processing."
+        ]
+    },
+    {
+        "company": "Google Developer Groups - On Campus",
+        "date": "Nov 2023 — Present",
+        "role": "Executive Lead",
+        "location": "Waterloo, ON",
+        "bullets": [
+            "Organized events and strategic initiatives for a community of 1,000+ members, driving significant growth and engagement.",
+            "Conducted TensorFlow workshops & hands-on projects, enabling 200+ students to understand & build impactful AI applications."
+        ]
+    }
+]

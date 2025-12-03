@@ -1,0 +1,44 @@
+[
+    {
+        "title": "Aqua Pinion | Drowning Detection",
+        "status": "offline",
+        "statusText": "Offline",
+        "techStack": "SVM, Sensor Fusion, TinyML, scikit-learn, Python, C/C++, CAD",
+        "githubLink": "https://github.com/Anish-Reddy-K",
+        "externalLink": "#",
+        "showGithub": true,
+        "showLink": true,
+        "bullets": [
+            "Engineered a sensor-driven wearable using ML to detect drowning with 95% precision and deploy a life-saving inflatable.",
+            "Developed a custom SVM classifier for microcontroller using sensor fusion, enabling real-time drowning detection & prevention."
+        ]
+    },
+    {
+        "title": "Embeddium | Vector Embedding App",
+        "status": "dev",
+        "statusText": "Dev",
+        "techStack": "PyQt5, Transformers, GPU Optimization, Python, Hugging Face",
+        "githubLink": "https://github.com/Anish-Reddy-K",
+        "externalLink": "#",
+        "showGithub": true,
+        "showLink": true,
+        "bullets": [
+            "Built desktop application to generate vector embeddings from multiple data formats with automated model selection.",
+            "Engineered multi-format pipeline with GPU acceleration & threading, enabling rapid CSV/JSON to FAISS/HDF5 conversion."
+        ]
+    },
+    {
+        "title": "Typez | AI-Driven Typing Tool",
+        "status": "live",
+        "statusText": "Live",
+        "techStack": "Local models, scikit-learn, PyTorch(Win), MLX(Mac), Python, Pandas, SQLite",
+        "githubLink": "https://github.com/Anish-Reddy-K",
+        "externalLink": "#",
+        "showGithub": true,
+        "showLink": true,
+        "bullets": [
+            "Built an AI-powered typing analyzer that tracks user patterns & generates personalized exercises targeting specific weaknesses.",
+            "Implemented a keystroke pattern recognition system using ML, enabling a 30% average improvement in typing proficiency."
+        ]
+    }
+]

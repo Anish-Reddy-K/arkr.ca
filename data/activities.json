@@ -1,0 +1,54 @@
+{
+    "activities": [
+        {
+            "title": "Conestoga Computing Society | President & Founder",
+            "date": "Sep 2024 — Present",
+            "description": "Founded a 300-member CS community, hosting 10+ events/workshops to enhance skills and foster campus-wide collaboration."
+        },
+        {
+            "title": "ConHacks - Hackathon | President & Co-Founder",
+            "date": "May 2023 — Present",
+            "description": "Initiated, planned, and executed a 130-participant hackathon, managing logistics, marketing, and operations to drive innovation."
+        },
+        {
+            "title": "Peer-Assisted Learning Leader & Tutor",
+            "date": "Mar 2023 — Present",
+            "description": "Led tutoring sessions on C Programming for 25+ students in DSA, OOP, and core CS topics, improving overall grades by 45%."
+        },
+        {
+            "title": "Atal Tinkering Lab | Student Lead",
+            "date": "Feb 2018 — Aug 2020",
+            "description": "Collaborated with 150+ students on IoT and ML projects, winning 4 awards at national and international science & tech expos."
+        }
+    ],
+    "awards": [
+        {
+            "category": "Winning & Academics",
+            "items": [
+                { "text": "HackThe6ix Winner", "color": "pink" },
+                { "text": "Student Innovator of the Year", "color": "pink" },
+                { "text": "FGSI Gold Medal", "color": "pink" },
+                { "text": "NIRD RISC: 1st Place", "color": "pink" },
+                { "text": "CSI Service Award", "color": "pink" }
+            ]
+        },
+        {
+            "category": "Judging & Mentoring",
+            "items": [
+                { "text": "Judge: GDSC Hacks", "color": "orange" },
+                { "text": "Judge: ConHacks", "color": "orange" },
+                { "text": "Mentor: Hack The North 2024", "color": "orange" },
+                { "text": "Mentor: Hawk Hacks", "color": "orange" },
+                { "text": "Co-op Peer Mentor", "color": "orange" }
+            ]
+        },
+        {
+            "category": "Community & Speaking",
+            "items": [
+                { "text": "Guest Speaker: GDSC, Queens U", "color": "gold" },
+                { "text": "Member: Program Advisory Committee", "color": "gold" },
+                { "text": "Google DevFest Volunteer", "color": "gold" }
+            ]
+        }
+    ]
+}
