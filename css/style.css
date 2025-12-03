@@ -1950,14 +1950,16 @@ footer {
     transition: all 0.2s ease;
 }
 
-#send-button .send-icon {
-    width: 14px; /* SVG icon size */
-    height: 14px;
-}
-
-#send-button:hover {
+#send-button:hover:not(:disabled) { /* Apply hover only when not disabled */
     opacity: 0.9;
     box-shadow: 0 0 10px rgba(255, 244, 31, 0.5);
+}
+
+#send-button:disabled {
+    background: rgba(255, 244, 31, 0.3); /* Pale yellow */
+    color: rgba(26, 26, 26, 0.5); /* Pale arrow color */
+    cursor: not-allowed;
+    box-shadow: none; /* No glow when disabled */
 }
 
 @keyframes shake {

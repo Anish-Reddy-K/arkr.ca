@@ -434,17 +434,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatMessages = qs('#chat-messages'); // Get reference to the chat messages container
     const inputAreaWrapper = qs('#input-area-wrapper'); // Added this line
 
+    // Function to update the state of the send button
+    const updateSendButtonState = () => {
+        if (userInput.value.trim() === '') {
+            sendButton.disabled = true;
+        } else {
+            sendButton.disabled = false;
+        }
+    };
+
     // Function to handle sending user input
     const handleUserInput = async () => { // Make this function async
         const inputValue = userInput.value.trim();
 
+        if (sendButton.disabled) { // Do not proceed if button is disabled
+            return;
+        }
+
         if (inputValue === '') {
-            // Input is empty, apply shake effect
-            inputAreaWrapper.classList.add('shake');
-            // Remove shake effect after animation
-            setTimeout(() => {
-                inputAreaWrapper.classList.remove('shake');
-            }, 300); // Matches CSS animation duration
+            // This case should ideally not be reached if button is disabled
+            // but as a fallback, prevent sending empty messages.
+            return; 
         } else {
             // Input is not empty, proceed with sending
             console.log('Sending message:', inputValue);
@@ -481,6 +491,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.log('Server response:', result.message);
                     // Clear input after successful send
                     userInput.value = '';
+                    updateSendButtonState(); // Update button state after clearing input
                 } else {
                     console.error('Error saving input:', result.message);
                     // Optionally, show an error to the user
@@ -492,7 +503,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    if (sendButton && userInput && textInputContainer && chatMessages && inputAreaWrapper) { // Updated this line
+    if (sendButton && userInput && textInputContainer && chatMessages && inputAreaWrapper) {
+        // Initial state of the send button
+        updateSendButtonState();
+
+        // Update send button state on input change
+        userInput.addEventListener('input', updateSendButtonState);
+
         // Handle send button click
         sendButton.addEventListener('click', handleUserInput);
 
