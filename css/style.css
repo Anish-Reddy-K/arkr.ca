@@ -373,7 +373,7 @@ nav {
     mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
     -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
     border-top: 1px solid rgba(255, 255, 255, 0.05); /* Subtle top border if needed, or rely on footer border */
-    margin-bottom: -1px; /* Eliminate gap to footer border */
+    margin-bottom: 0px; /* Eliminate gap to footer border */
 }
 
 .footer-marquee-content {
@@ -397,6 +397,7 @@ nav {
     white-space: nowrap;
     text-transform: uppercase;
     letter-spacing: 1px;
+    line-height: 1; /* Ensure tight vertical spacing */
 }
 
 .footer-marquee-item:hover {
@@ -405,7 +406,6 @@ nav {
     -webkit-background-clip: text;
     background-clip: text;
     opacity: 1;
-    transform: scale(1.05);
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
