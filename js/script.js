@@ -510,6 +510,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update send button state on input change
         userInput.addEventListener('input', updateSendButtonState);
 
+        // Handle focus and blur for width expansion
+        userInput.addEventListener('focus', () => {
+            textInputContainer.classList.add('width-expanded');
+        });
+
+        userInput.addEventListener('blur', () => {
+            if (userInput.value.trim() === '') {
+                textInputContainer.classList.remove('width-expanded');
+            }
+        });
+
         // Handle send button click
         sendButton.addEventListener('click', handleUserInput);
 

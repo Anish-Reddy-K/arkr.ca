@@ -1889,8 +1889,12 @@ footer {
     overflow-y: auto; /* Enable vertical scrolling */
 }
 
-#text-input-container:focus-within {
+#text-input-container.width-expanded {
     width: 450px; /* Expanded width on focus */
+}
+
+#text-input-container:focus-within {
+    /* width: 450px; Moved to .width-expanded class */
 }
 
 /* Chat Messages Container */
