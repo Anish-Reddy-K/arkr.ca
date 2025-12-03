@@ -232,7 +232,7 @@ nav {
     margin-bottom: 2rem;
     font-weight: 300;
     color: #ffffff; /* Ensure "I am Anish!" is white */
-    white-space: nowrap; /* Prevent line breaks within the heading */
+    line-height: 1.1; /* Tighter spacing for two lines */
 }
 
 #hello-text {

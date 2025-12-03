@@ -213,7 +213,11 @@ const changeGreeting = () => {
 
 let currentIndex = 0;
 if (qs('#hello-text')) {
-    setInterval(changeGreeting, 3600); // Total cycle: 0.8s fade-out, 0.8s fade-in, ~2s pause
+    // Initial faster transition for English
+    setTimeout(() => {
+        changeGreeting(); // Trigger first change
+        setInterval(changeGreeting, 3600); // Continue loop
+    }, 1500); // Shorter duration for the first "Hello"
 }
 
 
