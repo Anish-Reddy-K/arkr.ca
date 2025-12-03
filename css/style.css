@@ -239,17 +239,21 @@ nav {
 #hello-text {
     font-family: 'Radley', serif;
     font-style: italic;
-    font-size: 2.5rem; /* Smaller contrast size */
+    font-size: 3.5rem; /* Increased size */
     display: block; /* Forces new line */
-    margin-bottom: 0.5rem; /* Vertical space between Hello and Name */
+    margin-bottom: 0.2rem; /* Adjusted spacing */
     opacity: 1;
     transition: opacity 0.8s ease-in-out;
     
-    /* Gradient Text */
+    /* Gradient Text - Ensuring visibility */
     background: var(--primary-gradient);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    color: transparent; /* Fallback/Ensure transparent for fill */
+    width: fit-content; /* Ensure gradient only spans text width */
+    margin-left: auto; /* Center alignment if needed, or inherit */
+    margin-right: auto;
 }
 
 #hello-text.fade {
