@@ -1870,7 +1870,7 @@ footer {
     max-width: calc(100% - 40px);
     max-height: 40px; /* Initial small max-height */
     overflow: hidden; /* Ensure content outside initial height is hidden */
-    transition: width 0.6s ease, max-height 0.6s ease; /* Smooth transition for specific properties */
+    transition: max-height 0.5s ease-out, width 0.3s ease-out; /* Smooth transition for max-height and width */
 }
 
 /* Wrapper for input and send button */
@@ -1899,34 +1899,35 @@ footer {
 #chat-messages {
     flex-grow: 1;
     overflow-y: auto; /* Enable scrolling for messages */
-    display: flex;
-    flex-direction: column;
-    padding: 5px;
-    margin-bottom: 5px;
+    display: flex; /* Kept display flex here as base for layout */
+    opacity: 0; /* Hidden by default */
+    visibility: hidden; /* Hidden by default */
+    transition: opacity 0.3s ease-out, visibility 0.3s ease-out; /* Smooth fade for messages */
+    padding: 15px; /* Increased padding */
+    margin-bottom: 15px; /* Increased margin */
     border-radius: 10px;
     background-color: rgba(0, 0, 0, 0.2);
     /* Hide until messages are present */
-    display: none; 
+    /* display: none; Removed */
 }
 
 #text-input-container.expanded #chat-messages {
-    display: flex; /* Show when expanded */
+    opacity: 1; /* Show when expanded */
+    visibility: visible; /* Show when expanded */
+    /* display: flex; Removed, now handled by opacity/visibility */
 }
 
 /* Individual User Message Style */
 .user-message {
-    background-color: #f960eb; /* Primary pink from design system */
-    color: #1a1a1a; /* Dark text for contrast */
-    padding: 8px 12px;
-    border-radius: 15px;
-    margin-bottom: 8px;
+    /* ... existing properties ... */
+    margin-bottom: 10px;
+    margin-left: auto; /* Push to the right */
     align-self: flex-end; /* Align to the right */
     max-width: 80%; /* Limit width */
     word-wrap: break-word; /* Break long words */
     font-size: 0.9rem;
     line-height: 1.4;
 }
-
 #user-input {
     flex-grow: 1;
     border: none;

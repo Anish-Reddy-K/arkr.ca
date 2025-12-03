@@ -516,8 +516,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         userInput.addEventListener('blur', () => {
-            if (userInput.value.trim() === '') {
+            const wasExpandedWithMessages = textInputContainer.classList.contains('expanded'); // Capture state before removal
+
+            userInput.value = ''; // Clear message immediately
+            updateSendButtonState(); // Update button state immediately
+
+            // // Clear chat messages when closing
+
+            if (wasExpandedWithMessages) {
+                // If it had messages, collapse width first, then height
+                textInputContainer.classList.remove('width-expanded'); // Start width transition (0.4s)
+
+                setTimeout(() => {
+                    textInputContainer.classList.remove('expanded'); // Then start max-height transition (0.5s)
+                }, 300); // Wait for width transition to complete (0.3s)
+
+            } else {
+                // If no messages, collapse both immediately (or as they were)
                 textInputContainer.classList.remove('width-expanded');
+                textInputContainer.classList.remove('expanded'); // Ensure height is reset even if it never expanded with messages
             }
         });
 
