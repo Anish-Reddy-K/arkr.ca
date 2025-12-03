@@ -432,21 +432,56 @@ document.addEventListener('DOMContentLoaded', () => {
     const sendButton = qs('#send-button');
     const textInputContainer = qs('#text-input-container');
 
+    // Function to handle sending user input
+    const handleUserInput = async () => { // Make this function async
+        const inputValue = userInput.value.trim();
+
+        if (inputValue === '') {
+            // Input is empty, apply shake effect
+            textInputContainer.classList.add('shake');
+            // Remove shake effect after animation
+            setTimeout(() => {
+                textInputContainer.classList.remove('shake');
+            }, 300); // Matches CSS animation duration
+        } else {
+            // Input is not empty, proceed with sending
+            console.log('Sending message:', inputValue);
+
+            try {
+                const response = await fetch('api/save_input.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ userInput: inputValue }),
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    console.log('Server response:', result.message);
+                    // Clear input after successful send
+                    userInput.value = '';
+                } else {
+                    console.error('Error saving input:', result.message);
+                    // Optionally, show an error to the user
+                }
+            } catch (error) {
+                console.error('Network error:', error);
+                // Optionally, show a network error to the user
+            }
+        }
+    };
+
     if (sendButton && userInput && textInputContainer) {
-        sendButton.addEventListener('click', () => {
-            if (userInput.value.trim() === '') {
-                // Input is empty, apply shake effect
-                textInputContainer.classList.add('shake');
-                // Remove shake effect after animation
-                setTimeout(() => {
-                    textInputContainer.classList.remove('shake');
-                }, 300); // Matches CSS animation duration
-            } else {
-                // Input is not empty, proceed with sending (or whatever its original function was)
-                // For now, we'll just log it.
-                console.log('Sending message:', userInput.value);
-                // Clear input after sending
-                userInput.value = ''; 
+        // Handle send button click
+        sendButton.addEventListener('click', handleUserInput);
+
+        // Handle Enter key press in the input field
+        userInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) { // Send on Enter, allow Shift+Enter for new line
+                e.preventDefault(); // Prevent default new line behavior
+                handleUserInput();
             }
         });
     }
