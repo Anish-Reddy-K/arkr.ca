@@ -25,29 +25,28 @@
         {
             "category": "Winning & Academics",
             "items": [
-                { "text": "HackThe6ix Winner", "color": "pink" },
-                { "text": "Student Innovator of the Year", "color": "pink" },
-                { "text": "FGSI Gold Medal", "color": "pink" },
-                { "text": "NIRD RISC: 1st Place", "color": "pink" },
+                { "text": "HackThe6ix 2023 Winner (Best beginner hack)", "color": "pink" },
+                { "text": "Atal Tinkering Labs: Innovator of the Year - 2019", "color": "pink" },
+                { "text": "FGSI YASH: Gold Medal", "color": "pink" },
+                { "text": "NIRD RISC: Gold Medal", "color": "pink" },
                 { "text": "CSI Service Award", "color": "pink" }
             ]
         },
         {
             "category": "Judging & Mentoring",
             "items": [
-                { "text": "Judge: GDSC Hacks", "color": "orange" },
-                { "text": "Judge: ConHacks", "color": "orange" },
+                { "text": "Judge: GDSC Hacks 2024", "color": "orange" },
+                { "text": "Judge: ConHacks 2025", "color": "orange" },
                 { "text": "Mentor: Hack The North 2024", "color": "orange" },
-                { "text": "Mentor: Hawk Hacks", "color": "orange" },
+                { "text": "Mentor: Hawk Hacks 2024", "color": "orange" },
                 { "text": "Co-op Peer Mentor", "color": "orange" }
             ]
         },
         {
             "category": "Community & Speaking",
             "items": [
-                { "text": "Guest Speaker: GDSC, Queens U", "color": "gold" },
-                { "text": "Member: Program Advisory Committee", "color": "gold" },
-                { "text": "Google DevFest Volunteer", "color": "gold" }
+                { "text": "Guest Speaker: Google DSC, Queens University", "color": "gold" },
+                { "text": "Program Advisory Committee Member (School of Applied CS & IT)", "color": "gold" }
             ]
         }
     ]

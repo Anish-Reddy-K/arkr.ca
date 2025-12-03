@@ -599,717 +599,176 @@ nav {
 }
 
 /* ============================
-
    6. Experience Section
-
    ============================ */
-
 .experience-grid {
-
     display: grid;
-
     grid-template-columns: 1fr;
-
     gap: 4rem; /* Increased gap for better separation without boxes */
-
     /* Removed max-width and margin for left alignment */
-
 }
-
-
 
 /* Shared Left Bar Design for Experience, Projects, Activities */
-
 .experience-card, .project-card, .activity-item {
-
     position: relative;
-
     padding-left: 2rem;
-
     border: none !important; /* Remove any box borders */
-
     border-radius: 0 !important;
-
     transition: none; /* Remove transform transitions */
-
 }
-
-
 
 /* Base Grey Bar */
-
 .experience-card::before, .project-card::before, .activity-item::before {
-
     content: '';
-
     position: absolute;
-
     left: 0; top: 0; bottom: 0;
-
     width: 4px;
-
     background: rgba(255, 255, 255, 0.1);
-
     border-radius: 4px;
-
 }
-
-
 
 /* Gradient Hover Bar */
-
-
-
 .experience-card::after, .project-card::after, .activity-item::after {
-
-
-
     content: '';
-
-
-
     position: absolute;
-
-
-
     left: 0; top: 0; bottom: 0;
-
-
-
     width: 4px;
-
-
-
     background: linear-gradient(180deg, #f960eb, #ff854d, #fff41f);
-
-
-
     border-radius: 4px;
-
-
-
     opacity: 0;
-
-
-
     transition: opacity 0.6s ease; /* Increased duration for smoother fade */
-
-
-
     z-index: 1;
-
-
-
 }
-
-
 
 /* Hover Interaction */
-
 .experience-card:hover::after, .project-card:hover::after, .activity-item:hover::after {
-
     opacity: 1;
-
 }
-
-
 
 .experience-card .card-header {
-
-
-
     margin-bottom: 0; /* Removed margin to reduce gap */
-
-
-
 }
-
-
 
 .experience-card .header-line-1 {
-
-
-
     display: flex;
-
-
-
     justify-content: space-between; /* Push date to right */
-
-
-
     align-items: baseline;
-
-
-
     margin-bottom: 0.2rem;
-
-
-
 }
-
-
-
-
-
-
 
 .experience-card .header-line-1 .company-name {
-
-
-
-
-
-
-
     font-family: 'Outfit', sans-serif;
-
-
-
-
-
-
-
     font-size: 1.8rem;
-
-
-
-
-
-
-
     margin: 0;
-
-
-
-
-
-
-
     color: #f0f0f0; /* Brighter off-white */
-
-
-
-
-
-
-
     font-weight: 400; /* Reduced weight */
-
-
-
-
-
-
-
 }
-
-
-
-
-
-
 
 .experience-card .header-line-1 .date {
-
-
-
     color: #a7a7a7;
-
-
-
     font-size: 0.9rem;
-
-
-
     white-space: nowrap;
-
-
-
 }
-
-
-
-
-
-
 
 .experience-card .header-line-2 {
-
-
-
     display: flex;
-
-
-
     justify-content: space-between; /* Push location to right */
-
-
-
     align-items: baseline;
-
-
-
     margin-bottom: 0.2rem; /* Reduced vertical gap before bullets */
-
-
-
 }
-
-
-
-
-
-
 
 .experience-card .header-line-2 .role {
-
-
-
     font-size: 1.2rem;
-
-
-
     color: #d1d1d1; /* Less bright off-white */
-
-
-
     font-weight: 500;
-
-
-
 }
-
-
-
-
-
-
 
 .experience-card .header-line-2 .location {
-
-
-
     color: #a7a7a7;
-
-
-
     font-size: 0.9rem;
-
-
-
     white-space: nowrap;
-
-
-
 }
-
-
-
-
-
-
 
 .experience-card ul {
-
-
-
-
-
-
-
     list-style: none;
-
-
-
-
-
-
-
     padding-left: 0;
-
-
-
-
-
-
-
     margin-top: 0; /* Remove default top margin */
-
-
-
-
-
-
-
 }
-
-
-
-
-
-
 
 .experience-card li {
-
-
-
-
-
-
-
     position: relative;
-
-
-
-
-
-
-
     padding-left: 1.5rem;
-
-
-
-
-
-
-
     margin-bottom: 0.5rem;
-
-
-
-
-
-
-
     color: #ffffff; /* Text color remains white, does not change on hover */
-
-
-
-
-
-
-
     transition: color 0.3s ease; /* Maintain smooth transition for consistency, even if not changing color here */
-
-
-
-
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Default subtle dot */
-
-
-
-
-
-
-
 .experience-card li::before,
-
-
-
-
-
-
-
 .project-card li::before {
-
-
-
-
-
-
-
     content: '';
-
-
-
-
-
-
-
     position: absolute;
-
-
-
-
-
-
-
     left: 0;
-
-
-
-
-
-
-
     top: 0.6rem;
-
-
-
-
-
-
-
     width: 6px;
-
-
-
-
-
-
-
     height: 6px;
-
-
-
-
-
-
-
     border-radius: 50%;
-
-
-
-
-
-
-
     background-color: rgba(255, 244, 31, 0.2); /* Subtle default yellow dot */
-
-
-
-
-
-
-
     box-shadow: none; /* No glow by default */
-
-
-
-
-
-
-
     transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for dot */
-
-
-
-
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Hover state for the dot */
-
-
-
-
-
-
-
 .experience-card li:hover::before,
-
-
-
-
-
-
-
 .project-card li:hover::before {
-
-
-
-
-
-
-
     background-color: #fff41f; /* Bright yellow on hover */
-
-
-
-
-
-
-
     box-shadow: 0 0 8px rgba(255, 244, 31, 0.4); /* Neon Glow for yellow on hover */
-
-
-
-
-
-
-
 }
-
-
 
 /* ============================
-
-
-
    7. Projects Section
-
-
-
    ============================ */
-
-
-
 .projects-grid {
-
-
-
     display: grid;
-
-
-
     grid-template-columns: 1fr; /* Single column stack */
-
-
-
     gap: 4rem; /* Consistent gap */
-
-
-
     /* Removed max-width and margin for left alignment */
-
-
-
 }
-
-
 
 .project-card {
-
     /* Styles inherited from shared block above */
-
     height: 100%;
-
     display: flex;
-
     flex-direction: column;
-
 }
-
-
 
 .project-card h3 {
-
-
-
     font-family: 'Outfit', sans-serif;
-
-
-
     font-size: 1.8rem;
-
-
-
     margin-bottom: 0.5rem;
-
-
-
     color: #f0f0f0;
-
-
-
     font-weight: 400; /* Reduced weight */
-
-
-
 }
-
-
-
-
-
-
 
 .project-card .tech-stack {
-
-
-
     color: #d1d1d1; /* Matching role color */
-
-
-
     font-size: 1.2rem; /* Increased slightly to match role visual weight */
-
-
-
     font-family: 'Outfit', sans-serif; /* Consistent font */
-
-
-
     font-weight: 500;
-
-
-
     margin-bottom: 1rem;
-
-
-
 }
-
-
 
 .project-card ul {
-
     list-style: none;
-
     padding-left: 0;
-
 }
 
-
-
 .project-card li {
-
     position: relative;
-
     padding-left: 1.5rem;
-
     margin-bottom: 0.5rem;
-
     color: #d1d1d1;
-
     font-size: 0.95rem;
-
 }
 
 /* ============================
@@ -1435,78 +894,39 @@ nav {
     50% { opacity: 1; }
 }
 
-
-
-
-
 /* ============================
-
    8. Activities & Awards
-
    ============================ */
-
 .activities-list {
-
     display: flex;
-
     flex-direction: column;
-
     gap: 3rem; /* Increased gap */
-
     margin-bottom: 4rem;
-
 }
-
-
 
 /* .activity-item styles inherited from shared block */
-
-
-
 .activity-header {
-
     display: flex;
-
     justify-content: space-between;
-
     align-items: baseline;
-
     margin-bottom: 0.5rem;
-
     flex-wrap: wrap;
-
 }
-
-
 
 .activity-item h3 {
-
     font-size: 1.2rem;
-
     color: #ffffff;
-
     margin: 0;
-
 }
-
-
 
 .activity-item .date {
-
     color: #a7a7a7;
-
     font-size: 0.9rem;
-
 }
 
-
-
 .activity-item p {
-
     color: #d1d1d1;
-
     margin: 0;
-
 }
 
 /* ============================
@@ -1559,6 +979,7 @@ nav {
     height: 6px;
     border-radius: 50%;
     margin-right: 8px;
+    flex-shrink: 0; /* Prevent dot from shrinking */
 }
 
 .chip.gold::before { background-color: #fff41f; box-shadow: 0 0 8px rgba(255, 244, 31, 0.4); }
