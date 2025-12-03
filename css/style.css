@@ -254,6 +254,11 @@ nav {
     width: fit-content; /* Ensure gradient only spans text width */
     margin-left: auto; /* Center alignment if needed, or inherit */
     margin-right: auto;
+    
+    /* Fix for clipped ascenders/descenders */
+    line-height: 1.4;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
 }
 
 #hello-text.fade {
