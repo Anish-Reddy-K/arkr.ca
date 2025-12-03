@@ -228,7 +228,9 @@ nav {
    ============================ */
 #home {
     text-align: center;
-    padding-top: 100 rem; /* Adjusted to move content further down */
+    padding-top: 15rem; /* Moved up slightly */
+    padding-bottom: 0;
+    /* min-height handled by content flow now */
 }
 
 #home h1 {
@@ -298,30 +300,34 @@ nav {
     pointer-events: none;
 }
 
-/* Scroll Reveal Interests */
+/* Scroll Reveal Interests (Vertical Stream) */
 .interests-content {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem;
-    max-width: 900px;
+    flex-direction: column; /* Vertical stack */
+    align-items: center;
+    gap: 6rem; /* Large gap for granular scrolling */
+    margin-top: 8rem; /* Space from hero text */
+    padding-bottom: 4rem; /* Space before next section */
+    position: relative;
+    z-index: 1;
 }
 
 .interest-item-scroll {
     font-family: 'Outfit', sans-serif;
-    font-size: 2.5rem;
+    font-size: 2rem; /* Readable but not shouting */
     font-weight: 300;
     color: #ffffff;
-    opacity: 0.1; /* Start dim */
-    filter: blur(4px); /* Start blurry */
-    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); /* Smooth ease-out */
-    cursor: default;
+    opacity: 0.1; /* Start very dim */
+    filter: blur(3px); /* Start slightly blurry */
+    transition: all 0.6s ease-out;
+    letter-spacing: 1px;
 }
 
 .interest-item-scroll.in-focus {
-    opacity: 0.9;
+    opacity: 0.8; /* Gentle highlight */
     filter: blur(0);
-    transform: scale(1.05);
+    transform: scale(1.1);
+    letter-spacing: 2px; /* Opens up when focused */
 }
 
 .orb {
