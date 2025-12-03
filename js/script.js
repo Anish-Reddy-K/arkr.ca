@@ -109,15 +109,35 @@ const loadContent = async () => {
             `).join('');
         }
 
-        // 4. Load Interest Tags
+        // 4. Load Interest Reveal Section
         const interestResponse = await fetch('data/interests.json');
         const interestsData = await interestResponse.json();
-        const interestContainer = qs('#interest-tags');
+        const interestContainer = qs('#interests-content');
         
         if (interestContainer && interestsData) {
             interestContainer.innerHTML = interestsData.map(interest => `
-                <span class="interest-tag">${interest}</span>
+                <span class="interest-item-scroll">${interest}</span>
             `).join('');
+
+            // Setup Intersection Observer for "Focus on Scroll" effect
+            const observerOptions = {
+                root: null,
+                rootMargin: '-45% 0px -45% 0px', // Active zone is the middle 10% of the viewport
+                threshold: 0
+            };
+
+            const interestObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-focus');
+                    } else {
+                        entry.target.classList.remove('in-focus');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all new interest items
+            qsa('.interest-item-scroll').forEach(item => interestObserver.observe(item));
         }
 
     } catch (error) {
