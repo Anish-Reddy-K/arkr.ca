@@ -245,6 +245,13 @@ qsa('.nav-links a').forEach(link => {
 const badgeLink = qs('#badge-link');
 if (badgeLink) {
     badgeLink.addEventListener('click', (e) => {
+        // Check if the clicked element is inside the .code-snippet
+        if (e.target.closest('.code-snippet')) {
+            // If it's inside, don't prevent default, allow text selection
+            return;
+        }
+
+        // If not inside .code-snippet, prevent default and scroll to top
         e.preventDefault();
         window.scrollTo({
             top: 0,
