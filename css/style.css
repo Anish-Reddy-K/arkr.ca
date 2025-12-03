@@ -367,7 +367,7 @@ nav {
 .footer-marquee-container {
     width: 100%;
     overflow: hidden;
-    padding: 2rem 0;
+    padding: 1.5rem 0; /* Reduced from 2rem for tighter fit */
     position: relative;
     background: #1a1a1a; /* Match body bg */
     mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
