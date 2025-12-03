@@ -280,6 +280,12 @@ nav {
     letter-spacing: 0.5px;
 }
 
+.hero-subtitle .hero-subtitle-separator {
+    color: rgba(255, 255, 255, 0.4); /* Subtle separator color */
+    margin: 0 0.8rem; /* Increased horizontal gap */
+    font-weight: 400;
+}
+
 /* Hero Background Animation */
 .hero-background {
     position: absolute;
