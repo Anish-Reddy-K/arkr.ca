@@ -323,6 +323,108 @@ nav {
     pointer-events: none;
 }
 
+/* Sidebar Interests (Fixed Metadata) */
+.sidebar-interests {
+    position: fixed;
+    bottom: 300px; /* Positioned above the badge */
+    left: 20px;
+    z-index: 900; /* Below nav/widgets but visible */
+    text-align: left;
+    pointer-events: none; /* Don't block clicks */
+    display: none; /* Hidden on mobile by default via media query if needed, but keeping simple for now */
+}
+
+@media (min-width: 1000px) {
+    .sidebar-interests {
+        display: block;
+    }
+}
+
+.sidebar-interests h4 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.7rem;
+    color: #555;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.sidebar-interests ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-interests li {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 0.4rem;
+    transition: color 0.3s ease;
+}
+
+/* Footer Marquee */
+.footer-marquee-container {
+    width: 100%;
+    overflow: hidden;
+    padding: 2rem 0;
+    position: relative;
+    background: #1a1a1a; /* Match body bg */
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    border-top: 1px solid rgba(255, 255, 255, 0.05); /* Subtle top border if needed, or rely on footer border */
+    margin-bottom: -1px; /* Eliminate gap to footer border */
+}
+
+.footer-marquee-content {
+    display: flex;
+    gap: 4rem;
+    width: max-content;
+    animation: footer-marquee 50s linear infinite;
+}
+
+.footer-marquee-content:hover {
+    animation-play-state: paused; /* Pause on hover for readability */
+}
+
+.footer-marquee-item {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.2); /* Very subtle by default */
+    transition: all 0.3s ease;
+    cursor: default;
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.footer-marquee-item:hover {
+    color: transparent;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    opacity: 1;
+    transform: scale(1.05);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.footer-marquee-separator {
+    color: rgba(255, 255, 255, 0.1);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+@keyframes footer-marquee {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
 .orb {
     position: absolute;
     border-radius: 50%;

@@ -109,6 +109,35 @@ const loadContent = async () => {
             `).join('');
         }
 
+        // 4. Load Sidebar Interests (Optional/Hidden for now if redundant)
+        // keeping code if user wants sidebar back, but primarily loading footer marquee now.
+        const interestResponse = await fetch('data/interests.json');
+        const interestsData = await interestResponse.json();
+        
+        // Load Footer Marquee
+        const marqueeContainer = qs('#footer-marquee-content');
+        if (marqueeContainer && interestsData) {
+            // Duplicate list for seamless loop (x4)
+            const repeatedInterests = [...interestsData, ...interestsData, ...interestsData, ...interestsData];
+            
+            marqueeContainer.innerHTML = repeatedInterests.map(interest => `
+                <span class="footer-marquee-item">${interest}</span>
+                <span class="footer-marquee-separator">✦</span>
+            `).join('');
+        }
+
+        // Load Sidebar (If element exists)
+        const sidebarContainer = qs('#sidebar-interests');
+        if (sidebarContainer && interestsData) {
+             const sidebarItems = interestsData.slice(0, 6).map(item => `<li>${item}</li>`).join('');
+             sidebarContainer.innerHTML = `
+                <h4>Interests</h4>
+                <ul>
+                    ${sidebarItems}
+                </ul>
+            `;
+        }
+
     } catch (error) {
         console.error('Error loading content:', error);
     }
