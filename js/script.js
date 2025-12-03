@@ -109,6 +109,23 @@ const loadContent = async () => {
             `).join('');
         }
 
+        // 4. Load Interests Marquee
+        const interestResponse = await fetch('data/interests.json');
+        const interestsData = await interestResponse.json();
+        const marqueeContainer = qs('#marquee-content');
+        
+        if (marqueeContainer && interestsData) {
+            // Duplicate the list to ensure smooth infinite scroll
+            // We need enough items to fill the width + buffer. 
+            // Joining 4 copies should be plenty for standard screens.
+            const repeatedInterests = [...interestsData, ...interestsData, ...interestsData, ...interestsData];
+            
+            marqueeContainer.innerHTML = repeatedInterests.map(interest => `
+                <span class="interest-item">${interest}</span>
+                <span class="separator">✦</span>
+            `).join('');
+        }
+
     } catch (error) {
         console.error('Error loading content:', error);
     }
