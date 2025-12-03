@@ -431,6 +431,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const userInput = qs('#user-input');
     const sendButton = qs('#send-button');
     const textInputContainer = qs('#text-input-container');
+    const chatMessages = qs('#chat-messages'); // Get reference to the chat messages container
 
     // Function to handle sending user input
     const handleUserInput = async () => { // Make this function async
@@ -446,6 +447,23 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             // Input is not empty, proceed with sending
             console.log('Sending message:', inputValue);
+
+            // Create and append user message to the chat display
+            const userMessageDiv = document.createElement('div');
+            userMessageDiv.classList.add('user-message');
+            userMessageDiv.textContent = inputValue;
+            chatMessages.appendChild(userMessageDiv);
+
+            // Expand the container if it's not already expanded
+            if (!textInputContainer.classList.contains('expanded')) {
+                textInputContainer.classList.add('expanded');
+                // Adjust scroll height after expansion
+                setTimeout(() => {
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 300); // Allow time for transition
+            } else {
+                chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
+            }
 
             try {
                 const response = await fetch('api/save_input.php', {
@@ -473,7 +491,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    if (sendButton && userInput && textInputContainer) {
+    if (sendButton && userInput && textInputContainer && chatMessages) {
         // Handle send button click
         sendButton.addEventListener('click', handleUserInput);
 

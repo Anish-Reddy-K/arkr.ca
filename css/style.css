@@ -1852,20 +1852,63 @@ footer {
     transform: translateX(-50%);
     z-index: 1000;
     display: flex;
-    align-items: center;
+    flex-direction: column; /* Stack chat messages and input vertically */
+    justify-content: flex-end; /* Keep input at the bottom */
     gap: 8px; /* Reduced gap */
     padding: 8px; /* Even padding on all sides */
-    border-radius: 50px;
+    border-radius: 50px; /* Initially rounded for just the input */
     background: rgba(37, 37, 37, 0.8);
     backdrop-filter: blur(8px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     width: 300px;
     max-width: calc(100% - 40px);
-    transition: width 0.3s ease; /* Smooth transition for width */
+    height: 40px; /* Initial small height */
+    overflow: hidden; /* Hide scrollbar initially */
+    transition: all 0.3s ease; /* Smooth transition for all properties */
+}
+
+#text-input-container.expanded {
+    height: auto; /* Allow height to adjust based on content */
+    min-height: 100px; /* Minimum height when expanded */
+    max-height: 300px; /* Maximum height for chat history */
+    border-radius: 20px; /* More rectangular when expanded */
+    overflow-y: auto; /* Enable vertical scrolling */
 }
 
 #text-input-container:focus-within {
     width: 450px; /* Expanded width on focus */
+}
+
+/* Chat Messages Container */
+#chat-messages {
+    flex-grow: 1;
+    overflow-y: auto; /* Enable scrolling for messages */
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+    /* Hide until messages are present */
+    display: none; 
+}
+
+#text-input-container.expanded #chat-messages {
+    display: flex; /* Show when expanded */
+}
+
+/* Individual User Message Style */
+.user-message {
+    background-color: #f960eb; /* Primary pink from design system */
+    color: #1a1a1a; /* Dark text for contrast */
+    padding: 8px 12px;
+    border-radius: 15px;
+    margin-bottom: 8px;
+    align-self: flex-end; /* Align to the right */
+    max-width: 80%; /* Limit width */
+    word-wrap: break-word; /* Break long words */
+    font-size: 0.9rem;
+    line-height: 1.4;
 }
 
 #user-input {
