@@ -1901,22 +1901,11 @@ footer {
     overflow-y: auto; /* Enable scrolling for messages */
     display: flex; /* Kept display flex here as base for layout */
     flex-direction: column; /* Stack messages vertically */
-    opacity: 0; /* Hidden by default */
-    visibility: hidden; /* Hidden by default */
-    transition: opacity 0.3s ease-out, visibility 0.3s ease-out; /* Smooth fade for messages */
-    padding: 15px; /* Increased padding */
-    margin-bottom: 15px; /* Increased margin */
-    border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.2);
-    /* Hide until messages are present */
-    /* display: none; Removed */
+    /* All visual styling (opacity, visibility, transitions, padding, margin, border-radius, background-color) removed */
+    /* Messages will be implicitly hidden/shown by the #text-input-container's max-height/overflow */
 }
 
-#text-input-container.expanded #chat-messages {
-    opacity: 1; /* Show when expanded */
-    visibility: visible; /* Show when expanded */
-    /* display: flex; Removed, now handled by opacity/visibility */
-}
+
 
 /* Individual User Message Style */
 .user-message {

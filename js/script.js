@@ -537,16 +537,23 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('click', (e) => {
             // If the text input container is expanded and the click is outside it
             if (textInputContainer.classList.contains('expanded') && !textInputContainer.contains(e.target)) {
-                // Perform the closing animation
+                // Perform the closing animation immediately
                 textInputContainer.classList.remove('width-expanded');
-                setTimeout(() => {
-                    textInputContainer.classList.remove('expanded');
-                }, 300); // Match width transition duration
+                textInputContainer.classList.remove('expanded');
                 
                 // Clear input and update button state
                 userInput.value = '';
                 updateSendButtonState();
             }
         });
+
+        // Listen for the transition end on the text input container
+        textInputContainer.addEventListener('transitionend', (e) => {
+            // Only clear messages if the max-height transition has ended and the container is fully collapsed
+            if (e.propertyName === 'max-height' && !textInputContainer.classList.contains('expanded')) {
+                chatMessages.innerHTML = ''; // Clear chat messages
+            }
+        });
+
     }
 });
