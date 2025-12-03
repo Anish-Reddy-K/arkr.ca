@@ -280,31 +280,6 @@ nav {
     letter-spacing: 0.5px;
 }
 
-.hero-interests {
-    font-family: 'Manrope', sans-serif;
-    font-size: 1.1rem;
-    color: #888;
-    font-weight: 400;
-    margin-top: 2.5rem;
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    align-items: center;
-}
-
-.hero-interests .separator {
-    color: #444;
-    font-size: 0.8rem;
-}
-
-.hero-interests .interest {
-    transition: color 0.3s ease;
-}
-
-.hero-interests .interest:hover {
-    color: #fff;
-}
-
 /* Hero Background Animation */
 .hero-background {
     position: absolute;
