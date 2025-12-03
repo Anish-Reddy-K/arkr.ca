@@ -516,27 +516,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         userInput.addEventListener('blur', () => {
-            // Defer the closing logic to allow time for a new focus event to register
-            setTimeout(() => {
-                // Check if the currently active element is still inside the text input container
-                if (!textInputContainer.contains(document.activeElement)) {
-                    // If not, then it's a click outside, proceed with closing
-                    const wasExpandedWithMessages = textInputContainer.classList.contains('expanded');
-
-                    userInput.value = ''; // Clear message immediately
-                    updateSendButtonState(); // Update button state immediately
-
-                    if (wasExpandedWithMessages) {
-                        textInputContainer.classList.remove('width-expanded');
-                        setTimeout(() => {
-                            textInputContainer.classList.remove('expanded');
-                        }, 300);
-                    } else {
-                        textInputContainer.classList.remove('width-expanded');
-                        textInputContainer.classList.remove('expanded');
-                    }
-                }
-            }, 50); // A small delay (e.g., 50ms) to allow focus to shift
+            // Only clear the input and update button state on blur
+            // The closing logic will be handled by a global click listener
+            userInput.value = ''; // Clear message immediately
+            updateSendButtonState(); // Update button state immediately
         });
 
         // Handle send button click
@@ -547,6 +530,22 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.key === 'Enter' && !e.shiftKey) { // Send on Enter, allow Shift+Enter for new line
                 e.preventDefault(); // Prevent default new line behavior
                 handleUserInput();
+            }
+        });
+
+        // Close text input container when clicking outside of it
+        document.addEventListener('click', (e) => {
+            // If the text input container is expanded and the click is outside it
+            if (textInputContainer.classList.contains('expanded') && !textInputContainer.contains(e.target)) {
+                // Perform the closing animation
+                textInputContainer.classList.remove('width-expanded');
+                setTimeout(() => {
+                    textInputContainer.classList.remove('expanded');
+                }, 300); // Match width transition duration
+                
+                // Clear input and update button state
+                userInput.value = '';
+                updateSendButtonState();
             }
         });
     }
