@@ -1911,10 +1911,6 @@ footer {
 
 /* Individual User Message Style */
 .user-message {
-    display: flex; /* Make it a flex container to align text and icon */
-    align-items: center; /* Vertically align text and icon */
-    justify-content: flex-end; /* Push content to the right */
-    gap: 8px; /* Space between text and icon */
     margin-bottom: 10px;
     margin-left: auto; /* Push to the right */
     align-self: flex-end; /* Align to the right within chat-messages */
@@ -1924,12 +1920,7 @@ footer {
     line-height: 1.4;
 }
 
-.user-message-icon {
-    font-size: 1.2rem; /* Adjust size to match send button icon */
-    color: #fff41f; /* Use a color that matches the send button or theme */
-    min-width: 24px; /* Ensure consistent width for alignment */
-    text-align: center;
-}
+
 #user-input {
     flex-grow: 1;
     border: none;
