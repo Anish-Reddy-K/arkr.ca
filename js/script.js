@@ -247,7 +247,9 @@ if (badgeLink) {
     badgeLink.addEventListener('click', (e) => {
         // Check if the clicked element is inside the .code-snippet
         if (e.target.closest('.code-snippet')) {
-            // If it's inside, don't prevent default, allow text selection
+            // Prevent default to stop jump to top, but allow propagation/selection
+            e.preventDefault(); 
+            e.stopPropagation();
             return;
         }
 

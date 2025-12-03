@@ -1383,6 +1383,9 @@ nav {
     padding: 1.5rem;
     color: #d1d1d1;
     line-height: 1.6;
+    cursor: text !important;
+    user-select: text !important;
+    -webkit-user-select: text !important;
 }
 
 .code-snippet pre {
