@@ -478,6 +478,7 @@ nav {
     backdrop-filter: blur(10px);
     border-radius: 50%; /* Ensure circular shape is maintained */
     overflow: hidden; /* Clip content to circle */
+    cursor: default; /* Stable cursor for back face */
 }
 
 /* Image Styles */
@@ -1535,6 +1536,7 @@ nav {
     justify-content: center;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(10px);
+    cursor: default; /* Stable cursor for back face */
 }
 
 /* Code Snippet Styling */
@@ -1545,7 +1547,7 @@ nav {
     padding: 1.5rem;
     color: #d1d1d1;
     line-height: 1.6;
-    cursor: text !important;
+    cursor: text !important; /* Explicit text cursor for selection */
     user-select: text !important;
     -webkit-user-select: text !important;
 }
