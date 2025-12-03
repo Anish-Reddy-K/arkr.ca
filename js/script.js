@@ -270,9 +270,9 @@ qsa('.nav-links a, .scroll-indicator').forEach(link => {
     });
 });
 
-// ============================
+// ============================ 
 // Back to Top Smooth Scroll
-// ============================
+// ============================ 
 const badgeLink = qs('#badge-link');
 if (badgeLink) {
     badgeLink.addEventListener('click', (e) => {
@@ -293,13 +293,13 @@ if (badgeLink) {
     });
 }
 
-// ============================
+// ============================ 
 // Spotify Live Widget
-// ============================
+// ============================ 
 const spotifyWidget = qs('#spotify-widget');
 const spotifyAlbumArt = qs('#spotify-album-art');
 const spotifyTrackInfo = qs('#spotify-track-info'); // SVG Text Path
-const spotifyStatusText = qs('#spotify-status-text'); // Status Text Path
+const spotifyStatusText = qs('#spotify-status-text'); // Status Text on front of card
 const spotifyStatusBackText = qs('#spotify-status-back-text'); // Status Text on back of card
 
 const truncateText = (text, maxLength) => {
@@ -376,3 +376,34 @@ const fetchNowPlaying = async () => {
 // Start polling
 fetchNowPlaying(); // Initial check
 setInterval(fetchNowPlaying, 10000); // Poll every 10 seconds
+
+// ============================ 
+// AI Input Handling
+// ============================ 
+const aiInput = document.querySelector('.ai-input');
+const aiSendBtn = document.querySelector('.ai-send-btn');
+
+if (aiInput && aiSendBtn) {
+    aiInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && this.value.trim() !== '') {
+            handleAiRequest(this.value.trim());
+        }
+    });
+
+    aiSendBtn.addEventListener('click', function() {
+        const query = aiInput.value.trim();
+        if (query !== '') {
+            handleAiRequest(query);
+        }
+    });
+}
+
+function handleAiRequest(query) {
+    // For now, just clear the input and show alert
+    // This will be replaced with actual LLM API calls later
+    alert('You asked: ' + query + '\n\nLLM integration coming soon!');
+    if (aiInput) {
+        aiInput.value = '';
+        aiInput.blur();
+    }
+}
