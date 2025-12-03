@@ -1854,8 +1854,8 @@ footer {
     display: flex;
     flex-direction: column; /* Stack chat messages and input vertically */
     justify-content: flex-end; /* Keep input at the bottom */
-    gap: 8px; /* Reduced gap */
-    padding: 8px; /* Even padding on all sides */
+    /* gap: 8px; */ /* Removed, now handled by input-area-wrapper */
+    padding: 8px; /* Even padding on all sides for the container */
     border-radius: 50px; /* Initially rounded for just the input */
     background: rgba(37, 37, 37, 0.8);
     backdrop-filter: blur(8px);
@@ -1865,6 +1865,14 @@ footer {
     height: 40px; /* Initial small height */
     overflow: hidden; /* Hide scrollbar initially */
     transition: all 0.3s ease; /* Smooth transition for all properties */
+}
+
+/* Wrapper for input and send button */
+#input-area-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0; /* Prevent it from shrinking */
 }
 
 #text-input-container.expanded {

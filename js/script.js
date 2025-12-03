@@ -432,6 +432,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sendButton = qs('#send-button');
     const textInputContainer = qs('#text-input-container');
     const chatMessages = qs('#chat-messages'); // Get reference to the chat messages container
+    const inputAreaWrapper = qs('#input-area-wrapper'); // Added this line
 
     // Function to handle sending user input
     const handleUserInput = async () => { // Make this function async
@@ -439,10 +440,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (inputValue === '') {
             // Input is empty, apply shake effect
-            textInputContainer.classList.add('shake');
+            inputAreaWrapper.classList.add('shake');
             // Remove shake effect after animation
             setTimeout(() => {
-                textInputContainer.classList.remove('shake');
+                inputAreaWrapper.classList.remove('shake');
             }, 300); // Matches CSS animation duration
         } else {
             // Input is not empty, proceed with sending
@@ -491,7 +492,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    if (sendButton && userInput && textInputContainer && chatMessages) {
+    if (sendButton && userInput && textInputContainer && chatMessages && inputAreaWrapper) { // Updated this line
         // Handle send button click
         sendButton.addEventListener('click', handleUserInput);
 
