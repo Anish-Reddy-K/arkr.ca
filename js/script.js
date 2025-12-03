@@ -115,6 +115,24 @@ const loadContent = async () => {
 };
 
 // ============================ 
+// Visit Counter
+// ============================ 
+const fetchVisitCount = async () => {
+    try {
+        const response = await fetch('api/visits.php');
+        const data = await response.json();
+        const visitCountEl = qs('#visit-count');
+        if (visitCountEl) {
+            visitCountEl.textContent = `"${data.visits}"`; // Add quotes to match JSON style
+        }
+    } catch (error) {
+        console.error('Error fetching visit count:', error);
+        const visitCountEl = qs('#visit-count');
+        if (visitCountEl) visitCountEl.textContent = '"Error"';
+    }
+};
+
+// ============================ 
 // Initialization
 // ============================ 
 window.addEventListener('load', () => {
@@ -126,6 +144,9 @@ window.addEventListener('load', () => {
         window.scrollTo(0, 0);
         history.replaceState(null, null, ' ');
     }
+    
+    // Fetch Visit Count
+    fetchVisitCount();
 });
 
 // ============================ 
