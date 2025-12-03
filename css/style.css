@@ -230,7 +230,7 @@ nav {
     font-family: 'Outfit', sans-serif;
     font-size: 5rem;
     margin-bottom: 2rem;
-    font-weight: 300;
+    font-weight: 600; /* Increased weight for main name */
     color: #ffffff; /* Ensure "I am Anish!" is white */
 }
 
@@ -564,6 +564,14 @@ nav {
 
 
     color: #f0f0f0; /* Brighter off-white */
+
+
+
+
+
+
+
+    font-weight: 400; /* Reduced weight */
 
 
 
@@ -1018,6 +1026,10 @@ nav {
 
 
     color: #f0f0f0;
+
+
+
+    font-weight: 400; /* Reduced weight */
 
 
 
