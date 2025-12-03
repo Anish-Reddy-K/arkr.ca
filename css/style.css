@@ -292,52 +292,37 @@ nav {
     pointer-events: none;
 }
 
-/* Ambient Marquee */
-.marquee-container {
-    position: absolute;
-    bottom: 15%; /* Moved up to clear widgets */
-    left: 0;
-    width: 100%;
-    overflow: hidden;
-    z-index: 0;
-    pointer-events: none;
-    mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
-}
-
-.marquee-content {
+/* Interest Tags (Glass Pills) */
+.interest-tags {
     display: flex;
-    gap: 2rem; /* Reduced gap since we have separators */
-    white-space: nowrap;
-    animation: marquee-scroll 60s linear infinite; /* Slower for readability */
-    width: max-content;
-    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 2.5rem;
+    max-width: 800px; /* Constrain width to keep them grouped */
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.marquee-content .interest-item {
-    font-family: 'Outfit', sans-serif;
-    font-size: 4rem; /* Slightly smaller */
-    font-weight: 800;
-    text-transform: uppercase;
-    color: transparent;
-    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.15); /* Slightly more visible stroke */
-    opacity: 0.6; 
+.interest-tag {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.9rem;
+    color: #d1d1d1;
+    padding: 0.4rem 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(4px);
+    transition: all 0.3s ease;
+    cursor: default;
 }
 
-.marquee-content .separator {
-    font-family: 'Outfit', sans-serif;
-    font-size: 2rem;
-    color: rgba(255, 255, 255, 0.1);
-    padding-bottom: 0.5rem; /* Visual alignment */
-}
-
-@keyframes marquee-scroll {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(-50%);
-    }
+.interest-tag:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .orb {
