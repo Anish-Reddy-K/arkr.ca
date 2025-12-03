@@ -1861,6 +1861,11 @@ footer {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     width: 300px;
     max-width: calc(100% - 40px);
+    transition: width 0.3s ease; /* Smooth transition for width */
+}
+
+#text-input-container:focus-within {
+    width: 450px; /* Expanded width on focus */
 }
 
 #user-input {
