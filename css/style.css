@@ -223,6 +223,12 @@ nav {
     box-shadow: 0 0 12px rgba(255, 244, 31, 0.5); /* Yellow glow with opacity */
 }
 
+.resume-btn i {
+    font-size: 12px; /* Set size to 12px for Font Awesome icon */
+    margin-left: 5px; /* Add some spacing between text and icon */
+    font-weight: 900; /* Make the icon bolder */
+}
+
 /* ============================
    5. Home Section (from old_index.html)
    ============================ */
@@ -1950,14 +1956,24 @@ footer {
     transition: all 0.2s ease;
 }
 
+#send-button i {
+    font-size: 12px; /* Set size to 12px for Font Awesome icon */
+    line-height: 1; /* Ensure vertical centering */
+    font-weight: 900; /* Make the icon bolder */
+}
+
+#send-button:disabled i {
+    opacity: 0.5; /* Apply opacity for a faded look when disabled */
+}
+
 #send-button:hover:not(:disabled) { /* Apply hover only when not disabled */
     opacity: 0.9;
     box-shadow: 0 0 10px rgba(255, 244, 31, 0.5);
 }
 
 #send-button:disabled {
-    background: rgba(255, 244, 31, 0.3); /* Pale yellow */
-    color: rgba(26, 26, 26, 0.5); /* Pale arrow color */
+    background: #555555; /* Darker gray background */
+    color: #cccccc; /* Base color for disabled arrow */
     cursor: not-allowed;
     box-shadow: none; /* No glow when disabled */
 }
