@@ -252,7 +252,7 @@ if (qs('#hello-text')) {
 
 // Smooth Scroll
 // Apply smooth scroll to nav links AND the scroll indicator
-qsa('.nav-links a, .scroll-indicator').forEach(link => {
+qsa('.nav-links a').forEach(link => {
     link.addEventListener('click', (e) => {        e.preventDefault();
         const targetId = link.getAttribute('href');
         // Only attempt scroll if it's an internal link
