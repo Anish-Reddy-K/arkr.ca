@@ -518,6 +518,8 @@ document.addEventListener('DOMContentLoaded', () => {
         userInput.addEventListener('blur', () => {
             if (!textInputContainer.classList.contains('expanded')) {
                 textInputContainer.classList.remove('width-expanded');
+                userInput.value = ''; // Clear input
+                updateSendButtonState(); // Deactivate button
             }
         });
 
@@ -544,6 +546,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Perform the closing animation immediately
                 textInputContainer.classList.remove('width-expanded');
                 textInputContainer.classList.remove('expanded');
+                
+                // Clear input and deactivate send button immediately
+                userInput.value = '';
+                updateSendButtonState();
+
+                // Also call the API to clear server-side history
+                fetch('api/clear_inputs.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('Server history cleared:', data.message);
+                    } else {
+                        console.error('Failed to clear server history:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Network error clearing server history:', error);
+                });
+            } else if (!textInputContainer.contains(e.target) && textInputContainer.classList.contains('width-expanded')) {
+                // If container is only width-expanded (not expanded in height) and clicked outside, collapse it.
+                textInputContainer.classList.remove('width-expanded');
+                userInput.value = ''; // Clear input immediately
+                updateSendButtonState(); // Deactivate button immediately
             }
         });
 

@@ -1870,7 +1870,7 @@ footer {
     max-width: calc(100% - 40px);
     max-height: 40px; /* Initial small max-height */
     overflow: hidden; /* Ensure content outside initial height is hidden */
-    transition: max-height 0.5s ease-out, width 0.3s ease-out; /* Smooth transition for max-height and width */
+    transition: max-height 0.5s ease-out, width 0.5s ease-out; /* Smooth transition for max-height and width */
 }
 
 /* Wrapper for input and send button */
