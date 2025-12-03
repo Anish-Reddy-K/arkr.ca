@@ -6,6 +6,51 @@
 const qs = selector => document.querySelector(selector);
 const qsa = selector => document.querySelectorAll(selector);
 
+// Prompts for AI input
+let prompts = [];
+let currentPromptIndex = 0;
+// const userInput = qs('#user-input'); // Moved this inside the function
+
+const loadAndRotatePrompts = async () => {
+    console.log("Loading prompts and setting placeholder..."); // Debug log
+    const userInput = qs('#user-input'); // Define userInput here
+    try {
+        const response = await fetch('data/prompts.json');
+        prompts = await response.json();
+        console.log("prompts array:", prompts); // Debug log
+
+        console.log("userInput element:", userInput); // Debug log
+        if (prompts.length > 0 && userInput) {
+            // Pick a random starting prompt
+            currentPromptIndex = Math.floor(Math.random() * prompts.length);
+            console.log("Setting placeholder to:", prompts[currentPromptIndex]); // Debug log
+            userInput.placeholder = prompts[currentPromptIndex];
+            console.log("Placeholder set to:", userInput.placeholder); // Debug log
+
+            // Start rotating prompts every 5 seconds (adjust as needed)
+            setInterval(rotatePlaceholderText, 5000);
+        }
+    } catch (error) {
+        console.error('Error loading prompts:', error);
+    }
+};
+
+const rotatePlaceholderText = () => {
+    const userInput = qs('#user-input'); // Also query here
+    if (userInput && prompts.length > 0) {
+        // Add a class to fade out the placeholder (CSS will handle the transition)
+        userInput.classList.add('placeholder-fade-out');
+
+        setTimeout(() => {
+            currentPromptIndex = (currentPromptIndex + 1) % prompts.length;
+            userInput.placeholder = prompts[currentPromptIndex];
+            // Remove the class to fade in the new placeholder
+            userInput.classList.remove('placeholder-fade-out');
+        }, 500); // Half a second for fade-out, then change text and fade-in
+    }
+};
+
+
 // ============================ 
 // Content Loading (JSON to HTML)
 // ============================ 
@@ -43,7 +88,8 @@ const loadContent = async () => {
             projContainer.innerHTML = projectsData.map(project => {
                 // SVG Icons
                 const githubIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>`;
-                const linkIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>`;
+                const linkIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>`;
+
 
                 const githubLinkHtml = project.showGithub 
                     ? `<a href="${project.githubLink}" target="_blank" aria-label="View Code">${githubIcon}</a>` 
@@ -176,6 +222,7 @@ window.addEventListener('load', () => {
     
     // Fetch Visit Count
     fetchVisitCount();
+    loadAndRotatePrompts(); // Call new function
 });
 
 // ============================ 

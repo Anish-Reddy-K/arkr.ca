@@ -1833,3 +1833,74 @@ footer {
     letter-spacing: 2px;
     font-family: monospace;
 }
+
+/* Placeholder fade effect */
+#user-input.placeholder-fade-out::placeholder {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
+#user-input::placeholder {
+    transition: opacity 0.5s ease-in; /* For fading in */
+}
+
+/* Text Input Container */
+#text-input-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Reduced gap */
+    padding: 8px; /* Even padding on all sides */
+    border-radius: 50px;
+    background: rgba(37, 37, 37, 0.8);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    width: 300px;
+    max-width: calc(100% - 40px);
+}
+
+#user-input {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    color: #ffffff;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.9rem;
+    padding: 3px 0 3px 5px; /* Added left padding */
+    outline: none;
+}
+
+#user-input::placeholder {
+    color: #a7a7a7;
+    opacity: 0.7;
+}
+
+#send-button {
+    background: #fff41f; /* Solid yellow background */
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1a1a1a; /* Arrow color is dark for contrast */
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#send-button .send-icon {
+    width: 14px; /* SVG icon size */
+    height: 14px;
+}
+
+#send-button:hover {
+    opacity: 0.9;
+    box-shadow: 0 0 10px rgba(255, 244, 31, 0.5);
+}
+
