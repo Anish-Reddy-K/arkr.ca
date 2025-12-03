@@ -280,6 +280,16 @@ nav {
     letter-spacing: 0.5px;
 }
 
+.hero-subtitle-secondary {
+    font-family: 'Manrope', sans-serif;
+    font-size: 1.5rem;
+    color: #d1d1d1;
+    font-weight: 300;
+    margin-top: 0.2rem; /* Reduced top margin for closer spacing */
+    opacity: 0.8; /* Slightly less prominent */
+    letter-spacing: 0.5px;
+}
+
 /* Hero Background Animation */
 .hero-background {
     position: absolute;
