@@ -1631,7 +1631,7 @@ nav {
 /* Trigger Flip on Hover or Class */
 #spotify-widget:hover .spotify-card-inner,
 .spotify-card-inner.flipped {
-    transform: rotateY(180deg);
+    transform: rotateY(-180deg);
 }
 
 /* Common Face Styles */
@@ -1722,7 +1722,7 @@ nav {
 
 /* Back Face (Song Info) */
 .spotify-card-back {
-    transform: rotateY(180deg);
+    transform: rotateY(-180deg);
     background: rgba(26, 26, 26, 0.95);
     border: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
