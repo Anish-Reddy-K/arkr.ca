@@ -527,8 +527,8 @@ nav {
    ============================ */
 #blog-widget {
     position: fixed;
-    bottom: 40px; /* Aligned with spotify widget */
-    left: max(20px, calc(50vw - 650px + 2rem)); /* Aligned with content */
+    bottom: 20px; /* Aligned with spotify widget */
+    right: max(20px, calc(50vw - 650px + 2rem)); /* Aligned with content */
     width: 160px; /* Balanced size */
     height: 160px;
     z-index: 990;
@@ -1604,7 +1604,7 @@ nav {
 #spotify-widget {
     position: fixed;
     bottom: 20px;
-    right: max(20px, calc(50vw - 650px + 2rem)); /* Align with content max-width (1300/2 = 650) */
+    left: max(20px, calc(50vw - 650px + 2rem)); /* Align with content max-width (1300/2 = 650) */
     width: 250px; /* Matched to badge */
     height: 250px;
     z-index: 1000;
