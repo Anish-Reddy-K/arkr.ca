@@ -1441,6 +1441,19 @@ nav {
     50% { opacity: 1; }
 }
 
+@keyframes spotify-glow-blink {
+    0%, 100% {
+        background-size: 100% 100%;
+        background-position: 0% 50%;
+        color: transparent; /* Ensure text is transparent to show gradient */
+    }
+    50% {
+        background-size: 150% 150%;
+        background-position: 100% 50%;
+        color: transparent; /* Ensure text is transparent to show gradient */
+    }
+}
+
 
 
 
@@ -1722,11 +1735,16 @@ nav {
     font-family: 'Outfit', sans-serif;
     font-size: 0.65rem;
     letter-spacing: 1px;
-    color: #a7a7a7; /* Grey, removed pink */
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent; /* Fallback for browsers that don't support text-fill-color */
     text-transform: uppercase;
     margin: 0 0 1rem 0; /* Added bottom margin to move status up */
     text-align: center;
     line-height: 1.6; /* Increased line height for 2 lines */
+    animation: spotify-glow-blink 3s infinite ease-in-out; /* Subtle, slow blink */
 }
 
 #spotify-song-title {
@@ -1758,7 +1776,7 @@ nav {
 }
 
 .spotify-learn-more:hover {
-    color: #fff41f; /* Yellow hover */
+    color: #E0E0E0; /* Almost white hover */
 }
 
 .spotify-learn-more i {
