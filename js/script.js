@@ -351,29 +351,6 @@ qsa('.nav-links a').forEach(link => {
 });
 
 // ============================
-// Back to Top Smooth Scroll
-// ============================
-const badgeLink = qs('#badge-link');
-if (badgeLink) {
-    badgeLink.addEventListener('click', (e) => {
-        // Check if the clicked element is inside the .code-snippet
-        if (e.target.closest('.code-snippet')) {
-            // Prevent default to stop jump to top, but allow propagation/selection
-            e.preventDefault(); 
-            e.stopPropagation();
-            return;
-        }
-
-        // If not inside .code-snippet, prevent default and scroll to top
-        e.preventDefault();
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-}
-
-// ============================
 // Spotify Live Widget
 // ============================
 const spotifyWidget = qs('#spotify-widget');
