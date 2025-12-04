@@ -383,30 +383,94 @@ const spotifyStatusBack = qs('#spotify-status-back');
 const spotifySongTitle = qs('#spotify-song-title');
 const spotifyArtistName = qs('#spotify-artist-name');
 
+// Store active animation timeouts to handle cleanup
+const activeAnimations = new Map();
+
+const stopAnimation = (element) => {
+    if (activeAnimations.has(element)) {
+        const data = activeAnimations.get(element);
+        clearTimeout(data.timeoutId);
+        // Clear any nested timeouts if we stored them (simplified here by just clearing the current active one)
+        // Ideally we'd need to be more aggressive, but the loop relies on the chain.
+        // Let's just ensure we reset styles.
+        element.style.transition = 'none';
+        element.style.transform = 'translateX(0)';
+        activeAnimations.delete(element);
+    }
+};
+
+const runAnimationLoop = (element, containerWidth, textWidth) => {
+    const speed = 40; // px per second
+    const buffer = 30; // Extra space to ensure it clears fully
+    const distOut = textWidth + buffer; // Scroll fully out to left
+    const distIn = containerWidth + buffer; // Start fully out to right
+    
+    const durationOut = (distOut / speed) * 1000;
+    const durationIn = (distIn / speed) * 1000;
+    const pauseStart = 2000; // 2s wait at start
+    const pauseEnd = 2000;   // 2s wait at end
+
+    const step1 = () => {
+        // 1. Reset to Start (0)
+        element.style.transition = 'none';
+        element.style.transform = 'translateX(0)';
+        
+        // 2. Wait (Start Pause)
+        const id1 = setTimeout(() => {
+            
+            // 3. Scroll Left (Out)
+            element.style.transition = `transform ${durationOut}ms linear`;
+            element.style.transform = `translateX(-${distOut}px)`;
+            
+            // 4. Wait for Scroll Out to finish
+            const id2 = setTimeout(() => {
+                
+                // 5. Teleport to Right
+                element.style.transition = 'none';
+                element.style.transform = `translateX(${distIn}px)`;
+                
+                // 6. Wait a frame for teleport to apply
+                requestAnimationFrame(() => {
+                     requestAnimationFrame(() => {
+                        
+                        // 7. Scroll Left (In) to 0
+                        element.style.transition = `transform ${durationIn}ms linear`;
+                        element.style.transform = 'translateX(0)';
+                        
+                        // 8. Wait for Scroll In to finish + End Pause
+                        const id3 = setTimeout(() => {
+                             // Loop
+                             step1();
+                        }, durationIn + pauseEnd);
+                        
+                         activeAnimations.set(element, { timeoutId: id3 });
+                     });
+                });
+            }, durationOut);
+            activeAnimations.set(element, { timeoutId: id2 });
+
+        }, pauseStart);
+        activeAnimations.set(element, { timeoutId: id1 });
+    };
+    
+    step1();
+};
+
 const checkAndAnimateMarquee = (element) => {
     if (!element || !element.parentElement) return;
 
-    // Reset to measure correctly
-    element.classList.remove('scrolling');
-    element.parentElement.classList.remove('active'); // Reset alignment
-    element.style.removeProperty('--scroll-distance');
-    element.style.removeProperty('--duration');
+    // Stop any existing animation on this element
+    stopAnimation(element);
+    element.parentElement.classList.remove('active');
+    element.classList.remove('scrolling'); // Cleanup old class if present
 
     const containerWidth = element.parentElement.clientWidth;
     const textWidth = element.scrollWidth;
 
+    // Only animate if text is wider than container
     if (textWidth > containerWidth) {
-        const distance = textWidth - containerWidth;
-        // Calculate duration: slower for longer text, min 5s
-        const duration = Math.max(5, distance * 0.15); 
-        
-        // Set variables for the animation
-        element.style.setProperty('--scroll-distance', `-${distance}px`);
-        element.style.setProperty('--duration', `${duration}s`);
-        
-        // Add class to start animation (with CSS delay)
-        element.classList.add('scrolling');
         element.parentElement.classList.add('active'); // Align left
+        runAnimationLoop(element, containerWidth, textWidth);
     }
 };
 
@@ -415,29 +479,49 @@ const updateSpotifyWidget = (song) => {
 
     if (song.isPlaying) {
         spotifyWidget.classList.remove('hidden');
-        if (spotifyAlbumArt) spotifyAlbumArt.src = song.albumArt;
+        if (spotifyAlbumArt && spotifyAlbumArt.src !== song.albumArt) {
+             spotifyAlbumArt.src = song.albumArt;
+        }
         
         // Update Info on Back Card
         if (spotifyStatusBack && song.status) {
-            if (song.status === 'LISTENING TO') {
-                spotifyStatusBack.innerHTML = "Anish is<br>currently playing";
-            } else {
-                spotifyStatusBack.innerHTML = "Anish<br>last listened to";
+            const statusText = song.status === 'LISTENING TO' ? "Anish is<br>currently playing" : "Anish<br>last listened to";
+            if (spotifyStatusBack.innerHTML !== statusText) {
+                spotifyStatusBack.innerHTML = statusText;
             }
         }
 
         if (spotifySongTitle) {
-            spotifySongTitle.textContent = song.title;
-            checkAndAnimateMarquee(spotifySongTitle);
+            // Only update and re-trigger animation if text changed
+            if (spotifySongTitle.textContent !== song.title) {
+                spotifySongTitle.textContent = song.title;
+                checkAndAnimateMarquee(spotifySongTitle);
+            } else {
+                // If text hasn't changed, do we need to check if layout changed (e.g. resize)?
+                // For now, assume no. But if the widget was hidden and shown, we might need to check.
+                // Let's check if it has animation running.
+                if (!activeAnimations.has(spotifySongTitle) && spotifySongTitle.scrollWidth > spotifySongTitle.parentElement.clientWidth) {
+                    checkAndAnimateMarquee(spotifySongTitle);
+                }
+            }
         }
 
         if (spotifyArtistName) {
-            spotifyArtistName.textContent = song.artist;
-            checkAndAnimateMarquee(spotifyArtistName);
+            if (spotifyArtistName.textContent !== song.artist) {
+                spotifyArtistName.textContent = song.artist;
+                checkAndAnimateMarquee(spotifyArtistName);
+            } else {
+                if (!activeAnimations.has(spotifyArtistName) && spotifyArtistName.scrollWidth > spotifyArtistName.parentElement.clientWidth) {
+                    checkAndAnimateMarquee(spotifyArtistName);
+                }
+            }
         }
 
     } else {
         spotifyWidget.classList.add('hidden');
+        // Stop animations when hidden
+        if (spotifySongTitle) stopAnimation(spotifySongTitle);
+        if (spotifyArtistName) stopAnimation(spotifyArtistName);
     }
 };
 

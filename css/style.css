@@ -1791,19 +1791,10 @@ nav {
     transition: transform 0.1s; /* Reset helper */
 }
 
-/* Animation Class */
+/* Animation Class - JS Controlled */
 .scrolling {
-    animation: scroll-text var(--duration, 10s) linear infinite alternate; /* Bounces back and forth */
-    animation-delay: 1s; /* Initial delay */
-}
-
-@keyframes scroll-text {
-    0%, 10% {
-        transform: translateX(0);
-    }
-    90%, 100% {
-        transform: translateX(var(--scroll-distance, -50%));
-    }
+    /* Animation handled by JS */
+    will-change: transform;
 }
 
 /* Reuse animation */
