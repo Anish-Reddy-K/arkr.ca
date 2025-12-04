@@ -73,40 +73,33 @@
     <!-- Spotify Widget -->
     <div id="spotify-widget" class="hidden">
         <div class="spotify-card-inner">
-            <!-- Front: The Music Player -->
+            <!-- Front: The Vinyl Record -->
             <div class="spotify-card-front">
-                <div class="spotify-disc-container">
-                    <img src="" alt="Album Art" id="spotify-album-art">
-                    <!-- Ring Overlay for Text Background -->
-                    <div class="spotify-ring-overlay"></div>
+                <div class="spotify-record">
+                    <div class="spotify-grooves"></div>
+                    <div class="spotify-label">
+                        <img src="" alt="Album Art" id="spotify-album-art">
+                    </div>
+                    <div class="spotify-hole"></div>
                 </div>
-                <!-- SVG Text Overlay -->
-                <svg class="spotify-text-overlay" viewBox="0 0 250 250">
-                    <defs>
-                        <!-- Top arc for "LISTENING TO" (Radius 100) -->
-                        <path id="curve-top" d="M 25,125 A 100,100 0 0,1 225,125" fill="transparent" />
-                        <!-- Bottom arc for Song Info (Radius 110) -->
-                        <path id="curve-bottom" d="M 15,125 A 110,110 0 0,0 235,125" fill="transparent" />
-                    </defs>
-                    <text width="250">
-                        <textPath xlink:href="#curve-top" startOffset="50%" text-anchor="middle" class="spotify-text-top" id="spotify-status-text" fill="url(#spotify-gradient)">
-                            LISTENING TO
-                        </textPath>
-                        <textPath xlink:href="#curve-bottom" startOffset="50%" text-anchor="middle" class="spotify-text-bottom" id="spotify-track-info">
-                            Song Name - Artist
-                        </textPath>
-                    </text>
-                </svg>
             </div>
 
-            <!-- Back: The Tech Stack -->
+            <!-- Back: Song Info -->
             <div class="spotify-card-back">
-                <div class="code-snippet">
-<pre>
-<span class="key">"source"</span>: <span class="string">"Spotify API"</span>,
-<span class="key">"proxy"</span>:  <span class="string">"PHP"</span>,
-<span class="key">"status"</span>: <span class="bool" id="spotify-status-back-text"></span>
-</pre>
+                <div class="spotify-info-container">
+                    <p id="spotify-status-back" class="spotify-status">LISTENING TO</p>
+                    
+                    <div class="marquee-container">
+                        <h3 id="spotify-song-title">Song Name</h3>
+                    </div>
+                    
+                    <div class="marquee-container">
+                        <p id="spotify-artist-name">Artist Name</p>
+                    </div>
+
+                    <a href="https://blog.arkr.ca" target="_blank" class="spotify-learn-more">
+                        Learn more <i class="fas fa-external-link-alt"></i>
+                    </a>
                 </div>
             </div>
         </div>

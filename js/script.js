@@ -378,15 +378,36 @@ if (badgeLink) {
 // ============================
 const spotifyWidget = qs('#spotify-widget');
 const spotifyAlbumArt = qs('#spotify-album-art');
-const spotifyTrackInfo = qs('#spotify-track-info'); // SVG Text Path
-const spotifyStatusText = qs('#spotify-status-text'); // Status Text Path
-const spotifyStatusBackText = qs('#spotify-status-back-text'); // Status Text on back of card
+// New Elements
+const spotifyStatusBack = qs('#spotify-status-back');
+const spotifySongTitle = qs('#spotify-song-title');
+const spotifyArtistName = qs('#spotify-artist-name');
 
-const truncateText = (text, maxLength) => {
-    if (text.length > maxLength) {
-        return text.substring(0, maxLength) + '...';
+const checkAndAnimateMarquee = (element) => {
+    if (!element || !element.parentElement) return;
+
+    // Reset to measure correctly
+    element.classList.remove('scrolling');
+    element.parentElement.classList.remove('active'); // Reset alignment
+    element.style.removeProperty('--scroll-distance');
+    element.style.removeProperty('--duration');
+
+    const containerWidth = element.parentElement.clientWidth;
+    const textWidth = element.scrollWidth;
+
+    if (textWidth > containerWidth) {
+        const distance = textWidth - containerWidth;
+        // Calculate duration: slower for longer text, min 5s
+        const duration = Math.max(5, distance * 0.15); 
+        
+        // Set variables for the animation
+        element.style.setProperty('--scroll-distance', `-${distance}px`);
+        element.style.setProperty('--duration', `${duration}s`);
+        
+        // Add class to start animation (with CSS delay)
+        element.classList.add('scrolling');
+        element.parentElement.classList.add('active'); // Align left
     }
-    return text;
 };
 
 const updateSpotifyWidget = (song) => {
@@ -396,46 +417,26 @@ const updateSpotifyWidget = (song) => {
         spotifyWidget.classList.remove('hidden');
         if (spotifyAlbumArt) spotifyAlbumArt.src = song.albumArt;
         
-        // Update Status Text on front
-        if (spotifyStatusText && song.status) {
-            spotifyStatusText.textContent = song.status;
-        }
-
-        // Update Status Text on back
-        if (spotifyStatusBackText) {
-            const truncatedTitle = truncateText(song.title, 25); // Apply truncation
+        // Update Info on Back Card
+        if (spotifyStatusBack && song.status) {
             if (song.status === 'LISTENING TO') {
-                spotifyStatusBackText.textContent = `"Anish is currently listening to ${truncatedTitle} on Spotify."`;
+                spotifyStatusBack.innerHTML = "Anish is<br>currently playing";
             } else {
-                spotifyStatusBackText.textContent = `"Anish last listened to ${truncatedTitle} on Spotify."`;
+                spotifyStatusBack.innerHTML = "Anish<br>last listened to";
             }
         }
-        
-        if (spotifyTrackInfo) {
-            let displayTitle = song.title;
-            let displayArtist = song.artist;
 
-            // Define individual max lengths. Total combined string, including "...", should fit in ~25 characters.
-            const maxTitleLength = 12; 
-            const maxArtistLength = 10;
-            const finalCombinedLength = 25; // Adjusted to be more conservative for visual fit
-
-            if (displayTitle.length > maxTitleLength) {
-                displayTitle = truncateText(displayTitle, maxTitleLength);
-            }
-            if (displayArtist.length > maxArtistLength) {
-                displayArtist = truncateText(displayArtist, maxArtistLength);
-            }
-            
-            const rawText = `${displayTitle} • ${displayArtist}`;
-            const text = truncateText(rawText, finalCombinedLength); // Final truncation for SVG path fit
-            spotifyTrackInfo.textContent = text;
+        if (spotifySongTitle) {
+            spotifySongTitle.textContent = song.title;
+            checkAndAnimateMarquee(spotifySongTitle);
         }
+
+        if (spotifyArtistName) {
+            spotifyArtistName.textContent = song.artist;
+            checkAndAnimateMarquee(spotifyArtistName);
+        }
+
     } else {
-        // Update Status Text on back to "Last Played" before hiding the widget
-        if (spotifyStatusBackText) {
-            spotifyStatusBackText.textContent = "Last Played";
-        }
         spotifyWidget.classList.add('hidden');
     }
 };
