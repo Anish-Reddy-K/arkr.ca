@@ -523,6 +523,101 @@ nav {
 }
 
 /* ============================
+   Blog Widget (Circular Text)
+   ============================ */
+#blog-widget {
+    position: fixed;
+    bottom: 40px; /* Aligned with spotify widget */
+    left: max(20px, calc(50vw - 650px + 2rem)); /* Aligned with content */
+    width: 160px; /* Balanced size */
+    height: 160px;
+    z-index: 990;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+#blog-widget:hover {
+    transform: scale(1.05);
+}
+
+.blog-widget-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Rotating Text Ring */
+.blog-widget-text {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    animation: rotateClockwise 20s linear infinite;
+    pointer-events: none; /* Let clicks pass through to link */
+}
+
+.blog-widget-text svg {
+    width: 100%;
+    height: 100%;
+    fill: rgba(255, 255, 255, 0.4); /* Subtle text color */
+    letter-spacing: 2px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: fill 0.3s ease;
+}
+
+#blog-widget:hover .blog-widget-text svg {
+    fill: #ffffff; /* Brighten text on hover */
+}
+
+/* Center Button */
+.blog-widget-center {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: rgba(26, 26, 26, 0.6);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+#blog-widget:hover .blog-widget-center {
+    background: var(--primary-gradient);
+    border-color: transparent;
+    transform: rotate(-45deg); /* Rotate arrow slightly for effect */
+    box-shadow: 0 0 20px rgba(249, 96, 235, 0.4);
+}
+
+.blog-widget-center i {
+    transform: rotate(-45deg); /* Start arrow pointing diagonal up-right */
+    transition: transform 0.3s ease;
+}
+
+#blog-widget:hover .blog-widget-center i {
+    transform: rotate(0deg); /* Straighten arrow on hover */
+    color: #1a1a1a; /* Dark icon on bright background */
+}
+
+/* Reuse rotate animation if not already defined (it is in spotify section, but safe to redefine or ensure order) */
+@keyframes rotateClockwise {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ============================
 
    6. Experience Section
 
