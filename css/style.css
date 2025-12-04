@@ -546,9 +546,7 @@ nav {
 }
 
 /* Trigger Flip on Hover (Opposite Direction) */
-#badge-link:hover .badge-card-inner {
-    transform: rotateY(-180deg);
-}
+/* No hover flip animation */
 
 /* Common Face Styles */
 .badge-card-front, .badge-card-back {
