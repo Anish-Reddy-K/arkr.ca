@@ -6,7 +6,7 @@
 error_reporting(0); // Suppress warnings
 
 // Load credentials
-$config = require __DIR__ . '/config.php';
+$config = require __DIR__ . '/spotify_config.php';
 
 $clientId = $config['clientId'];
 $clientSecret = $config['clientSecret'];
