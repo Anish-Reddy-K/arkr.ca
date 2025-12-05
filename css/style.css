@@ -1,12 +1,15 @@
 :root {
     --primary-gradient: linear-gradient(90deg, #f960eb, #ff854d, #fff41f);
     --primary-pink: #f960eb;
+    --primary-orange: #ff854d;
+    --primary-yellow: #fff41f;
 }
+
 body {
     background-color: #1a1a1a;
     margin: 0;
     padding: 0;
-    scroll-behavior: smooth; /* For smooth scrolling to top */
+    scroll-behavior: smooth;
     font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     color: #ffffff;
     line-height: 1.6;
@@ -14,68 +17,52 @@ body {
     overflow-x: hidden;
 }
 
-/* ============================
-    1. CSS Reset & Base Styles
-    ============================ */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Interaction elements cursor override */
-a, button, .resume-btn, .nav-links a, 
-.social-sidebar a, .social-sidebar a svg,
-.scroll-indicator, .scroll-indicator *, .scroll-circle,
-.toggle-switch, .toggle-slider, .ai-send-btn {
-    cursor: pointer !important;
-}
-
-/* Prevent dragging */
-a, button {
-    -webkit-user-drag: none;
-    -khtml-user-drag: none;
-    -moz-user-drag: none;
-    -o-user-drag: none;
-}
 
 /* ============================
-   2. Layout & Common Elements
+   1. Layout & Common Elements
    ============================ */
-
 main {
     max-width: 1300px;
     margin: 0 auto;
     padding: 0 2rem;
     position: relative;
 }
+
 section {
     min-height: 100vh;
     padding: 8rem 2rem;
 }
+
 section h1 {
     margin-bottom: 2rem;
     font-size: 2.5rem;
-    color: #ffffff; /* Make h1 white */
+    color: #ffffff;
 }
+
 section h2 {
-    margin-bottom: 4rem; /* Increased vertical gap */
+    margin-bottom: 4rem;
     font-size: 2.5rem;
-    font-family: 'Outfit', sans-serif; /* Apply Outfit */
-    display: inline-block; /* Shrink to fit text width */
-    /* Apply gradient */
+    font-family: 'Outfit', sans-serif;
+    display: inline-block;
+    /* Gradient Text */
     background: var(--primary-gradient);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
-    background-size: 100%; /* Gradient stretches across text width */
+    background-size: 100%;
 }
 
-/* ============================
-    3. Header & Navigation
-    ============================ */
 
+/* ============================
+    2. Header & Navigation
+    ============================ */
 header {
     position: fixed;
     width: auto;
@@ -92,7 +79,6 @@ header {
     align-items: center;
     justify-content: space-between;
     max-width: 100%;
-    /* Background moved to ::after pseudo-element */
     border-radius: 16px;
     padding: 0.8rem 0.8rem;
     transition: all 0.3s ease;
@@ -110,7 +96,7 @@ header {
     bottom: 0;
     border-radius: 16px;
     background: var(--primary-gradient);
-    z-index: -2; /* Behind background */
+    z-index: -2;
     filter: blur(20px);
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -145,8 +131,8 @@ nav {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    position: relative; /* Needed for z-index to work */
-    z-index: 2; /* Ensure nav content is above the pseudo-element glow */
+    position: relative;
+    z-index: 2;
 }
 
 .nav-links {
@@ -200,9 +186,10 @@ nav {
     color: #fff41f;
 }
 
+/* Resume Button */
 .resume-btn {
-    background-color: #fff41f; /* Solid yellow fill */
-    color: #1a1a1a; /* Dark text for contrast */
+    background-color: #fff41f;
+    color: #1a1a1a;
     padding: 0.4rem 0.6rem;
     border-radius: 10px;
     text-decoration: none;
@@ -210,58 +197,55 @@ nav {
     transition: all 0.2s ease;
     margin-left: 2rem;
     margin-right: 0;
-    border: none; /* No border needed with full background */
+    border: none;
     white-space: nowrap;
 }
 .resume-btn:hover {
-    box-shadow: 0 0 12px rgba(255, 244, 31, 0.5); /* Yellow glow with opacity */
+    box-shadow: 0 0 12px rgba(255, 244, 31, 0.5);
 }
 
 .resume-btn i {
-    font-size: 12px; /* Set size to 12px for Font Awesome icon */
-    margin-left: 5px; /* Add some spacing between text and icon */
-    font-weight: 900; /* Make the icon bolder */
+    font-size: 12px;
+    margin-left: 5px;
+    font-weight: 900;
 }
 
-/* ============================
-   5. Home Section
-   ============================ */
 
+/* ============================
+   3. Home Section
+   ============================ */
 #home {
     text-align: center;
-    padding-top: 15rem; /* Moved up slightly */
+    padding-top: 15rem;
     padding-bottom: 0;
-    /* min-height handled by content flow now */
 }
 
 #home h1 {
     font-family: 'Outfit', sans-serif;
-    font-size: 6rem; /* Large, impactful size for the name */
+    font-size: 6rem;
     margin-bottom: 1.5rem;
-    font-weight: 300; /* Keep it thin/elegant */
+    font-weight: 300;
     color: #ffffff;
-    line-height: 1; /* Tight line height */
-    letter-spacing: -2px; /* Modern, sexy tight spacing */
+    line-height: 1;
+    letter-spacing: -2px;
 }
 
 #hello-text {
     font-family: 'Radley', serif;
     font-style: italic;
-    font-size: 3.5rem; /* Increased size */
-    display: block; /* Forces new line */
-    margin-bottom: 0.2rem; /* Adjusted spacing */
+    font-size: 3.5rem;
+    display: block;
+    margin-bottom: 0.2rem;
     opacity: 1;
     transition: opacity 0.8s ease-in-out;
-    /* Gradient Text - Ensuring visibility */
     background: var(--primary-gradient);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    color: transparent; /* Fallback/Ensure transparent for fill */
-    width: fit-content; /* Ensure gradient only spans text width */
-    margin-left: auto; /* Center alignment if needed, or inherit */
+    color: transparent;
+    width: fit-content; 
+    margin-left: auto;
     margin-right: auto;
-    /* Fix for clipped ascenders/descenders */
     line-height: 1.4;
     padding-top: 0.2rem;
     padding-bottom: 0.2rem;
@@ -282,32 +266,9 @@ nav {
 }
 
 .hero-subtitle .hero-subtitle-separator {
-    color: rgba(255, 255, 255, 0.4); /* Subtle separator color */
-    margin: 0 0.8rem; /* Increased horizontal gap */
+    color: rgba(255, 255, 255, 0.4);
+    margin: 0 0.8rem;
     font-weight: 400;
-}
-
-/* Scroll Indicator */
-.scroll-indicator {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    color: rgba(255, 255, 255, 0.3);
-    transition: color 0.3s ease, opacity 0.3s ease;
-    opacity: 0.7;
-    z-index: 10; /* Ensure clickable */
-}
-
-.scroll-indicator:hover {
-    color: #ffffff;
-    opacity: 1;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Slight glow light up */
-}
-
-.scroll-indicator svg {
-    width: 32px;
-    height: 32px;
 }
 
 /* Hero Background Animation */
@@ -320,108 +281,6 @@ nav {
     overflow: hidden;
     z-index: 0;
     pointer-events: none;
-}
-
-/* Sidebar Interests (Fixed Metadata) */
-.sidebar-interests {
-    position: fixed;
-    bottom: 300px; /* Positioned above the badge */
-    left: 20px;
-    z-index: 900; /* Below nav/widgets but visible */
-    text-align: left;
-    pointer-events: none; /* Don't block clicks */
-    display: none; /* Hidden on mobile by default via media query if needed, but keeping simple for now */
-}
-
-@media (min-width: 1000px) {
-    .sidebar-interests {
-        display: block;
-    }
-}
-
-.sidebar-interests h4 {
-    font-family: 'Manrope', sans-serif;
-    font-size: 0.7rem;
-    color: #555;
-    letter-spacing: 2px;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-}
-
-.sidebar-interests ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.sidebar-interests li {
-    font-family: 'Manrope', sans-serif;
-    font-size: 0.85rem;
-    color: #888;
-    margin-bottom: 0.4rem;
-    transition: color 0.3s ease;
-}
-
-/* Footer Marquee */
-.footer-marquee-container {
-    width: 100%;
-    overflow: hidden;
-    padding: 1rem 0; /* Adjusted padding for better centering */
-    position: relative;
-    background: #1a1a1a; /* Match body bg */
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Line directly below the text */
-    margin-bottom: 0px; /* Ensure no gap to footer */
-}
-
-.footer-marquee-content {
-    display: flex;
-    gap: 4rem;
-    width: max-content;
-    animation: footer-marquee 50s linear infinite;
-}
-
-.footer-marquee-content:hover {
-    animation-play-state: paused; /* Pause on hover for readability */
-}
-
-.footer-marquee-item {
-    font-family: 'Outfit', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.2); /* Very subtle by default */
-    transition: all 0.3s ease;
-    cursor: default;
-    white-space: nowrap;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    line-height: 1; /* Ensure tight vertical spacing */
-}
-
-.footer-marquee-item:hover {
-    color: transparent;
-    background: var(--primary-gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    opacity: 1;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-}
-
-.footer-marquee-separator {
-    color: rgba(255, 255, 255, 0.1);
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-}
-
-@keyframes footer-marquee {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(-50%);
-    }
 }
 
 .orb {
@@ -446,7 +305,7 @@ nav {
     right: 20%;
     width: 300px;
     height: 300px;
-    background: #ff854d; /* Orange */
+    background: var(--primary-orange);
     animation-duration: 30s;
     animation-delay: -5s;
 }
@@ -457,7 +316,7 @@ nav {
     transform: translate(-50%, -50%);
     width: 200px;
     height: 200px;
-    background: #fff41f; /* Yellow */
+    background: var(--primary-yellow);
     animation-duration: 20s;
     animation-delay: -10s;
 }
@@ -477,52 +336,15 @@ nav {
     }
 }
 
-.location {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    font-size: 1rem;
-    color: #a7a7a7;
-    margin-bottom: 3rem;
-}
-
-.ai-input-container {
-    position: fixed;
-    left: 50%;
-    bottom: 2rem;
-    transform: translateX(-50%);
-    z-index: 90;
-    width: 100%;
-    max-width: 600px;
-    padding: 0 1rem;
-}
-
-.ai-input-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    background: rgba(37, 37, 37, 0.6);
-    backdrop-filter: blur(8px);
-    border-radius: 30px;
-    padding: 0;
-    border: 1px solid rgba(249, 96, 235, 0.1); /* Changed color from #cea3ff to pink */
-    transition: all 0.3s ease;
-    overflow: hidden;
-    width: 250px;
-    margin: 0 auto;
-    height: 40px;
-}
 
 /* ============================
-   Blog Widget (Circular Text)
+   4. Blog Widget (Circular Text)
    ============================ */
-
 #blog-widget {
     position: fixed;
-    bottom: 20px; /* Aligned with spotify widget */
-    right: max(20px, calc(50vw - 650px + 2rem)); /* Aligned with content */
-    width: 250px; /* Matched to spotify widget */
+    bottom: 20px;
+    right: max(20px, calc(50vw - 650px + 2rem));
+    width: 250px;
     height: 250px;
     z-index: 990;
     display: flex;
@@ -545,19 +367,18 @@ nav {
     justify-content: center;
 }
 
-/* Rotating Text Ring */
 .blog-widget-text {
     position: absolute;
     width: 100%;
     height: 100%;
     animation: rotateClockwise 60s linear infinite;
-    pointer-events: none; /* Let clicks pass through to link */
+    pointer-events: none;
 }
 
 .blog-widget-text svg {
     width: 100%;
     height: 100%;
-    fill: rgba(255, 255, 255, 0.4); /* Subtle text color */
+    fill: rgba(255, 255, 255, 0.4);
     letter-spacing: 1.5px;
     font-family: 'Outfit', sans-serif;
     font-weight: 500;
@@ -566,10 +387,9 @@ nav {
 }
 
 #blog-widget:hover .blog-widget-text svg {
-    fill: #ffffff; /* Brighten text on hover */
+    fill: #ffffff;
 }
 
-/* Center Button */
 .blog-widget-center {
     position: absolute;
     width: 48px;
@@ -587,16 +407,247 @@ nav {
 }
 
 .blog-widget-center i {
-    color: rgba(255, 255, 255, 0.4); /* Match text color */
-    transform: rotate(-45deg); /* Point northeast */
+    color: rgba(255, 255, 255, 0.4);
+    transform: rotate(-45deg);
     transition: color 0.3s ease;
 }
 
 #blog-widget:hover .blog-widget-center i {
-    color: #ffffff; /* Brighten on hover like text */
+    color: #ffffff;
 }
 
-/* Reuse rotate animation if not already defined (it is in spotify section, but safe to redefine or ensure order) */
+@keyframes rotateClockwise {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+
+/* ============================
+   5. Spotify Widget
+   ============================ */
+#spotify-widget {
+    position: fixed;
+    bottom: 20px;
+    left: max(20px, calc(50vw - 650px + 2rem));
+    width: 250px;
+    height: 250px;
+    z-index: 1000;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+#spotify-widget.hidden {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+    pointer-events: none;
+}
+
+.spotify-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+}
+
+#spotify-widget:hover .spotify-card-inner,
+.spotify-card-inner.flipped {
+    transform: rotateY(-180deg);
+}
+
+.spotify-card-front, .spotify-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.spotify-card-front {
+    z-index: 2;
+    background: transparent;
+}
+
+.spotify-record {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #2a2a2a;
+    box-shadow: 0px 8px 20px rgba(0,0,0,0.6);
+    animation: rotateClockwise 60s linear infinite;
+    border: 1px solid #1a1a1a;
+}
+
+.spotify-grooves {
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    width: 96%;
+    height: 96%;
+    border-radius: 50%;
+    background: repeating-radial-gradient(
+        circle at center,
+        #1a1a1a 0,
+        #1a1a1a 1.5px,
+        #0a0a0a 2px,
+        #1a1a1a 2.5px,
+        #222222 3px,
+        #1a1a1a 3.5px,
+        #0a0a0a 4px,
+        #1a1a1a 4.5px
+    );
+    z-index: 1;
+    opacity: 1;
+}
+
+.spotify-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 60%;
+    border-radius: 50%;
+    overflow: hidden;
+    z-index: 2;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+#spotify-album-art {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.spotify-hole {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 16px;
+    height: 16px;
+    background: #0a0a0a;
+    border-radius: 50%;
+    z-index: 3;
+    border: 1px solid #333;
+    box-shadow: inset 1px 1px 2px rgba(0,0,0,1), 0 0 0 2px #121212;
+}
+
+/* Back Face (Song Info) */
+.spotify-card-back {
+    transform: rotateY(-180deg);
+    background: rgba(26, 26, 26, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    cursor: default;
+    padding: 2rem;
+}
+
+.spotify-info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+}
+
+.spotify-status {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    text-transform: uppercase;
+    margin: 0 0 1rem 0;
+    text-align: center;
+    line-height: 1.6;
+    animation: spotify-glow-blink 3s infinite ease-in-out;
+}
+
+#spotify-song-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.2;
+}
+
+#spotify-artist-name {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.95rem;
+    color: #a7a7a7;
+    margin: 0;
+}
+
+.spotify-learn-more {
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.7rem;
+    color: #888;
+    text-decoration: underline;
+    margin-top: 2rem;
+    transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.spotify-learn-more:hover {
+    color: #E0E0E0;
+}
+
+.spotify-learn-more i {
+    font-size: 0.6rem;
+}
+
+/* Marquee / Scrolling Text */
+.marquee-container {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    display: flex;
+    justify-content: center; /* Default center */
+    mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.marquee-container.active {
+    justify-content: flex-start; /* Align left when scrolling to see start */
+    mask-image: linear-gradient(to right, black 80%, transparent 100%); /* Only fade end when scrolling starts */
+    -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
+}
+
+/* The elements inside (h3, p) will be targeted */
+.marquee-container h3,
+.marquee-container p {
+    display: inline-block;
+    position: relative;
+    transition: transform 0.1s; /* Reset helper */
+}
+
+/* Animation Class - JS Controlled */
+.scrolling {
+    /* Animation handled by JS */
+    will-change: transform;
+}
+
+/* Reuse animation */
 @keyframes rotateClockwise {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
@@ -1019,255 +1070,81 @@ nav {
 .chip.orange::before { background-color: #ff854d; box-shadow: 0 0 8px rgba(255, 133, 77, 0.4); } /* Changed from blue */
 .chip.pink::before { background-color: #f960eb; box-shadow: 0 0 8px rgba(249, 96, 235, 0.4); }
 
-/* ============================
-   10. Spotify Widget
-   ============================ */
 
-#spotify-widget {
-    position: fixed;
-    bottom: 20px;
-    left: max(20px, calc(50vw - 650px + 2rem)); /* Align with content max-width (1300/2 = 650) */
-    width: 250px; /* Matched to badge */
-    height: 250px;
-    z-index: 1000;
-    perspective: 1000px; /* Enable 3D space */
-    cursor: pointer; /* Indicate interactivity */
-}
-
-#spotify-widget.hidden {
-    opacity: 0;
-    transform: translateY(20px) scale(0.8);
-    pointer-events: none;
-}
-
-/* The Flip Container */
-.spotify-card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy flip */
-    transform-style: preserve-3d;
-}
-
-/* Trigger Flip on Hover or Class */
-#spotify-widget:hover .spotify-card-inner,
-.spotify-card-inner.flipped {
-    transform: rotateY(-180deg);
-}
-
-/* Common Face Styles */
-.spotify-card-front, .spotify-card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden; /* Safari */
-    backface-visibility: hidden;
-    border-radius: 50%;
-    overflow: hidden;
-}
-
-/* Front Face (Vinyl Record) */
-.spotify-card-front {
-    z-index: 2;
-    background: transparent; /* Transparent container */
-}
-
-.spotify-record {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: #121212; /* Dark Vinyl Color - kept original dark background */
-    box-shadow: 0px 8px 20px rgba(0,0,0,0.6); /* Added shadow to the record */
-    animation: rotateClockwise 60s linear infinite; /* Slower rotation matched to badge */
-    border: 1px solid #1a1a1a; /* Thin black border */
-}
-
-.spotify-grooves {
-    position: absolute;
-    top: 2%;
-    left: 2%;
-    width: 96%;
-    height: 96%;
-    border-radius: 50%;
-    background: repeating-radial-gradient(
-        circle at center,
-        #1a1a1a 0,          /* Base vinyl color (Darker) */
-        #1a1a1a 1.5px,      /* Base color band */
-        #0a0a0a 2px,        /* Darker groove (Darker) */
-        #1a1a1a 2.5px,      /* Base color band */
-        #222222 3px,        /* Lighter groove (Darker) */
-        #1a1a1a 3.5px,      /* Base color band */
-        #0a0a0a 4px,        /* Darker groove (Darker) */
-        #1a1a1a 4.5px       /* End of pattern */
-    );
-    z-index: 1;
-    opacity: 1; /* Make grooves fully visible */
-    /* Removed box-shadow: inset 0 0 20px rgba(0,0,0,0.8); */
-}
-
-.spotify-label {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 60%; /* Increased size */
-    height: 60%;
-    border-radius: 50%;
-    overflow: hidden;
-    z-index: 2;
-    border: 1px solid rgba(255,255,255,0.1); /* Subtle edge for label */
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-}
-
-#spotify-album-art {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.spotify-hole {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 16px;
-    height: 16px;
-    background: #0a0a0a; /* Darker inner hole */
-    border-radius: 50%;
-    z-index: 3;
-    border: 1px solid #333; /* Edge of the hole */
-    box-shadow: inset 1px 1px 2px rgba(0,0,0,1), 0 0 0 2px #121212; /* Depth + Rim */
-}
-
-/* Back Face (Song Info) */
-.spotify-card-back {
-    transform: rotateY(-180deg);
-    background: rgba(26, 26, 26, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
-    cursor: default;
-    padding: 2rem;
-}
-
-.spotify-info-container {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-    align-items: center;
-    justify-content: center;
-    width: 100%; /* Ensure full width for marquees to measure against */
-    overflow: hidden; /* Clip overflow */
-}
-
-.spotify-status {
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.65rem;
-    letter-spacing: 1px;
-    background: var(--primary-gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent; /* Fallback for browsers that don't support text-fill-color */
-    text-transform: uppercase;
-    margin: 0 0 1rem 0; /* Added bottom margin to move status up */
-    text-align: center;
-    line-height: 1.6; /* Increased line height for 2 lines */
-    animation: spotify-glow-blink 3s infinite ease-in-out; /* Subtle, slow blink */
-}
-
-#spotify-song-title {
-    font-family: 'Outfit', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #ffffff;
-    margin: 0; /* Removed top margin since status has bottom margin */
-    line-height: 1.2;
-}
-
-#spotify-artist-name {
-    font-family: 'Manrope', sans-serif;
-    font-size: 0.95rem;
-    color: #a7a7a7;
-    margin: 0;
-}
-
-.spotify-learn-more {
-    font-family: 'Manrope', sans-serif;
-    font-size: 0.7rem; /* Smaller font */
-    color: #888;
-    text-decoration: underline; /* Permanent underline */
-    margin-top: 2rem; /* Increased margin to push it further down */
-    transition: color 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.spotify-learn-more:hover {
-    color: #E0E0E0; /* Almost white hover */
-}
-
-.spotify-learn-more i {
-    font-size: 0.6rem; /* Smaller icon */
-}
-
-/* Marquee / Scrolling Text */
-.marquee-container {
-    width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    position: relative;
-    display: flex;
-    justify-content: center; /* Default center */
-    mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-}
-
-.marquee-container.active {
-    justify-content: flex-start; /* Align left when scrolling to see start */
-    mask-image: linear-gradient(to right, black 80%, transparent 100%); /* Only fade end when scrolling starts */
-    -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
-}
-
-/* The elements inside (h3, p) will be targeted */
-.marquee-container h3,
-.marquee-container p {
-    display: inline-block;
-    position: relative;
-    transition: transform 0.1s; /* Reset helper */
-}
-
-/* Animation Class - JS Controlled */
-.scrolling {
-    /* Animation handled by JS */
-    will-change: transform;
-}
-
-/* Reuse animation */
-@keyframes rotateClockwise {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
 
 /* ============================
-   11. Footer
-   ============================ */
+    X. Footer Marquee Container
+    ============================ */
+    .footer-marquee-container {
+        width: 100%;
+        overflow: hidden;
+        padding: 1rem 0;
+        position: relative;
+        background: #1a1a1a;
+        mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 0px;
+    }
+    
+    .footer-marquee-content {
+        display: flex;
+        gap: 4rem;
+        width: max-content;
+        animation: footer-marquee 50s linear infinite;
+    }
+    
+    .footer-marquee-content:hover {
+        animation-play-state: paused;
+    }
+    
+    .footer-marquee-item {
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
+        cursor: default;
+        white-space: nowrap;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        line-height: 1;
+    }
+    
+    .footer-marquee-item:hover {
+        color: transparent;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        opacity: 1;
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    }
+    
+    .footer-marquee-separator {
+        color: rgba(255, 255, 255, 0.1);
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+    }
+    
+    @keyframes footer-marquee {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(-50%);
+        }
+    }
 
+
+/* ============================
+   X.Footer
+   ============================ */
 footer {
-    /* border-top removed */
-    padding: 5.5rem 0; /* Precision adjustment: Divider ~20px above widgets */
+    padding: 5.5rem 0;
     text-align: center;
-    margin-top: 0; /* Set to 0 to remove gap */
-    background-color: #1a1a1a;
+    margin-top: 0;
     position: relative;
-    /* z-index removed */
 }
 
 .footer-container {
@@ -1287,18 +1164,17 @@ footer {
 
 .footer-socials a {
     color: #a7a7a7;
-    transition: color 0.3s ease, text-shadow 0.3s ease; /* Changed transition properties */
+    transition: color 0.3s ease, text-shadow 0.3s ease; 
     display: flex;
 }
 
 .footer-socials a:hover {
     color: #ffffff;
-    /* Removed transform: translateY */
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Subtle glow effect */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .footer-socials svg {
-    width: 32px; /* Increased icon size */
+    width: 32px;
     height: 32px;
 }
 
@@ -1306,17 +1182,27 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.8rem; /* Increased gap */
+    gap: 0.8rem;
     font-family: 'Manrope', sans-serif;
-    font-size: 1.1rem; /* Increased font size */
+    font-size: 1.1rem;
     color: #666;
+}
+
+.location {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    color: #a7a7a7;
+    margin-bottom: 3rem;
 }
 
 .location-easter-egg {
     position: relative;
     cursor: default;
     height: 1.5em;
-    min-width: 220px; /* Ensure container has width */
+    min-width: 220px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1326,10 +1212,10 @@ footer {
 .location-easter-egg span {
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
     display: block;
-    position: absolute; /* Stack them on top of each other */
+    position: absolute;
     width: 100%;
     text-align: center;
-    left: 0; /* Ensure left alignment relative to container */
+    left: 0;
 }
 
 .location-easter-egg .coords {
@@ -1338,7 +1224,7 @@ footer {
 }
 
 .location-easter-egg .place {
-    transform: translateY(100%); /* Start below */
+    transform: translateY(100%);
     opacity: 0;
     color: #ffffff;
     font-weight: 500;
@@ -1349,35 +1235,53 @@ footer {
 }
 
 .location-easter-egg:hover .coords {
-    transform: translateY(-100%); /* Slide up and out */
+    transform: translateY(-100%);
     opacity: 0;
 }
 
 .location-easter-egg:hover .place {
-    transform: translateY(0); /* Slide up and in */
+    transform: translateY(0);
     opacity: 1;
 }
 
-.est {
-    font-size: 0.9rem; /* Increased size */
+.copyright {
+    font-size: 0.9rem;
     color: #444;
     letter-spacing: 2px;
-    font-family: monospace;
 }
 
-/* Placeholder fade effect */
-#user-input.placeholder-fade-out::placeholder {
-    opacity: 0;
-    transition: opacity 0.5s ease-out;
-}
-
-#user-input::placeholder {
-    transition: opacity 0.5s ease-in; /* For fading in */
-}
 
 /* ============================
-    12. AI Input
+    X. AI Input
    ============================ */
+
+   .ai-input-container {
+    position: fixed;
+    left: 50%;
+    bottom: 2rem;
+    transform: translateX(-50%);
+    z-index: 90;
+    width: 100%;
+    max-width: 600px;
+    padding: 0 1rem;
+}
+
+.ai-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: rgba(37, 37, 37, 0.6);
+    backdrop-filter: blur(8px);
+    border-radius: 30px;
+    padding: 0;
+    border: 1px solid rgba(249, 96, 235, 0.1); /* Changed color from #cea3ff to pink */
+    transition: all 0.3s ease;
+    overflow: hidden;
+    width: 250px;
+    margin: 0 auto;
+    height: 40px;
+}
+
 /* Text Input Container */
 #text-input-container {
     position: fixed;
@@ -1399,6 +1303,16 @@ footer {
     max-height: 40px; /* Initial small max-height */
     overflow: hidden; /* Ensure content outside initial height is hidden */
     transition: max-height 0.5s ease-out, width 0.5s ease-out; /* Smooth transition for max-height and width */
+}
+
+/* Placeholder fade effect */
+#user-input.placeholder-fade-out::placeholder {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
+#user-input::placeholder {
+    transition: opacity 0.5s ease-in;
 }
 
 /* Wrapper for input and send button */
