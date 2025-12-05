@@ -130,5 +130,49 @@
             "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
             "ip_hash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3"
         }
+    },
+    {
+        "id": "chat_693351901f110",
+        "timestamp": "2025-12-05T21:41:36+00:00",
+        "question": "hi",
+        "response": "Hello! How can I assist you today?",
+        "status": "success",
+        "metadata": {
+            "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+            "ip_hash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3"
+        }
+    },
+    {
+        "id": "chat_69335194df372",
+        "timestamp": "2025-12-05T21:41:40+00:00",
+        "question": "hio",
+        "response": "I'm a large language model, and I don't have any information about you. I'm a neutral AI assistant, and I don't have any context about a \"hio\" user. If you'd like to share more about yourself, I'd be happy to help!",
+        "status": "success",
+        "metadata": {
+            "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+            "ip_hash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3"
+        }
+    },
+    {
+        "id": "chat_693351992c25a",
+        "timestamp": "2025-12-05T21:41:45+00:00",
+        "question": "hi",
+        "response": "Hello! How can I assist you today?",
+        "status": "success",
+        "metadata": {
+            "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+            "ip_hash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3"
+        }
+    },
+    {
+        "id": "chat_6933525a8614d",
+        "timestamp": "2025-12-05T21:44:58+00:00",
+        "question": "hi",
+        "response": "How's it going? It's great to have you here. How can I assist you today?",
+        "status": "success",
+        "metadata": {
+            "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+            "ip_hash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3"
+        }
     }
 ]

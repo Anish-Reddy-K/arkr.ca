@@ -1302,6 +1302,12 @@ footer {
     background: linear-gradient(90deg, #fff41f, #22c55e);
     transition: width 0.3s ease;
     border-radius: 0 2px 2px 0;
+    opacity: 0;
+}
+
+/* Show loading bar when downloading */
+#ai-chat-container.downloading #ai-info-line::after {
+    opacity: 1;
 }
 
 /* Status Dot */
@@ -1381,7 +1387,7 @@ footer {
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    padding: 12px 14px;
+    padding: 12px 14px 66px 14px;
     gap: 10px;
     min-height: 0;
     opacity: 1;
@@ -1475,9 +1481,18 @@ footer {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 12px 14px;
+    padding: 12px;
     flex-shrink: 0;
     border-top: 1px solid rgba(255, 255, 255, 0.04);
+    height: 54px;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    background: rgba(28, 28, 28, 0.95);
+    z-index: 10;
 }
 
 #ai-user-input {
@@ -1490,6 +1505,10 @@ footer {
     padding: 4px 0;
     outline: none;
     min-width: 0;
+    line-height: 1.5;
+    height: 22px;
+    box-sizing: content-box;
+    vertical-align: middle;
 }
 
 #ai-user-input::placeholder {
@@ -1503,12 +1522,14 @@ footer {
     width: 30px;
     height: 30px;
     padding: 0;
+    margin: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #1a1a1a;
     cursor: pointer;
     flex-shrink: 0;
+    flex-grow: 0;
     transition: 
         transform 0.15s ease,
         box-shadow 0.15s ease,
@@ -1519,6 +1540,10 @@ footer {
     font-size: 11px;
     line-height: 1;
     font-weight: 900;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0;
+    padding: 0;
 }
 
 #ai-send-button:hover:not(:disabled) {

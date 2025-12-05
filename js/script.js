@@ -601,6 +601,7 @@ const AIChat = {
         container: null,
         infoLine: null,
         statusDot: null,
+        statusText: null,
         chatMessages: null,
         inputWrapper: null,
         userInput: null,
@@ -675,7 +676,7 @@ const AIChat = {
      */
     setEngineStatus(status) {
         this.engineStatus = status;
-        const { statusDot } = this.elements;
+        const { statusDot, statusText, container } = this.elements;
 
         if (statusDot) {
             // Remove all status classes
@@ -688,6 +689,26 @@ const AIChat = {
                 statusDot.classList.add('loading');
             } else if (status === 'error' || status === 'unsupported') {
                 statusDot.classList.add('error');
+            }
+        }
+
+        // Update status text and container class
+        if (statusText) {
+            if (status === 'loading') {
+                statusText.textContent = 'Downloading...';
+            } else if (status === 'ready') {
+                statusText.textContent = 'Local LLM';
+            } else {
+                statusText.textContent = 'Local LLM';
+            }
+        }
+
+        // Add/remove downloading class for loading bar visibility
+        if (container) {
+            if (status === 'loading') {
+                container.classList.add('downloading');
+            } else {
+                container.classList.remove('downloading');
             }
         }
     },
@@ -790,9 +811,8 @@ const AIChat = {
         const PAUSE_START = 400;    // pause before starting new word
 
         const type = () => {
-            // Stop if input has focus or user is typing
-            if (document.activeElement === input) {
-                this.typewriterTimeout = setTimeout(type, 500);
+            // Only stop typewriter in chat mode (after first message)
+            if (this.uiState === 'chat') {
                 return;
             }
 
@@ -879,6 +899,11 @@ const AIChat = {
             case 'chat':
                 container.classList.add('chat-open');
                 this.uiState = 'chat';
+                // Stop typewriter and set static placeholder
+                this.stopTypewriter();
+                if (userInput) {
+                    userInput.placeholder = 'Type a message...';
+                }
                 setTimeout(() => this.scrollToBottom(), 50);
                 break;
                 
@@ -896,6 +921,11 @@ const AIChat = {
                     
                     // Reset conversation
                     WebLLMEngine.reset();
+                    
+                    // Restart typewriter when returning to collapsed
+                    if (this.prompts.length > 0) {
+                        this.startTypewriter();
+                    }
                 }, 400);
                 break;
                 
@@ -904,6 +934,10 @@ const AIChat = {
                 this.uiState = 'collapsed';
                 userInput.value = '';
                 this.updateSendButtonState();
+                // Restart typewriter when collapsing
+                if (this.prompts.length > 0) {
+                    this.startTypewriter();
+                }
                 break;
         }
     },
@@ -1009,7 +1043,7 @@ const AIChat = {
         }
 
         if (this.engineStatus === 'loading' || this.engineStatus === 'checking') {
-            aiMessage.textContent = "AI is still loading... I'll answer once ready.";
+            aiMessage.textContent = "Downloading model... I'll answer once ready.";
             this.queuedMessage = { question, element: aiMessage };
             return;
         }
@@ -1127,6 +1161,7 @@ const AIChat = {
             container: qs('#ai-chat-container'),
             infoLine: qs('#ai-info-line'),
             statusDot: qs('#ai-status-dot'),
+            statusText: qs('#ai-status-text'),
             chatMessages: qs('#ai-chat-messages'),
             inputWrapper: qs('#ai-input-wrapper'),
             userInput: qs('#ai-user-input'),
