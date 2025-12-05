@@ -1,16 +1,6 @@
-# System files
 .DS_Store
 Thumbs.db
-
-# Others
-GEMINI.md
-
-# Security
 api/spotify_config.php
-
-# Cache
 api/spotify_cache.json
-
-data/user_inputs.json
-
+data/chat_logs.json
 todo.md

@@ -1299,7 +1299,7 @@ footer {
     left: 0;
     height: 2px;
     width: var(--loading-progress);
-    background: linear-gradient(90deg, #fff41f, #22c55e);
+    background: var(--primary-gradient);
     transition: width 0.3s ease;
     border-radius: 0 2px 2px 0;
     opacity: 0;
