@@ -186,16 +186,23 @@
 
         <!-- Input Area -->
         <div id="ai-input-wrapper">
+            <div id="ai-local-tag">
+                <i class="fas fa-microchip"></i>
+                <span>Local AI</span>
+            </div>
             <input type="text" id="ai-user-input" placeholder="Ask about my skills..." maxlength="512" autocomplete="off">
             <button id="ai-send-button" disabled>
                 <i class="fas fa-arrow-up"></i>
             </button>
         </div>
 
-        <!-- Local AI Badge -->
+        <!-- Local AI Badge (expanded view) -->
         <div id="ai-local-badge">
-            <i class="fas fa-microchip"></i>
-            <span>Runs locally in your browser</span>
+            <i class="fas fa-lock"></i>
+            <span>100% private - runs entirely in your browser</span>
+            <a href="https://blog.arkr.ca" target="_blank" id="ai-badge-link">
+                Learn more <i class="fas fa-external-link-alt"></i>
+            </a>
         </div>
     </div>
 

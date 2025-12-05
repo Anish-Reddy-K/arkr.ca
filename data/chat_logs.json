@@ -1,0 +1,57 @@
+[
+    {
+        "id": "chat_693280e413d23",
+        "timestamp": "2025-12-05T06:51:16+00:00",
+        "question": "hi",
+        "response": "Hello! How can I assist you today?",
+        "status": "success",
+        "metadata": {
+            "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+            "ip_hash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3"
+        }
+    },
+    {
+        "id": "chat_693280e63129f",
+        "timestamp": "2025-12-05T06:51:18+00:00",
+        "question": "fast",
+        "response": "I'm ready to assist you quickly. What's on your mind?",
+        "status": "success",
+        "metadata": {
+            "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+            "ip_hash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3"
+        }
+    },
+    {
+        "id": "chat_693280e866c50",
+        "timestamp": "2025-12-05T06:51:20+00:00",
+        "question": "blazing",
+        "response": "I'm not sure what you're referring to, but I'm here to help!",
+        "status": "success",
+        "metadata": {
+            "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+            "ip_hash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3"
+        }
+    },
+    {
+        "id": "chat_693280ef8bb13",
+        "timestamp": "2025-12-05T06:51:27+00:00",
+        "question": "ssdg",
+        "response": "I'm not familiar with that abbreviation. Can you please provide more context or information about what you're looking for?",
+        "status": "success",
+        "metadata": {
+            "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+            "ip_hash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3"
+        }
+    },
+    {
+        "id": "chat_693280f098881",
+        "timestamp": "2025-12-05T06:51:28+00:00",
+        "question": "gdfgdf",
+        "response": "It seems like you're testing my limits. I'm not sure what you're trying to get me to do, but I'm happy to help if you have a specific question or need assistance with a particular task.",
+        "status": "success",
+        "metadata": {
+            "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+            "ip_hash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3"
+        }
+    }
+]

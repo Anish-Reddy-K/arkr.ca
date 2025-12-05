@@ -1425,6 +1425,55 @@ footer {
     flex-shrink: 0;
 }
 
+/* Local AI Tag (always visible) */
+#ai-local-tag {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    background: rgba(255, 244, 31, 0.1);
+    border-radius: 10px;
+    flex-shrink: 0;
+    cursor: help;
+}
+
+#ai-local-tag i {
+    font-size: 0.6rem;
+    color: #fff41f;
+}
+
+#ai-local-tag span {
+    font-size: 0.65rem;
+    color: #999;
+    font-family: 'Manrope', sans-serif;
+    white-space: nowrap;
+}
+
+#ai-local-tag::before {
+    content: 'AI runs in your browser - 100% private';
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 12px;
+    background: rgba(20, 20, 20, 0.95);
+    color: #ccc;
+    font-size: 0.65rem;
+    padding: 6px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(4px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+    pointer-events: none;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#ai-local-tag:hover::before {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
 #ai-user-input {
     flex-grow: 1;
     border: none;
@@ -1484,14 +1533,14 @@ footer {
     opacity: 0.5;
 }
 
-/* Local AI Badge */
+/* Local AI Badge (expanded view) */
 #ai-local-badge {
     display: none;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    padding: 6px 12px;
-    background: rgba(255, 244, 31, 0.05);
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(255, 244, 31, 0.03);
     border-top: 1px solid rgba(255, 255, 255, 0.05);
     opacity: 0;
     transform: translateY(10px);
@@ -1505,16 +1554,35 @@ footer {
     transform: translateY(0);
 }
 
-#ai-local-badge i {
-    font-size: 0.65rem;
-    color: #fff41f;
+#ai-local-badge i.fa-lock {
+    font-size: 0.6rem;
+    color: #22c55e;
 }
 
-#ai-local-badge span {
+#ai-local-badge > span {
     font-size: 0.65rem;
     color: #666;
     font-family: 'Manrope', sans-serif;
-    letter-spacing: 0.02em;
+}
+
+#ai-badge-link {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.65rem;
+    color: #888;
+    text-decoration: none;
+    font-family: 'Manrope', sans-serif;
+    transition: color 0.2s ease;
+    margin-left: auto;
+}
+
+#ai-badge-link:hover {
+    color: #fff41f;
+}
+
+#ai-badge-link i {
+    font-size: 0.55rem;
 }
 
 /* Thinking Animation */
@@ -1564,35 +1632,6 @@ footer {
     transform: translateY(0);
 }
 
-#ai-local-badge {
-    position: relative;
-    cursor: help;
-}
-
-#ai-local-badge::before {
-    content: '100% private - no data sent to servers';
-    position: absolute;
-    bottom: calc(100% + 8px);
-    left: 50%;
-    transform: translateX(-50%) translateY(4px);
-    background: rgba(20, 20, 20, 0.95);
-    color: #ccc;
-    font-size: 0.65rem;
-    padding: 6px 10px;
-    border-radius: 6px;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
-    pointer-events: none;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-#ai-local-badge:hover::before {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0);
-}
 
 /* Status checking animation */
 #ai-status-indicator.status-checking {
@@ -1628,7 +1667,12 @@ footer {
     
     /* Hide tooltips on mobile (touch devices) */
     #ai-learn-more::before,
-    #ai-local-badge::before {
+    #ai-local-tag::before {
+        display: none;
+    }
+    
+    /* Smaller local tag on mobile */
+    #ai-local-tag span {
         display: none;
     }
 }

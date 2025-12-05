@@ -779,21 +779,18 @@ const AIChat = {
     // -------------------------------------------------------------------------
 
     /**
-     * Loads placeholder prompts from JSON and starts rotation
-     * @returns {Promise<void>}
+     * Initializes placeholder prompts from config and starts rotation
      */
-    async loadPrompts() {
-        try {
-            const response = await fetch('data/prompts.json');
-            this.prompts = await response.json();
-            
-            if (this.prompts.length > 0 && this.elements.userInput) {
-                this.promptIndex = Math.floor(Math.random() * this.prompts.length);
-                this.elements.userInput.placeholder = this.prompts[this.promptIndex];
-                this.promptRotationInterval = setInterval(() => this.rotatePrompt(), 3000);
-            }
-        } catch (error) {
-            console.error('[AIChat] Failed to load prompts:', error);
+    initPrompts() {
+        // Use prompts from config (loaded in loadConfig)
+        if (this.config?.placeholderPrompts) {
+            this.prompts = this.config.placeholderPrompts;
+        }
+        
+        if (this.prompts.length > 0 && this.elements.userInput) {
+            this.promptIndex = Math.floor(Math.random() * this.prompts.length);
+            this.elements.userInput.placeholder = this.prompts[this.promptIndex];
+            this.promptRotationInterval = setInterval(() => this.rotatePrompt(), 3000);
         }
     },
 
@@ -891,37 +888,25 @@ const AIChat = {
     // -------------------------------------------------------------------------
 
     /**
-     * Logs user question to server for analytics
+     * Logs chat interaction (question + response) to server for analytics
      * @param {string} question - User's question
+     * @param {string} response - AI's response
+     * @param {string} [status='success'] - Status of the interaction
      * @returns {Promise<boolean>} Success status
      */
-    async logQuestion(question) {
+    async logChat(question, response, status = 'success') {
         try {
-            const response = await fetch('api/save_input.php', {
+            const res = await fetch('api/log_chat.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userInput: question }),
+                body: JSON.stringify({ question, response, status }),
             });
-            const result = await response.json();
+            const result = await res.json();
             return result.success;
         } catch (error) {
-            console.error('[AIChat] Failed to log question:', error);
+            // Silent fail - logging shouldn't break the chat experience
+            console.warn('[AIChat] Failed to log chat:', error);
             return false;
-        }
-    },
-
-    /**
-     * Clears server-side conversation history
-     * @returns {Promise<void>}
-     */
-    async clearServerHistory() {
-        try {
-            await fetch('api/clear_inputs.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-            });
-        } catch (error) {
-            console.error('[AIChat] Failed to clear server history:', error);
         }
     },
 
@@ -947,20 +932,21 @@ const AIChat = {
         // Display user message
         this.appendMessage('user', question);
 
-        // Log to server (non-blocking)
-        this.logQuestion(question);
-
         // Create AI message placeholder
         const aiMessage = this.appendMessage('ai', '');
 
         // Handle based on current status
         if (this.status === 'unsupported') {
-            aiMessage.textContent = "Sorry, your browser doesn't support WebGPU. Please try Chrome 113+, Edge 113+, or Firefox 126+.";
+            const errorMsg = "Sorry, your browser doesn't support WebGPU. Please try Chrome 113+, Edge 113+, or Firefox 126+.";
+            aiMessage.textContent = errorMsg;
+            this.logChat(question, errorMsg, 'unsupported');
             return;
         }
 
         if (this.status === 'error') {
-            aiMessage.textContent = "Sorry, there was an error loading the AI. Please refresh and try again.";
+            const errorMsg = "Sorry, there was an error loading the AI. Please refresh and try again.";
+            aiMessage.textContent = errorMsg;
+            this.logChat(question, errorMsg, 'error');
             return;
         }
 
@@ -981,16 +967,23 @@ const AIChat = {
      */
     async processMessage(question, messageElement) {
         messageElement.textContent = '';
+        let fullResponse = '';
 
         try {
             // Stream response from WebLLM
             for await (const chunk of WebLLMEngine.chat(question)) {
-                messageElement.textContent += chunk;
+                fullResponse += chunk;
+                messageElement.textContent = fullResponse;
                 this.scrollToBottom();
             }
+            
+            // Log the complete interaction (non-blocking)
+            this.logChat(question, fullResponse, 'success');
         } catch (error) {
             console.error('[AIChat] Error getting response:', error);
-            messageElement.textContent = "Sorry, I encountered an error. Please try again.";
+            const errorMsg = "Sorry, I encountered an error. Please try again.";
+            messageElement.textContent = errorMsg;
+            this.logChat(question, errorMsg, 'error');
         }
     },
 
@@ -1008,7 +1001,6 @@ const AIChat = {
         if (!container.contains(event.target)) {
             if (container.classList.contains('expanded')) {
                 this.collapseContainer();
-                this.clearServerHistory();
             } else if (container.classList.contains('width-expanded')) {
                 container.classList.remove('width-expanded');
                 this.elements.userInput.value = '';
@@ -1108,11 +1100,11 @@ const AIChat = {
         this.updateSendButtonState();
         this.initEventListeners();
         
-        // Load config and prompts in parallel
-        await Promise.all([
-            this.loadConfig(),
-            this.loadPrompts(),
-        ]);
+        // Load config first (contains prompts)
+        await this.loadConfig();
+        
+        // Initialize prompts from config
+        this.initPrompts();
 
         // Initialize WebLLM (starts on page load as per user preference)
         this.initWebLLM();
