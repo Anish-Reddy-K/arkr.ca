@@ -622,59 +622,63 @@ nav {
     white-space: nowrap;
     position: relative;
     display: flex;
-    justify-content: center; /* Default center */
+    justify-content: center;
     mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
 }
 
 .marquee-container.active {
-    justify-content: flex-start; /* Align left when scrolling to see start */
-    mask-image: linear-gradient(to right, black 80%, transparent 100%); /* Only fade end when scrolling starts */
+    justify-content: flex-start;
+    mask-image: linear-gradient(to right, black 80%, transparent 100%);
     -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
 }
 
-/* The elements inside (h3, p) will be targeted */
 .marquee-container h3,
 .marquee-container p {
     display: inline-block;
     position: relative;
-    transition: transform 0.1s; /* Reset helper */
+    transition: transform 0.1s;
 }
 
 /* Animation Class - JS Controlled */
 .scrolling {
-    /* Animation handled by JS */
     will-change: transform;
 }
 
-/* Reuse animation */
 @keyframes rotateClockwise {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
 
+@keyframes spotify-glow-blink {
+    0%, 100% {
+        background-size: 100% 100%;
+        background-position: 0% 50%;
+        color: transparent;
+    }
+    50% {
+        background-size: 150% 150%;
+        background-position: 100% 50%;
+        color: transparent;
+    }
+}
+
 /* ============================
    6. Experience Section
    ============================ */
-
 .experience-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 4rem; /* Increased gap for better separation without boxes */
-    /* Removed max-width and margin for left alignment */
+    gap: 4rem;
 }
-
-/* Shared Left Bar Design for Experience, Projects, Activities */
 
 .experience-card, .project-card, .activity-item {
     position: relative;
     padding-left: 2rem;
-    border: none !important; /* Remove any box borders */
+    border: none !important;
     border-radius: 0 !important;
-    transition: none; /* Remove transform transitions */
+    transition: none;
 }
-
-/* Base Grey Bar */
 
 .experience-card::before, .project-card::before, .activity-item::before {
     content: '';
@@ -685,8 +689,6 @@ nav {
     border-radius: 4px;
 }
 
-/* Gradient Hover Bar */
-
 .experience-card::after, .project-card::after, .activity-item::after {
     content: '';
     position: absolute;
@@ -695,23 +697,21 @@ nav {
     background: linear-gradient(180deg, #f960eb, #ff854d, #fff41f);
     border-radius: 4px;
     opacity: 0;
-    transition: opacity 0.6s ease; /* Increased duration for smoother fade */
+    transition: opacity 0.6s ease;
     z-index: 1;
 }
-
-/* Hover Interaction */
 
 .experience-card:hover::after, .project-card:hover::after, .activity-item:hover::after {
     opacity: 1;
 }
 
 .experience-card .card-header {
-    margin-bottom: 0; /* Removed margin to reduce gap */
+    margin-bottom: 0;
 }
 
 .experience-card .header-line-1 {
     display: flex;
-    justify-content: space-between; /* Push date to right */
+    justify-content: space-between;
     align-items: baseline;
     margin-bottom: 0.2rem;
 }
@@ -720,8 +720,8 @@ nav {
     font-family: 'Outfit', sans-serif;
     font-size: 1.8rem;
     margin: 0;
-    color: #f0f0f0; /* Brighter off-white */
-    font-weight: 400; /* Reduced weight */
+    color: #f0f0f0;
+    font-weight: 400;
 }
 
 .experience-card .header-line-1 .date {
@@ -732,14 +732,14 @@ nav {
 
 .experience-card .header-line-2 {
     display: flex;
-    justify-content: space-between; /* Push location to right */
+    justify-content: space-between;
     align-items: baseline;
-    margin-bottom: 0.2rem; /* Reduced vertical gap before bullets */
+    margin-bottom: 0.2rem;
 }
 
 .experience-card .header-line-2 .role {
     font-size: 1.2rem;
-    color: #d1d1d1; /* Less bright off-white */
+    color: #d1d1d1;
     font-weight: 500;
 }
 
@@ -752,18 +752,16 @@ nav {
 .experience-card ul {
     list-style: none;
     padding-left: 0;
-    margin-top: 0; /* Remove default top margin */
+    margin-top: 0;
 }
 
 .experience-card li {
     position: relative;
     padding-left: 1.5rem;
     margin-bottom: 0.5rem;
-    color: #ffffff; /* Text color remains white, does not change on hover */
-    transition: color 0.3s ease; /* Maintain smooth transition for consistency, even if not changing color here */
+    color: #ffffff;
+    transition: color 0.3s ease;
 }
-
-/* Default subtle dot */
 
 .experience-card li::before,
 .project-card li::before {
@@ -774,32 +772,27 @@ nav {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.4); /* Subtle default white dot */
-    box-shadow: none; /* No glow by default */
-    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for dot */
+    background-color: rgba(255, 255, 255, 0.4);
+    box-shadow: none;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
-
-/* Hover state for the dot */
 
 .experience-card li:hover::before,
 .project-card li:hover::before {
-    background-color: #ffffff; /* Bright white on hover */
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.4); /* Neon Glow for white on hover */
+    background-color: #ffffff;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
 }
 
 /* ============================
    7. Projects Section
    ============================ */
-
 .projects-grid {
     display: grid;
-    grid-template-columns: 1fr; /* Single column stack */
-    gap: 4rem; /* Consistent gap */
-    /* Removed max-width and margin for left alignment */
+    grid-template-columns: 1fr;
+    gap: 4rem;
 }
 
 .project-card {
-    /* Styles inherited from shared block above */
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -810,13 +803,13 @@ nav {
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
     color: #f0f0f0;
-    font-weight: 400; /* Reduced weight */
+    font-weight: 400;
 }
 
 .project-card .tech-stack {
-    color: #d1d1d1; /* Matching role color */
-    font-size: 1.2rem; /* Increased slightly to match role visual weight */
-    font-family: 'Outfit', sans-serif; /* Consistent font */
+    color: #d1d1d1;
+    font-size: 1.2rem;
+    font-family: 'Outfit', sans-serif;
     font-weight: 500;
     margin-bottom: 1rem;
 }
@@ -834,15 +827,11 @@ nav {
     font-size: 0.95rem;
 }
 
-/* ============================
-    Project Card Header & Status
-   ============================ */
-
 .project-card .card-header {
     display: flex;
     flex-direction: column;
     gap: 0.2rem;
-    margin-bottom: 1.5rem; /* Increased spacing */
+    margin-bottom: 1.5rem;
 }
 
 .project-card .header-line-1,
@@ -856,12 +845,11 @@ nav {
     margin: 0;
 }
 
-/* Override tech-stack to fit in header */
 .project-card .tech-stack {
     margin: 0;
-    font-size: 1rem; /* Adjusted size for header context */
+    font-size: 1rem;
     color: #d1d1d1;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .project-header-links {
@@ -873,22 +861,22 @@ nav {
 .project-header-links a {
     color: #a7a7a7;
     transition: all 0.3s ease;
-    display: flex; /* To center SVG */
+    display: flex;
     align-items: center;
     justify-content: center;
-    width: 16px; /* Adjusted icon size */
-    height: 16px; /* Adjusted icon size */
+    width: 16px;
+    height: 16px;
 }
 
 .project-header-links a:hover {
     color: #ffffff;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Subtle glow effect */
-    transform: scale(1.1); /* Expand effect */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transform: scale(1.1);
 }
 
 .project-header-links svg {
-    width: 16px; /* Adjusted icon size */
-    height: 16px; /* Adjusted icon size */
+    width: 16px;
+    height: 16px;
 }
 
 .status-badge {
@@ -910,21 +898,17 @@ nav {
     position: relative;
 }
 
-/* Live - Green */
 .status-badge.live {
-    color: #39ff14;
-    /* border-color: rgba(57, 255, 20, 0.3); */
+    color: #39ff14
 }
 .status-badge.live .status-dot {
     background-color: #39ff14;
-    box-shadow: 0 0 6px #39ff14; /* Subtle initial glow */
-    animation: blink-green 2s infinite ease-in-out; /* Smooth fade */
+    box-shadow: 0 0 6px #39ff14;
+    animation: blink-green 2s infinite ease-in-out;
 }
 
-/* Dev - Orange/Yellow */
 .status-badge.dev {
     color: #ffbd36;
-    /* border-color: rgba(255, 189, 54, 0.3); */
 }
 .status-badge.dev .status-dot {
     background-color: #ffbd36;
@@ -932,10 +916,8 @@ nav {
     animation: blink-orange 2s infinite ease-in-out;
 }
 
-/* Offline - Red/Grey */
 .status-badge.offline {
     color: #ff4d4d;
-    /* border-color: rgba(255, 77, 77, 0.3); */
 }
 .status-badge.offline .status-dot {
     background-color: #ff4d4d;
@@ -958,36 +940,21 @@ nav {
     50% { opacity: 1; }
 }
 
-@keyframes spotify-glow-blink {
-    0%, 100% {
-        background-size: 100% 100%;
-        background-position: 0% 50%;
-        color: transparent; /* Ensure text is transparent to show gradient */
-    }
-    50% {
-        background-size: 150% 150%;
-        background-position: 100% 50%;
-        color: transparent; /* Ensure text is transparent to show gradient */
-    }
-}
 
 /* ============================
    8. Activities & Awards
    ============================ */
-
 #activities {
-    padding-top: 4rem !important; /* Reduced to match gap between experience and projects */
-    margin-top: 0 !important; /* Remove any extra margin */
+    padding-top: 4rem !important;
+    margin-top: 0 !important;
 }
 
 .activities-list {
     display: flex;
     flex-direction: column;
-    gap: 3rem; /* Increased gap */
+    gap: 3rem;
     margin-bottom: 4rem;
 }
-
-/* .activity-item styles inherited from shared block */
 
 .activity-header {
     display: flex;
@@ -1013,17 +980,13 @@ nav {
     margin: 0;
 }
 
-/* ============================
-   9. Awards (Categorized Chips)
-   ============================ */
-
 .awards-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 3rem;
     margin-top: 4rem;
     padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05); /* Subtle separator */
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .award-category h4 {
@@ -1036,27 +999,25 @@ nav {
 }
 
 .award-chips {
-    display: grid; /* Changed to grid to force one item per line */
-    grid-template-columns: 1fr; /* Single column */
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 0.8rem;
 }
 
 .chip {
-    display: flex; /* Changed to flex to maintain internal alignment if any */
+    display: flex;
     align-items: center;
-    padding: 0 0.5rem; /* Reduced padding */
+    padding: 0 0.5rem;
     border-radius: 6px;
     font-size: 0.85rem;
     color: #d1d1d1;
-    margin-bottom: 0.5rem; /* Added spacing between chips */
+    margin-bottom: 0.5rem;
 }
 
 .chip:hover {
-    color: #fff; /* Subtle text highlight on hover */
-    /* Removed background on hover */
+    color: #fff;
 }
 
-/* Colored indicators */
 .chip::before {
     content: '';
     display: inline-block;
@@ -1067,13 +1028,12 @@ nav {
 }
 
 .chip.gold::before { background-color: #fff41f; box-shadow: 0 0 8px rgba(255, 244, 31, 0.4); }
-.chip.orange::before { background-color: #ff854d; box-shadow: 0 0 8px rgba(255, 133, 77, 0.4); } /* Changed from blue */
+.chip.orange::before { background-color: #ff854d; box-shadow: 0 0 8px rgba(255, 133, 77, 0.4); }
 .chip.pink::before { background-color: #f960eb; box-shadow: 0 0 8px rgba(249, 96, 235, 0.4); }
 
 
-
 /* ============================
-    X. Footer Marquee Container
+    9. Footer Marquee Container
     ============================ */
     .footer-marquee-container {
         width: 100%;
@@ -1138,7 +1098,7 @@ nav {
 
 
 /* ============================
-   X.Footer
+   10.Footer
    ============================ */
 footer {
     padding: 5.5rem 0;
@@ -1252,10 +1212,9 @@ footer {
 
 
 /* ============================
-    X. AI Input
+   11. AI Input
    ============================ */
-
-   .ai-input-container {
+.ai-input-container {
     position: fixed;
     left: 50%;
     bottom: 2rem;
@@ -1274,7 +1233,7 @@ footer {
     backdrop-filter: blur(8px);
     border-radius: 30px;
     padding: 0;
-    border: 1px solid rgba(249, 96, 235, 0.1); /* Changed color from #cea3ff to pink */
+    border: 1px solid rgba(249, 96, 235, 0.1);
     transition: all 0.3s ease;
     overflow: hidden;
     width: 250px;
@@ -1282,7 +1241,6 @@ footer {
     height: 40px;
 }
 
-/* Text Input Container */
 #text-input-container {
     position: fixed;
     bottom: 20px;
@@ -1290,22 +1248,20 @@ footer {
     transform: translateX(-50%);
     z-index: 1000;
     display: flex;
-    flex-direction: column; /* Stack chat messages and input vertically */
-    justify-content: flex-end; /* Keep input at the bottom */
-    /* gap: 8px; */ /* Removed, now handled by input-area-wrapper */
-    padding: 8px; /* Even padding on all sides for the container */
-    border-radius: 20px; /* Consistent rounded corners from pill to expanded */
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 8px;
+    border-radius: 20px;
     background: rgba(37, 37, 37, 0.8);
     backdrop-filter: blur(8px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     width: 300px;
     max-width: calc(100% - 40px);
-    max-height: 40px; /* Initial small max-height */
-    overflow: hidden; /* Ensure content outside initial height is hidden */
-    transition: max-height 0.5s ease-out, width 0.5s ease-out; /* Smooth transition for max-height and width */
+    max-height: 40px;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out, width 0.5s ease-out;
 }
 
-/* Placeholder fade effect */
 #user-input.placeholder-fade-out::placeholder {
     opacity: 0;
     transition: opacity 0.5s ease-out;
@@ -1315,58 +1271,51 @@ footer {
     transition: opacity 0.5s ease-in;
 }
 
-/* Wrapper for input and send button */
 #input-area-wrapper {
     display: flex;
     align-items: center;
     gap: 8px;
-    flex-shrink: 0; /* Prevent it from shrinking */
+    flex-shrink: 0;
 }
 
 #text-input-container.expanded {
-    max-height: 300px; /* Maximum height for chat history, triggers smooth expansion */
-    /* border-radius: 20px; Removed, now consistent from base */
-    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 300px;
+    overflow-y: auto;
 }
 
 #text-input-container.width-expanded {
-    width: 450px; /* Expanded width on focus */
+    width: 450px;
 }
 
-/* Chat Messages Container */
 #chat-messages {
     flex-grow: 1;
-    overflow-y: auto; /* Enable scrolling for messages */
-    display: flex; /* Kept display flex here as base for layout */
-    flex-direction: column; /* Stack messages vertically */
-    padding: 15px; /* Added padding to create space from container borders */
-    gap: 10px; /* Added gap to space messages from each other */
-    /* All visual styling (opacity, visibility, transitions, margin, border-radius, background-color) removed */
-    /* Messages will be implicitly hidden/shown by the #text-input-container's max-height/overflow */
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    gap: 10px;
 }
 
-/* Individual User Message Style */
 .user-message {
     margin-bottom: 10px;
-    margin-left: auto; /* Push to the right */
-    align-self: flex-end; /* Align to the right within chat-messages */
-    max-width: 80%; /* Limit width */
-    word-wrap: break-word; /* Break long words */
+    margin-left: auto;
+    align-self: flex-end;
+    max-width: 80%;
+    word-wrap: break-word;
     font-size: 0.9rem;
     line-height: 1.4;
-    color: #ffffff; /* User message text color */
+    color: #ffffff;
 }
 
-/* Individual AI Message Style */
 .ai-message {
     margin-bottom: 10px;
-    margin-right: auto; /* Push to the left */
-    align-self: flex-start; /* Align to the left within chat-messages */
-    max-width: 80%; /* Limit width */
-    word-wrap: break-word; /* Break long words */
+    margin-right: auto;
+    align-self: flex-start;
+    max-width: 80%;
+    word-wrap: break-word;
     font-size: 0.9rem;
     line-height: 1.4;
-    color: #a7a7a7; /* AI message text color */
+    color: #a7a7a7;
 }
 
 #user-input {
@@ -1376,7 +1325,7 @@ footer {
     color: #ffffff;
     font-family: 'Manrope', sans-serif;
     font-size: 0.9rem;
-    padding: 3px 0 3px 5px; /* Added left padding */
+    padding: 3px 0 3px 5px;
     outline: none;
 }
 
@@ -1386,7 +1335,7 @@ footer {
 }
 
 #send-button {
-    background: #fff41f; /* Solid yellow background */
+    background: #fff41f;
     border: none;
     border-radius: 50%;
     width: 24px;
@@ -1395,29 +1344,29 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #1a1a1a; /* Arrow color is dark for contrast */
+    color: #1a1a1a;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 #send-button i {
-    font-size: 12px; /* Set size to 12px for Font Awesome icon */
-    line-height: 1; /* Ensure vertical centering */
-    font-weight: 900; /* Make the icon bolder */
+    font-size: 12px;
+    line-height: 1;
+    font-weight: 900;
 }
 
 #send-button:disabled i {
-    opacity: 0.5; /* Apply opacity for a faded look when disabled */
+    opacity: 0.5;
 }
 
-#send-button:hover:not(:disabled) { /* Apply hover only when not disabled */
+#send-button:hover:not(:disabled) {
     opacity: 0.9;
     box-shadow: 0 0 10px rgba(255, 244, 31, 0.5);
 }
 
 #send-button:disabled {
-    background: #555555; /* Darker gray background */
-    color: #cccccc; /* Base color for disabled arrow */
+    background: #555555;
+    color: #cccccc;
     cursor: not-allowed;
-    box-shadow: none; /* No glow when disabled */
+    box-shadow: none;
 }
