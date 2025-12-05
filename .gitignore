@@ -6,9 +6,11 @@ Thumbs.db
 GEMINI.md
 
 # Security
-api/config.php
+api/spotify_config.php
 
 # Cache
 api/spotify_cache.json
 
 data/user_inputs.json
+
+todo.md
