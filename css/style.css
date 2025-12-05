@@ -100,10 +100,6 @@ header {
     z-index: 1;
 }
 
-.header-scrolled .header-container {
-    /* Styles now handled by pseudo-elements */
-}
-
 /* Gradient Glow (Bottom Layer) */
 .header-container::before {
     content: '';
@@ -228,7 +224,7 @@ nav {
 }
 
 /* ============================
-   5. Home Section (from old_index.html)
+   5. Home Section
    ============================ */
 
 #home {
@@ -491,7 +487,6 @@ nav {
     margin-bottom: 3rem;
 }
 
-/* AI Input - Copying from old_index.html, but will remove later if it's meant to be separated */
 .ai-input-container {
     position: fixed;
     left: 50%;
@@ -1023,8 +1018,9 @@ nav {
 .chip.gold::before { background-color: #fff41f; box-shadow: 0 0 8px rgba(255, 244, 31, 0.4); }
 .chip.orange::before { background-color: #ff854d; box-shadow: 0 0 8px rgba(255, 133, 77, 0.4); } /* Changed from blue */
 .chip.pink::before { background-color: #f960eb; box-shadow: 0 0 8px rgba(249, 96, 235, 0.4); }
+
 /* ============================
-   9. Spotify Widget
+   10. Spotify Widget
    ============================ */
 
 #spotify-widget {
@@ -1261,7 +1257,7 @@ nav {
 }
 
 /* ============================
-   10. Footer
+   11. Footer
    ============================ */
 
 footer {
@@ -1379,6 +1375,9 @@ footer {
     transition: opacity 0.5s ease-in; /* For fading in */
 }
 
+/* ============================
+    12. AI Input
+   ============================ */
 /* Text Input Container */
 #text-input-container {
     position: fixed;
@@ -1418,10 +1417,6 @@ footer {
 
 #text-input-container.width-expanded {
     width: 450px; /* Expanded width on focus */
-}
-
-#text-input-container:focus-within {
-    /* width: 450px; Moved to .width-expanded class */
 }
 
 /* Chat Messages Container */
@@ -1511,18 +1506,4 @@ footer {
     color: #cccccc; /* Base color for disabled arrow */
     cursor: not-allowed;
     box-shadow: none; /* No glow when disabled */
-}
-
-@keyframes shake {
-    0% { transform: translateX(-50%) translateX(0); }
-    25% { transform: translateX(-50%) translateX(-5px); }
-    50% { transform: translateX(-50%) translateX(5px); }
-    75% { transform: translateX(-50%) translateX(-5px); }
-    100% { transform: translateX(-50%) translateX(0); }
-}
-
-.shake {
-    animation: shake 0.3s cubic-bezier(.36,.07,.19,.97) both;
-    transform: translateX(-50%); /* Ensure it stays centered after shake */
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.6); /* Red glow for error */
 }
