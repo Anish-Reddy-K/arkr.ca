@@ -695,11 +695,11 @@ const AIChat = {
         // Update status text and container class
         if (statusText) {
             if (status === 'loading') {
-                statusText.textContent = 'Downloading...';
+                statusText.textContent = 'Loading model in browser...';
             } else if (status === 'ready') {
-                statusText.textContent = 'Local LLM';
+                statusText.textContent = 'In-browser, local LLM';
             } else {
-                statusText.textContent = 'Local LLM';
+                statusText.textContent = 'In-browser, local LLM';
             }
         }
 

@@ -174,5 +174,60 @@
             "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
             "ip_hash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3"
         }
+    },
+    {
+        "id": "chat_69335f0f5d87e",
+        "timestamp": "2025-12-05T22:39:11+00:00",
+        "question": "hi",
+        "response": "Hello! How can I assist you today?",
+        "status": "success",
+        "metadata": {
+            "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+            "ip_hash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3"
+        }
+    },
+    {
+        "id": "chat_69335f13c83cc",
+        "timestamp": "2025-12-05T22:39:15+00:00",
+        "question": "hi",
+        "response": "Hello! How can I assist you today?",
+        "status": "success",
+        "metadata": {
+            "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+            "ip_hash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3"
+        }
+    },
+    {
+        "id": "chat_69335fe63baf1",
+        "timestamp": "2025-12-05T22:42:46+00:00",
+        "question": "hi",
+        "response": "Hello! How can I assist you today?",
+        "status": "success",
+        "metadata": {
+            "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+            "ip_hash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3"
+        }
+    },
+    {
+        "id": "chat_693360f96b647",
+        "timestamp": "2025-12-05T22:47:21+00:00",
+        "question": "hi",
+        "response": "Hello! How can I assist you today?",
+        "status": "success",
+        "metadata": {
+            "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+            "ip_hash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3"
+        }
+    },
+    {
+        "id": "chat_693361b0af638",
+        "timestamp": "2025-12-05T22:50:24+00:00",
+        "question": "hi",
+        "response": "Hello! How can I assist you today?",
+        "status": "success",
+        "metadata": {
+            "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+            "ip_hash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3"
+        }
     }
 ]
