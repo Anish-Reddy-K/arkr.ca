@@ -5,6 +5,20 @@
 const qs = selector => document.querySelector(selector);
 const qsa = selector => document.querySelectorAll(selector);
 
+/**
+ * Throttles a function to run at most once per specified delay
+ */
+const throttle = (func, delay) => {
+    let lastCall = 0;
+    return (...args) => {
+        const now = Date.now();
+        if (now - lastCall >= delay) {
+            lastCall = now;
+            func(...args);
+        }
+    };
+};
+
 // ============================================================================
 // CONSTANTS & CONFIGURATION
 // ============================================================================
@@ -12,20 +26,21 @@ const qsa = selector => document.querySelectorAll(selector);
 const CONFIG = {
     SPOTIFY: {
         POLL_INTERVAL: 10000, // 10 seconds
+        MARQUEE: {
+            SPEED: 40, // px per second
+            BUFFER: 30, // pixels
+            PAUSE_START: 2000, // ms
+            PAUSE_END: 2000, // ms
+        },
     },
     GREETING: {
         INITIAL_DELAY: 1500, // ms
         ROTATION_INTERVAL: 3600, // ms
         FADE_DURATION: 800, // ms
     },
-    AI_INPUT: {
-        PLACEHOLDER_ROTATION_INTERVAL: 3000, // ms
-        PLACEHOLDER_FADE_DURATION: 500, // ms
-        THINKING_DELAY: 1000, // ms
-        CONTAINER_EXPANSION_DELAY: 300, // ms
-    },
     SCROLL: {
         OFFSET: 100, // pixels
+        THROTTLE_DELAY: 16, // ~60fps
     },
 };
 
@@ -42,6 +57,12 @@ const GREETINGS = [
     { text: "Привет,", language: "Russian" },
     { text: "안녕하세요,", language: "Korean" }
 ];
+
+// SVG Icons
+const SVG_ICONS = {
+    GITHUB: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>`,
+    EXTERNAL_LINK: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>`,
+};
 
 // ============================================================================
 // CONTENT LOADER MODULE
@@ -68,32 +89,28 @@ const ContentLoader = {
      * Loads and renders experience data
      */
     async loadExperience() {
-        try {
-            const response = await fetch('data/experience.json');
-            const data = await response.json();
-            const container = qs('#experience-container');
-            
-            if (container && data) {
-                container.innerHTML = data.map(item => `
-                    <div class="experience-card">
-                        <div class="card-header">
-                            <div class="header-line-1">
-                                <h3 class="company-name">${item.company}</h3>
-                                <span class="date">${item.date}</span>
-                            </div>
-                            <div class="header-line-2">
-                                <span class="role">${item.role}</span>
-                                <span class="location">${item.location}</span>
-                            </div>
+        const response = await fetch('data/experience.json');
+        const data = await response.json();
+        const container = qs('#experience-container');
+        
+        if (container && data) {
+            container.innerHTML = data.map(item => `
+                <div class="experience-card">
+                    <div class="card-header">
+                        <div class="header-line-1">
+                            <h3 class="company-name">${item.company}</h3>
+                            <span class="date">${item.date}</span>
                         </div>
-                        <ul>
-                            ${item.bullets.map(bullet => `<li>${bullet}</li>`).join('')}
-                        </ul>
+                        <div class="header-line-2">
+                            <span class="role">${item.role}</span>
+                            <span class="location">${item.location}</span>
+                        </div>
                     </div>
-                `).join('');
-            }
-        } catch (error) {
-            console.error('Error loading experience:', error);
+                    <ul>
+                        ${item.bullets.map(bullet => `<li>${bullet}</li>`).join('')}
+                    </ul>
+                </div>
+            `).join('');
         }
     },
 
@@ -101,50 +118,43 @@ const ContentLoader = {
      * Loads and renders projects data
      */
     async loadProjects() {
-        try {
-            const response = await fetch('data/projects.json');
-            const data = await response.json();
-            const container = qs('#projects-container');
-            
-            if (container && data) {
-                const githubIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>`;
-                const linkIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>`;
+        const response = await fetch('data/projects.json');
+        const data = await response.json();
+        const container = qs('#projects-container');
+        
+        if (container && data) {
+            container.innerHTML = data.map(project => {
+                const githubLinkHtml = project.showGithub 
+                    ? `<a href="${project.githubLink}" target="_blank" aria-label="View Code">${SVG_ICONS.GITHUB}</a>` 
+                    : '';
+                const externalLinkHtml = project.showLink 
+                    ? `<a href="${project.externalLink}" target="_blank" aria-label="View Project">${SVG_ICONS.EXTERNAL_LINK}</a>` 
+                    : '';
 
-                container.innerHTML = data.map(project => {
-                    const githubLinkHtml = project.showGithub 
-                        ? `<a href="${project.githubLink}" target="_blank" aria-label="View Code">${githubIcon}</a>` 
-                        : '';
-                    const externalLinkHtml = project.showLink 
-                        ? `<a href="${project.externalLink}" target="_blank" aria-label="View Project">${linkIcon}</a>` 
-                        : '';
-
-                    return `
-                        <div class="project-card">
-                            <div class="card-header">
-                                <div class="header-line-1">
-                                    <h3>${project.title}</h3>
-                                    <div class="status-badge ${project.status}">
-                                        <span class="status-dot"></span>
-                                        ${project.statusText}
-                                    </div>
-                                </div>
-                                <div class="header-line-2">
-                                    <span class="tech-stack">${project.techStack}</span>
-                                    <div class="project-header-links">
-                                        ${githubLinkHtml}
-                                        ${externalLinkHtml}
-                                    </div>
+                return `
+                    <div class="project-card">
+                        <div class="card-header">
+                            <div class="header-line-1">
+                                <h3>${project.title}</h3>
+                                <div class="status-badge ${project.status}">
+                                    <span class="status-dot"></span>
+                                    ${project.statusText}
                                 </div>
                             </div>
-                            <ul>
-                                ${project.bullets.map(bullet => `<li>${bullet}</li>`).join('')}
-                            </ul>
+                            <div class="header-line-2">
+                                <span class="tech-stack">${project.techStack}</span>
+                                <div class="project-header-links">
+                                    ${githubLinkHtml}
+                                    ${externalLinkHtml}
+                                </div>
+                            </div>
                         </div>
-                    `;
-                }).join('');
-            }
-        } catch (error) {
-            console.error('Error loading projects:', error);
+                        <ul>
+                            ${project.bullets.map(bullet => `<li>${bullet}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }).join('');
         }
     },
 
@@ -152,38 +162,34 @@ const ContentLoader = {
      * Loads and renders activities and awards data
      */
     async loadActivities() {
-        try {
-            const response = await fetch('data/activities.json');
-            const data = await response.json();
-            
-            // Load Activities
-            const activitiesContainer = qs('#activities-container');
-            if (activitiesContainer && data.activities) {
-                activitiesContainer.innerHTML = data.activities.map(item => `
-                    <div class="activity-item">
-                        <div class="activity-header">
-                            <h3>${item.title}</h3>
-                            <span class="date">${item.date}</span>
-                        </div>
-                        <p>${item.description}</p>
+        const response = await fetch('data/activities.json');
+        const data = await response.json();
+        
+        // Load Activities
+        const activitiesContainer = qs('#activities-container');
+        if (activitiesContainer && data.activities) {
+            activitiesContainer.innerHTML = data.activities.map(item => `
+                <div class="activity-item">
+                    <div class="activity-header">
+                        <h3>${item.title}</h3>
+                        <span class="date">${item.date}</span>
                     </div>
-                `).join('');
-            }
+                    <p>${item.description}</p>
+                </div>
+            `).join('');
+        }
 
-            // Load Awards
-            const awardsContainer = qs('#awards-container');
-            if (awardsContainer && data.awards) {
-                awardsContainer.innerHTML = data.awards.map(cat => `
-                    <div class="award-category">
-                        <h4>${cat.category}</h4>
-                        <div class="award-chips">
-                            ${cat.items.map(chip => `<span class="chip ${chip.color}">${chip.text}</span>`).join('')}
-                        </div>
+        // Load Awards
+        const awardsContainer = qs('#awards-container');
+        if (awardsContainer && data.awards) {
+            awardsContainer.innerHTML = data.awards.map(cat => `
+                <div class="award-category">
+                    <h4>${cat.category}</h4>
+                    <div class="award-chips">
+                        ${cat.items.map(chip => `<span class="chip ${chip.color}">${chip.text}</span>`).join('')}
                     </div>
-                `).join('');
-            }
-        } catch (error) {
-            console.error('Error loading activities:', error);
+                </div>
+            `).join('');
         }
     },
 
@@ -191,22 +197,18 @@ const ContentLoader = {
      * Loads and renders interests in footer marquee
      */
     async loadInterests() {
-        try {
-            const response = await fetch('data/interests.json');
-            const data = await response.json();
-            const container = qs('#footer-marquee-content');
+        const response = await fetch('data/interests.json');
+        const data = await response.json();
+        const container = qs('#footer-marquee-content');
+        
+        if (container && data) {
+            // Duplicate list for seamless loop (x4)
+            const repeatedInterests = [...data, ...data, ...data, ...data];
             
-            if (container && data) {
-                // Duplicate list for seamless loop (x4)
-                const repeatedInterests = [...data, ...data, ...data, ...data];
-                
-                container.innerHTML = repeatedInterests.map(interest => `
-                    <span class="footer-marquee-item">${interest}</span>
-                    <span class="footer-marquee-separator">✦</span>
-                `).join('');
-            }
-        } catch (error) {
-            console.error('Error loading interests:', error);
+            container.innerHTML = repeatedInterests.map(interest => `
+                <span class="footer-marquee-item">${interest}</span>
+                <span class="footer-marquee-separator">✦</span>
+            `).join('');
         }
     },
 };
@@ -216,6 +218,20 @@ const ContentLoader = {
 // ============================================================================
 
 const ScrollHandler = {
+    // Cached DOM elements
+    header: null,
+    sections: null,
+    navLinks: null,
+
+    /**
+     * Caches DOM elements for performance
+     */
+    cacheElements() {
+        this.header = qs('header');
+        this.sections = qsa('section');
+        this.navLinks = qsa('.nav-links a');
+    },
+
     /**
      * Handles scroll events for header transparency and navigation highlighting
      */
@@ -228,9 +244,13 @@ const ScrollHandler = {
      * Updates header transparency based on scroll position
      */
     updateHeaderTransparency() {
-        const header = qs('header');
-        if (header) {
-            header.classList.toggle('header-scrolled', window.scrollY > 1);
+        if (this.header) {
+            const isScrolled = window.scrollY > 0;
+            if (isScrolled) {
+                this.header.classList.add('header-scrolled');
+            } else {
+                this.header.classList.remove('header-scrolled');
+            }
         }
     },
 
@@ -238,19 +258,16 @@ const ScrollHandler = {
      * Updates active navigation link based on current section
      */
     updateNavigationHighlight() {
-        const sections = qsa('section');
-        const navLinks = qsa('.nav-links a');
+        if (!this.sections || this.sections.length === 0) return;
 
-        if (sections.length === 0) return;
-
-        sections.forEach(section => {
+        this.sections.forEach(section => {
             const sectionTop = section.offsetTop - CONFIG.SCROLL.OFFSET;
             const sectionHeight = section.clientHeight;
             const scrollPosition = window.scrollY;
 
             if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
                 const targetId = `#${section.id}`;
-                navLinks.forEach(link => {
+                this.navLinks.forEach(link => {
                     link.classList.toggle('active', link.getAttribute('href') === targetId);
                 });
             }
@@ -258,10 +275,26 @@ const ScrollHandler = {
     },
 
     /**
-     * Initializes scroll event listener
+     * Initializes scroll event listener with throttling
      */
     init() {
-        window.addEventListener('scroll', () => this.handle());
+        this.cacheElements();
+        
+        // Set initial state
+        this.updateHeaderTransparency();
+        
+        // Throttled scroll handler
+        const throttledHandle = throttle(() => this.handle(), CONFIG.SCROLL.THROTTLE_DELAY);
+        window.addEventListener('scroll', throttledHandle);
+        
+        // Also check on scroll end to ensure state is correct
+        let scrollEndTimer;
+        window.addEventListener('scroll', () => {
+            clearTimeout(scrollEndTimer);
+            scrollEndTimer = setTimeout(() => {
+                this.updateHeaderTransparency();
+            }, 150);
+        });
     },
 };
 
@@ -300,6 +333,7 @@ const Navigation = {
 
 const Greeting = {
     currentIndex: 0,
+    rotationInterval: null,
 
     /**
      * Changes the greeting text with fade animation
@@ -327,7 +361,7 @@ const Greeting = {
         // Initial faster transition for English
         setTimeout(() => {
             this.change();
-            setInterval(() => this.change(), CONFIG.GREETING.ROTATION_INTERVAL);
+            this.rotationInterval = setInterval(() => this.change(), CONFIG.GREETING.ROTATION_INTERVAL);
         }, CONFIG.GREETING.INITIAL_DELAY);
     },
 };
@@ -346,6 +380,9 @@ const SpotifyWidget = {
 
     // Animation tracking
     activeAnimations: new Map(),
+
+    // Polling interval
+    pollInterval: null,
 
     /**
      * Initializes DOM element references
@@ -375,15 +412,12 @@ const SpotifyWidget = {
      * Runs the marquee animation loop for overflowing text
      */
     runAnimationLoop(element, containerWidth, textWidth) {
-        const speed = 40; // px per second
-        const buffer = 30;
-        const distOut = textWidth + buffer;
-        const distIn = containerWidth + buffer;
+        const { SPEED, BUFFER, PAUSE_START, PAUSE_END } = CONFIG.SPOTIFY.MARQUEE;
+        const distOut = textWidth + BUFFER;
+        const distIn = containerWidth + BUFFER;
         
-        const durationOut = (distOut / speed) * 1000;
-        const durationIn = (distIn / speed) * 1000;
-        const pauseStart = 2000;
-        const pauseEnd = 2000;
+        const durationOut = (distOut / SPEED) * 1000;
+        const durationIn = (distIn / SPEED) * 1000;
 
         const step1 = () => {
             // Reset to start
@@ -400,23 +434,21 @@ const SpotifyWidget = {
                     element.style.transition = 'none';
                     element.style.transform = `translateX(${distIn}px)`;
                     
-                    // Wait for teleport, then scroll in
+                    // Wait for teleport, then scroll in (single RAF is sufficient)
                     requestAnimationFrame(() => {
-                        requestAnimationFrame(() => {
-                            element.style.transition = `transform ${durationIn}ms linear`;
-                            element.style.transform = 'translateX(0)';
-                            
-                            // Wait for scroll in, then loop
-                            const id3 = setTimeout(() => {
-                                step1();
-                            }, durationIn + pauseEnd);
-                            
-                            this.activeAnimations.set(element, { timeoutId: id3 });
-                        });
+                        element.style.transition = `transform ${durationIn}ms linear`;
+                        element.style.transform = 'translateX(0)';
+                        
+                        // Wait for scroll in, then loop
+                        const id3 = setTimeout(() => {
+                            step1();
+                        }, durationIn + PAUSE_END);
+                        
+                        this.activeAnimations.set(element, { timeoutId: id3 });
                     });
                 }, durationOut);
                 this.activeAnimations.set(element, { timeoutId: id2 });
-            }, pauseStart);
+            }, PAUSE_START);
             this.activeAnimations.set(element, { timeoutId: id1 });
         };
         
@@ -439,6 +471,21 @@ const SpotifyWidget = {
         if (textWidth > containerWidth) {
             element.parentElement.classList.add('active');
             this.runAnimationLoop(element, containerWidth, textWidth);
+        }
+    },
+
+    /**
+     * Updates a text element with animation if needed
+     */
+    updateTextElement(element, newText) {
+        if (!element) return;
+
+        if (element.textContent !== newText) {
+            element.textContent = newText;
+            this.checkAndAnimateMarquee(element);
+        } else if (!this.activeAnimations.has(element) && 
+                   element.scrollWidth > element.parentElement.clientWidth) {
+            this.checkAndAnimateMarquee(element);
         }
     },
 
@@ -466,27 +513,9 @@ const SpotifyWidget = {
                 }
             }
 
-            // Update song title with animation if needed
-            if (this.songTitle) {
-                if (this.songTitle.textContent !== song.title) {
-                    this.songTitle.textContent = song.title;
-                    this.checkAndAnimateMarquee(this.songTitle);
-                } else if (!this.activeAnimations.has(this.songTitle) && 
-                           this.songTitle.scrollWidth > this.songTitle.parentElement.clientWidth) {
-                    this.checkAndAnimateMarquee(this.songTitle);
-                }
-            }
-
-            // Update artist name with animation if needed
-            if (this.artistName) {
-                if (this.artistName.textContent !== song.artist) {
-                    this.artistName.textContent = song.artist;
-                    this.checkAndAnimateMarquee(this.artistName);
-                } else if (!this.activeAnimations.has(this.artistName) && 
-                           this.artistName.scrollWidth > this.artistName.parentElement.clientWidth) {
-                    this.checkAndAnimateMarquee(this.artistName);
-                }
-            }
+            // Update song title and artist name using helper method
+            this.updateTextElement(this.songTitle, song.title);
+            this.updateTextElement(this.artistName, song.artist);
         } else {
             this.widget.classList.add('hidden');
             if (this.songTitle) this.stopAnimation(this.songTitle);
@@ -516,7 +545,7 @@ const SpotifyWidget = {
     init() {
         this.initElements();
         this.fetchNowPlaying(); // Initial check
-        setInterval(() => this.fetchNowPlaying(), CONFIG.SPOTIFY.POLL_INTERVAL);
+        this.pollInterval = setInterval(() => this.fetchNowPlaying(), CONFIG.SPOTIFY.POLL_INTERVAL);
     },
 };
 
@@ -592,7 +621,7 @@ const AIInput = {
                 this.userInput.placeholder = this.prompts[this.currentPromptIndex];
                 console.log("Placeholder set to:", this.userInput.placeholder);
 
-                setInterval(() => this.rotatePlaceholderText(), CONFIG.AI_INPUT.PLACEHOLDER_ROTATION_INTERVAL);
+                setInterval(() => this.rotatePlaceholderText(), 3000);
             }
         } catch (error) {
             console.error('Error loading prompts:', error);
@@ -611,7 +640,7 @@ const AIInput = {
             this.currentPromptIndex = (this.currentPromptIndex + 1) % this.prompts.length;
             this.userInput.placeholder = this.prompts[this.currentPromptIndex];
             this.userInput.classList.remove('placeholder-fade-out');
-        }, CONFIG.AI_INPUT.PLACEHOLDER_FADE_DURATION);
+        }, 500);
     },
 
     /**
@@ -646,7 +675,7 @@ const AIInput = {
             this.textInputContainer.classList.add('expanded');
             setTimeout(() => {
                 this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
-            }, CONFIG.AI_INPUT.CONTAINER_EXPANSION_DELAY);
+            }, 300);
         } else {
             this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
         }
@@ -685,7 +714,7 @@ const AIInput = {
                         aiMessageDiv.textContent = "Error: Could not load AI configuration.";
                         this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
                     }
-                }, CONFIG.AI_INPUT.THINKING_DELAY);
+                }, 1000);
             } else {
                 console.error('Error saving input:', result.message);
             }
