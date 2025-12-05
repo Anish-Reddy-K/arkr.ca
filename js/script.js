@@ -593,6 +593,9 @@ const AIChat = {
     /** @type {number|null} Typewriter timeout ID */
     typewriterTimeout: null,
 
+    /** @type {boolean} Whether typewriter is currently running */
+    typewriterRunning: false,
+
     // -------------------------------------------------------------------------
     // DOM Element References
     // -------------------------------------------------------------------------
@@ -801,6 +804,15 @@ const AIChat = {
         const input = this.elements.userInput;
         if (!input || this.prompts.length === 0) return;
 
+        // Stop any existing typewriter to prevent overlapping loops
+        this.stopTypewriter();
+
+        // Prevent starting if already running (safety check)
+        if (this.typewriterRunning) {
+            return;
+        }
+
+        this.typewriterRunning = true;
         let promptIndex = Math.floor(Math.random() * this.prompts.length);
         let charIndex = 0;
         let isDeleting = false;
@@ -813,6 +825,7 @@ const AIChat = {
         const type = () => {
             // Only stop typewriter in chat mode (after first message)
             if (this.uiState === 'chat') {
+                this.typewriterRunning = false;
                 return;
             }
 
@@ -858,6 +871,7 @@ const AIChat = {
             clearTimeout(this.typewriterTimeout);
             this.typewriterTimeout = null;
         }
+        this.typewriterRunning = false;
     },
 
     // -------------------------------------------------------------------------
