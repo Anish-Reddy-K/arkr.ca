@@ -163,17 +163,42 @@
         </div>
     </footer>
 
-    <!-- AI Input -->
-    <div id="text-input-container">
-        <div id="chat-messages"></div>
-        <div id="input-area-wrapper">
-            <input type="text" id="user-input" placeholder="Ask about my skills..." maxlength="512">
-            <button id="send-button">
+    <!-- AI Chat Assistant -->
+    <div id="ai-chat-container">
+        <!-- Status Bar (Loading/Ready indicator) -->
+        <div id="ai-status-bar">
+            <div id="ai-status-left">
+                <span id="ai-status-indicator" class="status-checking"></span>
+                <span id="ai-status-text">Initializing AI...</span>
+            </div>
+            <a href="https://blog.arkr.ca" target="_blank" id="ai-learn-more" title="Learn how this works">
+                <i class="fas fa-info-circle"></i>
+            </a>
+        </div>
+
+        <!-- Progress Bar (shown during model download) -->
+        <div id="ai-progress-container">
+            <div id="ai-progress-bar"></div>
+        </div>
+
+        <!-- Chat Messages Area -->
+        <div id="ai-chat-messages"></div>
+
+        <!-- Input Area -->
+        <div id="ai-input-wrapper">
+            <input type="text" id="ai-user-input" placeholder="Ask about my skills..." maxlength="512" autocomplete="off">
+            <button id="ai-send-button" disabled>
                 <i class="fas fa-arrow-up"></i>
             </button>
         </div>
+
+        <!-- Local AI Badge -->
+        <div id="ai-local-badge">
+            <i class="fas fa-microchip"></i>
+            <span>Runs locally in your browser</span>
+        </div>
     </div>
 
-    <script src="js/script.js"></script>
+    <script type="module" src="js/script.js"></script>
 </body>
 </html>

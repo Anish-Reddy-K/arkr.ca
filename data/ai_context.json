@@ -1,0 +1,136 @@
+{
+    "name": "Anish Reddy",
+    "title": "Applied AI/ML Engineer",
+    "tagline": "Applied AI/ML Engineer | Software Engineer",
+    "location": "Waterloo, Canada",
+    "email": "anishreddy3456@gmail.com",
+    "github": "https://github.com/Anish-Reddy-K",
+    "linkedin": "https://linkedin.com/in/anishreddyk",
+    "website": "https://arkr.ca",
+    "blog": "https://blog.arkr.ca",
+
+    "summary": "I'm an Applied AI/ML Engineer based in Waterloo, Canada. I specialize in building production-ready AI systems, from fine-tuning LLMs to deploying models on edge devices. I'm passionate about making AI accessible and practical.",
+
+    "experience": [
+        {
+            "company": "Geotab",
+            "role": "Data Analyst Intern",
+            "period": "May 2025 - Present",
+            "highlights": [
+                "Automated Root Cause Analysis with a Data Quality Agent, reducing manual investigation time by 30%",
+                "Deployed real-time anomaly detection and data quality dashboards",
+                "Developed Data Lineage System for enhanced governance"
+            ]
+        },
+        {
+            "company": "OCAS",
+            "role": "Machine Learning Engineer Intern",
+            "period": "Apr 2024 - Apr 2025",
+            "highlights": [
+                "Built end-to-end AI advisor using Llama & Azure OpenAI for college program discovery",
+                "Created semantic search pipeline for 10,000+ programs using BERT embeddings, achieving 3x more relevant matches and 85% latency reduction"
+            ]
+        },
+        {
+            "company": "SMART Centre",
+            "role": "AI/ML Engineer Intern",
+            "period": "Sep 2023 - Apr 2024",
+            "highlights": [
+                "Fine-tuned dialogue model for microcontroller deployment",
+                "Optimized SLM using quantization & pruning, reducing inference latency by 80%",
+                "Built efficient inference pipeline for real-time conversational AI on embedded systems"
+            ]
+        }
+    ],
+
+    "projects": [
+        {
+            "name": "Aqua Pinion",
+            "description": "Drowning detection wearable using ML",
+            "tech": "SVM, Sensor Fusion, TinyML, scikit-learn, Python, C/C++",
+            "highlights": [
+                "95% precision drowning detection with life-saving inflatable deployment",
+                "Custom SVM classifier for microcontroller using sensor fusion"
+            ],
+            "status": "Offline"
+        },
+        {
+            "name": "Embeddium",
+            "description": "Vector embedding desktop application",
+            "tech": "PyQt5, Transformers, GPU Optimization, Hugging Face",
+            "highlights": [
+                "Generate vector embeddings from multiple data formats",
+                "GPU-accelerated pipeline for CSV/JSON to FAISS/HDF5 conversion"
+            ],
+            "status": "In Development"
+        },
+        {
+            "name": "Typez",
+            "description": "AI-driven typing improvement tool",
+            "tech": "Local models, scikit-learn, PyTorch, MLX, SQLite",
+            "highlights": [
+                "Tracks typing patterns and generates personalized exercises",
+                "30% average improvement in typing proficiency using keystroke pattern recognition"
+            ],
+            "status": "Live"
+        }
+    ],
+
+    "skills": {
+        "languages": ["Python", "C/C++", "JavaScript", "SQL"],
+        "ml_frameworks": ["PyTorch", "TensorFlow", "scikit-learn", "Hugging Face Transformers"],
+        "llm_tools": ["LangChain", "Azure OpenAI", "Llama", "Fine-tuning", "RAG"],
+        "mlops": ["MLflow", "Docker", "Azure ML", "Model Optimization"],
+        "specialties": ["Edge AI/TinyML", "LLM Applications", "Semantic Search", "Computer Vision"]
+    },
+
+    "activities": [
+        {
+            "title": "Conestoga Computing Society",
+            "role": "President & Founder",
+            "description": "Founded 300-member CS community, hosted 10+ events/workshops"
+        },
+        {
+            "title": "ConHacks Hackathon",
+            "role": "President & Co-Founder",
+            "description": "Organized 130-participant hackathon"
+        },
+        {
+            "title": "Google Developer Groups - On Campus",
+            "role": "Executive Lead",
+            "description": "Organized events for 1,000+ members, conducted TensorFlow workshops"
+        },
+        {
+            "title": "Peer-Assisted Learning",
+            "role": "Leader & Tutor",
+            "description": "Tutored C Programming, DSA, OOP - improved student grades by 45%"
+        }
+    ],
+
+    "awards": [
+        "HackThe6ix Winner",
+        "Student Innovator of the Year",
+        "FGSI Gold Medal",
+        "NIRD RISC: 1st Place"
+    ],
+
+    "mentoring": [
+        "Mentor at Hack The North 2024",
+        "Mentor at Hawk Hacks",
+        "Judge at GDSC Hacks",
+        "Judge at ConHacks",
+        "Guest Speaker at GDSC Queens University"
+    ],
+
+    "interests": [
+        "Generative AI",
+        "Space Tech",
+        "System Design",
+        "Formula 1",
+        "3D Printing",
+        "Cooking",
+        "IoT",
+        "Data Science",
+        "Music"
+    ]
+}
