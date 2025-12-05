@@ -53,5 +53,82 @@
             "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
             "ip_hash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3"
         }
+    },
+    {
+        "id": "chat_6932812c80fa5",
+        "timestamp": "2025-12-05T06:52:28+00:00",
+        "question": "hi",
+        "response": "Hello! How can I assist you today?",
+        "status": "success",
+        "metadata": {
+            "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+            "ip_hash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3"
+        }
+    },
+    {
+        "id": "chat_69333b3a07199",
+        "timestamp": "2025-12-05T20:06:18+00:00",
+        "question": "hi",
+        "response": "How are you today?",
+        "status": "success",
+        "metadata": {
+            "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+            "ip_hash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3"
+        }
+    },
+    {
+        "id": "chat_69333b42dd9a1",
+        "timestamp": "2025-12-05T20:06:26+00:00",
+        "question": "good how are you",
+        "response": "Same to you! How's your day shaping up?",
+        "status": "success",
+        "metadata": {
+            "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+            "ip_hash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3"
+        }
+    },
+    {
+        "id": "chat_69333b4952897",
+        "timestamp": "2025-12-05T20:06:33+00:00",
+        "question": "not baf",
+        "response": "No worries, we all need a break sometimes. What's on your mind, or would you like to chat about something in particular?",
+        "status": "success",
+        "metadata": {
+            "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+            "ip_hash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3"
+        }
+    },
+    {
+        "id": "chat_69333b50c74e6",
+        "timestamp": "2025-12-05T20:06:40+00:00",
+        "question": "just lost",
+        "response": "Don't worry, we've all been there. It sounds like you might need a mental pick-me-up or a fresh start. Would you like some suggestions or a conversation to help clear your mind?",
+        "status": "success",
+        "metadata": {
+            "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+            "ip_hash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3"
+        }
+    },
+    {
+        "id": "chat_69333b587366d",
+        "timestamp": "2025-12-05T20:06:48+00:00",
+        "question": "yes",
+        "response": "Let's start fresh. I'm a large language model, and I'm here to listen and help. You can share what's on your mind, and I'll do my best to provide a supportive and non-judgmental space.\n\nIf you're feeling overwhelmed or stuck, I can offer some suggestions or prompts to help you get started. Or, if you're just looking for someone to talk to, I'm here to listen and provide a friendly ear.\n\nWhat's been going on, and how can I help?",
+        "status": "success",
+        "metadata": {
+            "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+            "ip_hash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3"
+        }
+    },
+    {
+        "id": "chat_69333b7ec9b89",
+        "timestamp": "2025-12-05T20:07:26+00:00",
+        "question": "hi",
+        "response": "Hello! How can I assist you today?",
+        "status": "success",
+        "metadata": {
+            "user_agent": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/142.0.0.0 Safari\/537.36",
+            "ip_hash": "eff8e7ca506627fe15dda5e0e512fcaad70b6d520f37cc76597fdb4f2d83a1a3"
+        }
     }
 ]

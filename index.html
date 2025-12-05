@@ -165,44 +165,29 @@
 
     <!-- AI Chat Assistant -->
     <div id="ai-chat-container">
-        <!-- Status Bar (Loading/Ready indicator) -->
-        <div id="ai-status-bar">
-            <div id="ai-status-left">
-                <span id="ai-status-indicator" class="status-checking"></span>
-                <span id="ai-status-text">Initializing AI...</span>
-            </div>
-            <a href="https://blog.arkr.ca" target="_blank" id="ai-learn-more" title="Learn how this works">
-                <i class="fas fa-info-circle"></i>
+        <!-- Info Line (always visible) -->
+        <div id="ai-info-line">
+            <span id="ai-status-dot"></span>
+            <span class="ai-info-badge">
+                <i class="fas fa-lock"></i>
+                Private
+            </span>
+            <span class="ai-info-separator">·</span>
+            <span class="ai-info-text">In-browser AI</span>
+            <a href="https://blog.arkr.ca" target="_blank" class="ai-info-link">
+                Learn more <i class="fas fa-external-link-alt"></i>
             </a>
         </div>
 
-        <!-- Progress Bar (shown during model download) -->
-        <div id="ai-progress-container">
-            <div id="ai-progress-bar"></div>
-        </div>
-
-        <!-- Chat Messages Area -->
+        <!-- Chat Messages (hidden until chat mode) -->
         <div id="ai-chat-messages"></div>
 
         <!-- Input Area -->
         <div id="ai-input-wrapper">
-            <div id="ai-local-tag">
-                <i class="fas fa-microchip"></i>
-                <span>Local AI</span>
-            </div>
-            <input type="text" id="ai-user-input" placeholder="Ask about my skills..." maxlength="512" autocomplete="off">
+            <input type="text" id="ai-user-input" placeholder="" maxlength="512" autocomplete="off">
             <button id="ai-send-button" disabled>
                 <i class="fas fa-arrow-up"></i>
             </button>
-        </div>
-
-        <!-- Local AI Badge (expanded view) -->
-        <div id="ai-local-badge">
-            <i class="fas fa-lock"></i>
-            <span>100% private - runs entirely in your browser</span>
-            <a href="https://blog.arkr.ca" target="_blank" id="ai-badge-link">
-                Learn more <i class="fas fa-external-link-alt"></i>
-            </a>
         </div>
     </div>
 

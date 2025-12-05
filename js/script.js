@@ -564,25 +564,22 @@ const SpotifyWidget = {
  * Features:
  * - Local LLM inference using WebLLM (runs entirely in browser)
  * - Streaming responses for better UX
- * - Conversation history management
- * - Loading states and progress indication
+ * - Typewriter placeholder effect
+ * - Choreographed animations for state transitions
  */
 const AIChat = {
     // -------------------------------------------------------------------------
     // State
     // -------------------------------------------------------------------------
     
-    /** @type {string[]} Rotating placeholder prompts */
+    /** @type {string[]} Placeholder prompts for typewriter effect */
     prompts: [],
-    
-    /** @type {number} Current prompt index for rotation */
-    promptIndex: 0,
-    
-    /** @type {number|null} Interval ID for prompt rotation */
-    promptRotationInterval: null,
+
+    /** @type {'collapsed'|'focused'|'chat'|'closing'} UI state */
+    uiState: 'collapsed',
 
     /** @type {'checking'|'loading'|'ready'|'error'|'unsupported'} Engine status */
-    status: 'checking',
+    engineStatus: 'checking',
 
     /** @type {Object|null} AI configuration */
     config: null,
@@ -590,8 +587,11 @@ const AIChat = {
     /** @type {Object|null} AI context (portfolio data) */
     context: null,
 
-    /** @type {string|null} Queued message while loading */
+    /** @type {Object|null} Queued message while loading */
     queuedMessage: null,
+
+    /** @type {number|null} Typewriter timeout ID */
+    typewriterTimeout: null,
 
     // -------------------------------------------------------------------------
     // DOM Element References
@@ -599,16 +599,13 @@ const AIChat = {
     
     elements: {
         container: null,
+        infoLine: null,
+        statusDot: null,
         chatMessages: null,
         inputWrapper: null,
         userInput: null,
         sendButton: null,
-        statusIndicator: null,
-        statusText: null,
-        progressBar: null,
-        progressContainer: null,
-        learnMoreLink: null,
-        localBadge: null,
+        infoLink: null,
     },
 
     // -------------------------------------------------------------------------
@@ -628,11 +625,6 @@ const AIChat = {
             
             this.config = await configRes.json();
             this.context = await contextRes.json();
-            
-            // Update learn more link
-            if (this.elements.learnMoreLink && this.config.blogUrl) {
-                this.elements.learnMoreLink.href = this.config.blogUrl;
-            }
         } catch (error) {
             console.error('[AIChat] Failed to load config:', error);
         }
@@ -678,40 +670,36 @@ const AIChat = {
     // -------------------------------------------------------------------------
 
     /**
-     * Updates the UI status indicator
+     * Updates the engine status and UI indicator
      * @param {'checking'|'loading'|'ready'|'error'|'unsupported'} status
-     * @param {string} [text] Status text
      */
-    setStatus(status, text) {
-        this.status = status;
-        const { statusIndicator, statusText, container, progressContainer } = this.elements;
+    setEngineStatus(status) {
+        this.engineStatus = status;
+        const { statusDot } = this.elements;
 
-        // Update indicator class
-        if (statusIndicator) {
-            statusIndicator.className = '';
-            statusIndicator.id = 'ai-status-indicator';
-            statusIndicator.classList.add(`status-${status}`);
-        }
-
-        // Update text
-        if (statusText && text) {
-            statusText.textContent = text;
-        }
-
-        // Toggle loading class for progress bar visibility
-        if (container) {
-            container.classList.toggle('loading', status === 'loading');
+        if (statusDot) {
+            // Remove all status classes
+            statusDot.classList.remove('ready', 'loading', 'error');
+            
+            // Add appropriate class
+            if (status === 'ready') {
+                statusDot.classList.add('ready');
+            } else if (status === 'loading') {
+                statusDot.classList.add('loading');
+            } else if (status === 'error' || status === 'unsupported') {
+                statusDot.classList.add('error');
+            }
         }
     },
 
     /**
-     * Updates the progress bar
+     * Updates the loading progress bar via CSS variable
      * @param {number} percent Progress percentage (0-100)
      */
     setProgress(percent) {
-        const { progressBar } = this.elements;
-        if (progressBar) {
-            progressBar.style.width = `${percent}%`;
+        const { container } = this.elements;
+        if (container) {
+            container.style.setProperty('--loading-progress', `${percent}%`);
         }
     },
 
@@ -724,18 +712,18 @@ const AIChat = {
      * @returns {Promise<void>}
      */
     async initWebLLM() {
-        this.setStatus('checking', 'Checking browser compatibility...');
+        this.setEngineStatus('checking');
 
         // Check WebGPU support
         const compatibility = await WebLLMEngine.checkCompatibility();
         
         if (!compatibility.supported) {
-            this.setStatus('unsupported', 'WebGPU not supported');
+            this.setEngineStatus('unsupported');
             console.warn('[AIChat] WebGPU not supported:', compatibility.reason);
             return;
         }
 
-        this.setStatus('loading', 'Loading AI model...');
+        this.setEngineStatus('loading');
         this.setProgress(0);
 
         const systemPrompt = this.buildSystemPrompt();
@@ -743,17 +731,11 @@ const AIChat = {
         const success = await WebLLMEngine.init({
             modelId: this.config?.modelId || 'Llama-3.2-1B-Instruct-q4f16_1-MLC',
             systemPrompt,
-            onProgress: ({ percent, text }) => {
+            onProgress: ({ percent }) => {
                 this.setProgress(percent);
-                // Simplify status text
-                let displayText = 'Loading AI model...';
-                if (text.includes('Fetching')) displayText = 'Downloading model...';
-                else if (text.includes('Loading')) displayText = 'Loading model...';
-                else if (percent > 80) displayText = 'Almost ready...';
-                this.setStatus('loading', displayText);
             },
             onReady: () => {
-                this.setStatus('ready', 'AI Ready');
+                this.setEngineStatus('ready');
                 this.setProgress(100);
                 
                 // Process queued message if any
@@ -764,50 +746,98 @@ const AIChat = {
                 }
             },
             onError: (error) => {
-                this.setStatus('error', 'Failed to load AI');
+                this.setEngineStatus('error');
                 console.error('[AIChat] WebLLM error:', error);
             },
         });
 
         if (!success) {
-            this.setStatus('error', 'Failed to load AI');
+            this.setEngineStatus('error');
         }
     },
 
     // -------------------------------------------------------------------------
-    // Placeholder Prompts
+    // Typewriter Effect for Placeholder
     // -------------------------------------------------------------------------
 
     /**
-     * Initializes placeholder prompts from config and starts rotation
+     * Initializes prompts from config
      */
     initPrompts() {
-        // Use prompts from config (loaded in loadConfig)
         if (this.config?.placeholderPrompts) {
             this.prompts = this.config.placeholderPrompts;
         }
         
-        if (this.prompts.length > 0 && this.elements.userInput) {
-            this.promptIndex = Math.floor(Math.random() * this.prompts.length);
-            this.elements.userInput.placeholder = this.prompts[this.promptIndex];
-            this.promptRotationInterval = setInterval(() => this.rotatePrompt(), 3000);
+        if (this.prompts.length > 0) {
+            this.startTypewriter();
         }
     },
 
     /**
-     * Rotates to the next placeholder prompt with fade animation
+     * Starts the typewriter effect for placeholder text
      */
-    rotatePrompt() {
+    startTypewriter() {
         const input = this.elements.userInput;
         if (!input || this.prompts.length === 0) return;
 
-        input.classList.add('placeholder-fade-out');
+        let promptIndex = Math.floor(Math.random() * this.prompts.length);
+        let charIndex = 0;
+        let isDeleting = false;
         
-        setTimeout(() => {
-            this.promptIndex = (this.promptIndex + 1) % this.prompts.length;
-            input.placeholder = this.prompts[this.promptIndex];
-            input.classList.remove('placeholder-fade-out');
-        }, 500);
+        const TYPE_SPEED = 70;      // ms per character when typing
+        const DELETE_SPEED = 35;    // ms per character when deleting
+        const PAUSE_END = 2500;     // pause at end of word
+        const PAUSE_START = 400;    // pause before starting new word
+
+        const type = () => {
+            // Stop if input has focus or user is typing
+            if (document.activeElement === input) {
+                this.typewriterTimeout = setTimeout(type, 500);
+                return;
+            }
+
+            const currentPrompt = this.prompts[promptIndex];
+            
+            if (isDeleting) {
+                // Deleting characters
+                charIndex--;
+                input.placeholder = currentPrompt.substring(0, charIndex);
+                
+                if (charIndex === 0) {
+                    isDeleting = false;
+                    promptIndex = (promptIndex + 1) % this.prompts.length;
+                    this.typewriterTimeout = setTimeout(type, PAUSE_START);
+                    return;
+                }
+                
+                this.typewriterTimeout = setTimeout(type, DELETE_SPEED);
+            } else {
+                // Typing characters
+                charIndex++;
+                input.placeholder = currentPrompt.substring(0, charIndex);
+                
+                if (charIndex === currentPrompt.length) {
+                    isDeleting = true;
+                    this.typewriterTimeout = setTimeout(type, PAUSE_END);
+                    return;
+                }
+                
+                this.typewriterTimeout = setTimeout(type, TYPE_SPEED);
+            }
+        };
+
+        // Start the effect
+        type();
+    },
+
+    /**
+     * Stops the typewriter effect
+     */
+    stopTypewriter() {
+        if (this.typewriterTimeout) {
+            clearTimeout(this.typewriterTimeout);
+            this.typewriterTimeout = null;
+        }
     },
 
     // -------------------------------------------------------------------------
@@ -825,29 +855,57 @@ const AIChat = {
     },
 
     /**
-     * Expands the chat container to show messages
+     * Sets the UI state with proper class management
+     * @param {'collapsed'|'focused'|'chat'|'closing'} newState
      */
-    expandContainer() {
-        const { container, chatMessages } = this.elements;
-        if (!container.classList.contains('expanded')) {
-            container.classList.add('expanded');
-            setTimeout(() => {
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, 300);
-        }
-    },
+    setUIState(newState) {
+        const { container, chatMessages, userInput } = this.elements;
+        if (!container) return;
 
-    /**
-     * Collapses the chat container
-     */
-    collapseContainer() {
-        const { container, userInput } = this.elements;
-        container.classList.remove('width-expanded', 'expanded');
-        userInput.value = '';
-        this.updateSendButtonState();
+        const prevState = this.uiState;
         
-        // Reset conversation when closing
-        WebLLMEngine.reset();
+        // Don't transition if already in that state (except closing)
+        if (prevState === newState && newState !== 'closing') return;
+
+        // Remove all state classes
+        container.classList.remove('focused', 'chat-open', 'closing');
+
+        switch (newState) {
+            case 'focused':
+                container.classList.add('focused');
+                this.uiState = 'focused';
+                break;
+                
+            case 'chat':
+                container.classList.add('chat-open');
+                this.uiState = 'chat';
+                setTimeout(() => this.scrollToBottom(), 50);
+                break;
+                
+            case 'closing':
+                container.classList.add('closing');
+                this.uiState = 'closing';
+                
+                // After animation completes, reset to collapsed
+                setTimeout(() => {
+                    container.classList.remove('closing');
+                    chatMessages.innerHTML = '';
+                    userInput.value = '';
+                    this.updateSendButtonState();
+                    this.uiState = 'collapsed';
+                    
+                    // Reset conversation
+                    WebLLMEngine.reset();
+                }, 400);
+                break;
+                
+            case 'collapsed':
+            default:
+                this.uiState = 'collapsed';
+                userInput.value = '';
+                this.updateSendButtonState();
+                break;
+        }
     },
 
     /**
@@ -924,10 +982,10 @@ const AIChat = {
         
         if (!question) return;
 
-        // Clear input and expand container
+        // Clear input and transition to chat state
         userInput.value = '';
         this.updateSendButtonState();
-        this.expandContainer();
+        this.setUIState('chat');
 
         // Display user message
         this.appendMessage('user', question);
@@ -935,22 +993,22 @@ const AIChat = {
         // Create AI message placeholder
         const aiMessage = this.appendMessage('ai', '');
 
-        // Handle based on current status
-        if (this.status === 'unsupported') {
+        // Handle based on current engine status
+        if (this.engineStatus === 'unsupported') {
             const errorMsg = "Sorry, your browser doesn't support WebGPU. Please try Chrome 113+, Edge 113+, or Firefox 126+.";
             aiMessage.textContent = errorMsg;
             this.logChat(question, errorMsg, 'unsupported');
             return;
         }
 
-        if (this.status === 'error') {
+        if (this.engineStatus === 'error') {
             const errorMsg = "Sorry, there was an error loading the AI. Please refresh and try again.";
             aiMessage.textContent = errorMsg;
             this.logChat(question, errorMsg, 'error');
             return;
         }
 
-        if (this.status === 'loading' || this.status === 'checking') {
+        if (this.engineStatus === 'loading' || this.engineStatus === 'checking') {
             aiMessage.textContent = "AI is still loading... I'll answer once ready.";
             this.queuedMessage = { question, element: aiMessage };
             return;
@@ -997,14 +1055,15 @@ const AIChat = {
      */
     handleOutsideClick(event) {
         const { container } = this.elements;
+        if (!container) return;
         
         if (!container.contains(event.target)) {
-            if (container.classList.contains('expanded')) {
-                this.collapseContainer();
-            } else if (container.classList.contains('width-expanded')) {
-                container.classList.remove('width-expanded');
-                this.elements.userInput.value = '';
-                this.updateSendButtonState();
+            if (this.uiState === 'chat') {
+                // Close with animation
+                this.setUIState('closing');
+            } else if (this.uiState === 'focused') {
+                // Just collapse width
+                this.setUIState('collapsed');
             }
         }
     },
@@ -1013,22 +1072,29 @@ const AIChat = {
      * Sets up all event listeners
      */
     initEventListeners() {
-        const { container, userInput, sendButton, chatMessages } = this.elements;
+        const { container, userInput, sendButton } = this.elements;
 
-        // Input events
-        userInput.addEventListener('input', () => this.updateSendButtonState());
-        
+        // Input focus/blur for width expansion
         userInput.addEventListener('focus', () => {
-            container.classList.add('width-expanded');
+            if (this.uiState === 'collapsed') {
+                this.setUIState('focused');
+            }
         });
 
         userInput.addEventListener('blur', () => {
-            if (!container.classList.contains('expanded')) {
-                container.classList.remove('width-expanded');
-                userInput.value = '';
-                this.updateSendButtonState();
+            // Only collapse if not in chat mode and input is empty
+            if (this.uiState === 'focused' && userInput.value.trim() === '') {
+                // Small delay to allow click events to fire first
+                setTimeout(() => {
+                    if (this.uiState === 'focused') {
+                        this.setUIState('collapsed');
+                    }
+                }, 150);
             }
         });
+
+        // Input change
+        userInput.addEventListener('input', () => this.updateSendButtonState());
 
         // Submit events
         sendButton.addEventListener('click', () => this.handleSubmit());
@@ -1046,13 +1112,6 @@ const AIChat = {
 
         // Outside click to close
         document.addEventListener('click', (e) => this.handleOutsideClick(e));
-
-        // Clear messages when container collapses
-        container.addEventListener('transitionend', (e) => {
-            if (e.propertyName === 'max-height' && !container.classList.contains('expanded')) {
-                chatMessages.innerHTML = '';
-            }
-        });
     },
 
     // -------------------------------------------------------------------------
@@ -1066,16 +1125,13 @@ const AIChat = {
     cacheElements() {
         this.elements = {
             container: qs('#ai-chat-container'),
+            infoLine: qs('#ai-info-line'),
+            statusDot: qs('#ai-status-dot'),
             chatMessages: qs('#ai-chat-messages'),
             inputWrapper: qs('#ai-input-wrapper'),
             userInput: qs('#ai-user-input'),
             sendButton: qs('#ai-send-button'),
-            statusIndicator: qs('#ai-status-indicator'),
-            statusText: qs('#ai-status-text'),
-            progressBar: qs('#ai-progress-bar'),
-            progressContainer: qs('#ai-progress-container'),
-            learnMoreLink: qs('#ai-learn-more'),
-            localBadge: qs('#ai-local-badge'),
+            infoLink: qs('.ai-info-link'),
         };
 
         // Check required elements
@@ -1103,10 +1159,15 @@ const AIChat = {
         // Load config first (contains prompts)
         await this.loadConfig();
         
-        // Initialize prompts from config
+        // Update info link with blog URL
+        if (this.elements.infoLink && this.config?.blogUrl) {
+            this.elements.infoLink.href = this.config.blogUrl;
+        }
+        
+        // Start typewriter effect for placeholder
         this.initPrompts();
 
-        // Initialize WebLLM (starts on page load as per user preference)
+        // Initialize WebLLM (starts on page load)
         this.initWebLLM();
 
         console.log('[AIChat] Module initialized');

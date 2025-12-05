@@ -1215,152 +1215,178 @@ footer {
    11. AI Chat Assistant
    ============================ */
 
-/* Main Container */
+/* CSS Custom Properties for Animation Control */
 #ai-chat-container {
+    --width-collapsed: 320px;
+    --width-expanded: 420px;
+    --height-collapsed: 88px;
+    --height-chat: 400px;
+    --loading-progress: 0%;
+    
     position: fixed;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
+    
     display: flex;
     flex-direction: column;
-    padding: 0;
-    border-radius: 20px;
-    background: rgba(30, 30, 30, 0.95);
-    backdrop-filter: blur(12px);
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
-    width: 320px;
+    
+    width: var(--width-collapsed);
+    height: var(--height-collapsed);
     max-width: calc(100% - 32px);
-    max-height: 48px;
-    overflow: hidden;
-    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
-                width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 0.3s ease;
+    
+    background: rgba(28, 28, 28, 0.95);
+    backdrop-filter: blur(16px);
+    border-radius: 18px;
     border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+    
+    overflow: hidden;
+    will-change: width, height;
+    
+    /* Default expanding transition */
+    transition: 
+        width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.3s ease;
 }
 
 #ai-chat-container:hover {
-    box-shadow: 0 6px 32px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 6px 32px rgba(0, 0, 0, 0.5);
 }
 
-#ai-chat-container.width-expanded {
-    width: 450px;
-    max-height: 120px;
+/* State: Focused (width expanded) */
+#ai-chat-container.focused {
+    width: var(--width-expanded);
 }
 
-#ai-chat-container.expanded {
-    max-height: 450px;
+/* State: Chat Open (full expansion) */
+#ai-chat-container.chat-open {
+    width: var(--width-expanded);
+    height: var(--height-chat);
 }
 
-/* Status Bar */
-#ai-status-bar {
-    display: none;
-    align-items: center;
-    justify-content: space-between;
-    padding: 6px 12px;
-    background: rgba(255, 255, 255, 0.03);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    min-height: 28px;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+/* State: Closing (choreographed collapse) */
+#ai-chat-container.closing {
+    transition: 
+        width 0.25s cubic-bezier(0.4, 0, 1, 1) 0.15s,
+        height 0.28s cubic-bezier(0.4, 0, 1, 1) 0.05s,
+        box-shadow 0.2s ease;
 }
 
-#ai-chat-container.width-expanded #ai-status-bar,
-#ai-chat-container.expanded #ai-status-bar {
-    display: flex;
-    opacity: 1;
-    transform: translateY(0);
-}
-
-#ai-status-left {
+/* -------------------------
+   Info Line (Always Visible)
+   ------------------------- */
+#ai-info-line {
     display: flex;
     align-items: center;
-    gap: 8px;
-}
-
-#ai-status-indicator {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
+    gap: 6px;
+    padding: 8px 14px;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.68rem;
+    position: relative;
     flex-shrink: 0;
 }
 
-#ai-status-indicator.status-loading {
-    background: #f59e0b;
-    animation: pulse-loading 1.5s ease-in-out infinite;
+/* Loading Progress Bar (inside info line) */
+#ai-info-line::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: var(--loading-progress);
+    background: linear-gradient(90deg, #fff41f, #22c55e);
+    transition: width 0.3s ease;
+    border-radius: 0 2px 2px 0;
 }
 
-#ai-status-indicator.status-ready {
+/* Status Dot */
+#ai-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #6366f1;
+    flex-shrink: 0;
+    animation: pulse-status 1.5s ease-in-out infinite;
+}
+
+#ai-status-dot.ready {
     background: #22c55e;
-    box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+    box-shadow: 0 0 6px rgba(34, 197, 94, 0.6);
+    animation: none;
 }
 
-#ai-status-indicator.status-error {
-    background: #ef4444;
-}
-
-#ai-status-indicator.status-unsupported {
+#ai-status-dot.loading {
     background: #f59e0b;
+    animation: pulse-status 1s ease-in-out infinite;
 }
 
-@keyframes pulse-loading {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.9); }
+#ai-status-dot.error {
+    background: #ef4444;
+    animation: none;
 }
 
-#ai-status-text {
-    font-size: 0.7rem;
-    color: #888;
-    font-family: 'Manrope', sans-serif;
-    letter-spacing: 0.02em;
+@keyframes pulse-status {
+    0%, 100% { opacity: 0.5; transform: scale(0.9); }
+    50% { opacity: 1; transform: scale(1.1); }
 }
 
-#ai-learn-more {
-    color: #666;
-    font-size: 0.75rem;
-    text-decoration: none;
-    transition: color 0.2s ease;
+.ai-info-badge {
     display: flex;
     align-items: center;
+    gap: 4px;
+    color: #888;
 }
 
-#ai-learn-more:hover {
+.ai-info-badge i {
+    font-size: 0.6rem;
+    color: #22c55e;
+}
+
+.ai-info-separator {
+    color: #444;
+}
+
+.ai-info-text {
+    color: #666;
+}
+
+.ai-info-link {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #555;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.ai-info-link:hover {
     color: #fff41f;
 }
 
-/* Progress Bar */
-#ai-progress-container {
-    height: 0;
-    background: rgba(255, 255, 255, 0.05);
-    overflow: hidden;
-    opacity: 0;
-    transition: opacity 0.3s ease, height 0.3s ease;
+.ai-info-link i {
+    font-size: 0.55rem;
 }
 
-#ai-chat-container.loading #ai-progress-container {
-    height: 2px;
-    opacity: 1;
-}
-
-#ai-progress-bar {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #fff41f, #f59e0b);
-    transition: width 0.3s ease;
-    border-radius: 2px;
-}
-
-/* Chat Messages */
+/* -------------------------
+   Chat Messages Area
+   ------------------------- */
 #ai-chat-messages {
-    flex-grow: 1;
+    flex: 1;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     padding: 12px 14px;
     gap: 10px;
     min-height: 0;
-    max-height: 250px;
+    opacity: 1;
+    transition: opacity 0.15s ease-out;
+    
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
 }
@@ -1380,8 +1406,15 @@ footer {
 
 #ai-chat-messages:empty {
     display: none;
+    padding: 0;
 }
 
+/* Fade out messages when closing */
+#ai-chat-container.closing #ai-chat-messages {
+    opacity: 0;
+}
+
+/* Message Bubbles */
 .user-message {
     align-self: flex-end;
     max-width: 85%;
@@ -1392,6 +1425,7 @@ footer {
     background: rgba(255, 244, 31, 0.1);
     padding: 8px 12px;
     border-radius: 14px 14px 4px 14px;
+    animation: message-in 0.2s ease-out;
 }
 
 .ai-message {
@@ -1404,78 +1438,50 @@ footer {
     background: rgba(255, 255, 255, 0.05);
     padding: 8px 12px;
     border-radius: 14px 14px 14px 4px;
+    animation: message-in 0.2s ease-out;
 }
 
-.system-message {
-    align-self: center;
-    font-size: 0.75rem;
-    color: #666;
-    text-align: center;
-    padding: 4px 12px;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 10px;
+@keyframes message-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-/* Input Area */
+/* Typing cursor for empty AI messages */
+.ai-message:empty::after {
+    content: '';
+    display: inline-block;
+    width: 2px;
+    height: 14px;
+    background: #888;
+    animation: blink-cursor 0.7s ease-in-out infinite;
+    vertical-align: text-bottom;
+}
+
+@keyframes blink-cursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* -------------------------
+   Input Area
+   ------------------------- */
 #ai-input-wrapper {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 12px;
+    gap: 10px;
+    padding: 12px 14px;
     flex-shrink: 0;
-}
-
-/* Local AI Tag (always visible) */
-#ai-local-tag {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 4px 8px;
-    background: rgba(255, 244, 31, 0.1);
-    border-radius: 10px;
-    flex-shrink: 0;
-    cursor: help;
-}
-
-#ai-local-tag i {
-    font-size: 0.6rem;
-    color: #fff41f;
-}
-
-#ai-local-tag span {
-    font-size: 0.65rem;
-    color: #999;
-    font-family: 'Manrope', sans-serif;
-    white-space: nowrap;
-}
-
-#ai-local-tag::before {
-    content: 'AI runs in your browser - 100% private';
-    position: absolute;
-    bottom: calc(100% + 8px);
-    left: 12px;
-    background: rgba(20, 20, 20, 0.95);
-    color: #ccc;
-    font-size: 0.65rem;
-    padding: 6px 10px;
-    border-radius: 6px;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(4px);
-    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
-    pointer-events: none;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-#ai-local-tag:hover::before {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 #ai-user-input {
-    flex-grow: 1;
+    flex: 1;
     border: none;
     background: transparent;
     color: #fff;
@@ -1487,28 +1493,26 @@ footer {
 }
 
 #ai-user-input::placeholder {
-    color: #666;
-    transition: opacity 0.4s ease;
-}
-
-#ai-user-input.placeholder-fade-out::placeholder {
-    opacity: 0;
+    color: #555;
 }
 
 #ai-send-button {
     background: #fff41f;
     border: none;
     border-radius: 50%;
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #1a1a1a;
     cursor: pointer;
-    transition: all 0.2s ease;
     flex-shrink: 0;
+    transition: 
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
 }
 
 #ai-send-button i {
@@ -1518,13 +1522,17 @@ footer {
 }
 
 #ai-send-button:hover:not(:disabled) {
-    transform: scale(1.05);
-    box-shadow: 0 0 12px rgba(255, 244, 31, 0.5);
+    transform: scale(1.08);
+    box-shadow: 0 0 14px rgba(255, 244, 31, 0.5);
+}
+
+#ai-send-button:active:not(:disabled) {
+    transform: scale(0.95);
 }
 
 #ai-send-button:disabled {
-    background: #444;
-    color: #777;
+    background: #3a3a3a;
+    color: #666;
     cursor: not-allowed;
     box-shadow: none;
 }
@@ -1533,146 +1541,27 @@ footer {
     opacity: 0.5;
 }
 
-/* Local AI Badge (expanded view) */
-#ai-local-badge {
-    display: none;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 8px 12px;
-    background: rgba(255, 244, 31, 0.03);
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-#ai-chat-container.width-expanded #ai-local-badge,
-#ai-chat-container.expanded #ai-local-badge {
-    display: flex;
-    opacity: 1;
-    transform: translateY(0);
-}
-
-#ai-local-badge i.fa-lock {
-    font-size: 0.6rem;
-    color: #22c55e;
-}
-
-#ai-local-badge > span {
-    font-size: 0.65rem;
-    color: #666;
-    font-family: 'Manrope', sans-serif;
-}
-
-#ai-badge-link {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 0.65rem;
-    color: #888;
-    text-decoration: none;
-    font-family: 'Manrope', sans-serif;
-    transition: color 0.2s ease;
-    margin-left: auto;
-}
-
-#ai-badge-link:hover {
-    color: #fff41f;
-}
-
-#ai-badge-link i {
-    font-size: 0.55rem;
-}
-
-/* Thinking Animation */
-.ai-message:empty::after {
-    content: '';
-    display: inline-block;
-    width: 4px;
-    height: 14px;
-    background: #888;
-    margin-left: 2px;
-    animation: blink-cursor 0.8s ease-in-out infinite;
-    vertical-align: text-bottom;
-}
-
-@keyframes blink-cursor {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-}
-
-/* Tooltips */
-#ai-learn-more {
-    position: relative;
-}
-
-#ai-learn-more::before {
-    content: 'Learn how this works';
-    position: absolute;
-    bottom: calc(100% + 8px);
-    right: 0;
-    background: rgba(20, 20, 20, 0.95);
-    color: #ccc;
-    font-size: 0.65rem;
-    padding: 6px 10px;
-    border-radius: 6px;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(4px);
-    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
-    pointer-events: none;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-#ai-learn-more:hover::before {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-
-/* Status checking animation */
-#ai-status-indicator.status-checking {
-    background: #6366f1;
-    animation: pulse-checking 1s ease-in-out infinite;
-}
-
-@keyframes pulse-checking {
-    0%, 100% { opacity: 0.4; transform: scale(0.9); }
-    50% { opacity: 1; transform: scale(1.1); }
-}
-
-/* Status ready glow animation */
-#ai-status-indicator.status-ready {
-    animation: ready-glow 2s ease-in-out infinite;
-}
-
-@keyframes ready-glow {
-    0%, 100% { box-shadow: 0 0 8px rgba(34, 197, 94, 0.5); }
-    50% { box-shadow: 0 0 12px rgba(34, 197, 94, 0.8); }
-}
-
-/* Responsive */
-@media (max-width: 520px) {
+/* -------------------------
+   Responsive
+   ------------------------- */
+@media (max-width: 480px) {
     #ai-chat-container {
-        width: calc(100% - 32px);
-        max-width: none;
+        --width-collapsed: calc(100% - 32px);
+        --width-expanded: calc(100% - 32px);
+        --height-chat: 350px;
+        bottom: 16px;
     }
     
-    #ai-chat-container.width-expanded {
-        width: calc(100% - 32px);
+    #ai-info-line {
+        font-size: 0.62rem;
+        padding: 6px 12px;
     }
     
-    /* Hide tooltips on mobile (touch devices) */
-    #ai-learn-more::before,
-    #ai-local-tag::before {
+    .ai-info-text {
         display: none;
     }
     
-    /* Smaller local tag on mobile */
-    #ai-local-tag span {
+    .ai-info-separator:nth-of-type(1) {
         display: none;
     }
 }
