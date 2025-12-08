@@ -16,6 +16,7 @@ import { CreateMLCEngine } from "https://esm.run/@mlc-ai/web-llm";
 const DEFAULT_CONFIG = {
     modelId: "Llama-3.2-1B-Instruct-q4f16_1-MLC",
     useIndexedDBCache: true,
+    temperature: 0.2, // Lower temperature for more deterministic, less hallucinatory responses
 };
 
 // ============================================================================
@@ -105,6 +106,7 @@ const WebLLMEngine = {
      * @param {Object} options Configuration options
      * @param {string} [options.modelId] Model identifier
      * @param {string} [options.systemPrompt] System prompt for the AI
+     * @param {number} [options.temperature] Temperature for response generation (0.0-2.0)
      * @param {Function} [options.onProgress] Progress callback ({percent: number, text: string})
      * @param {Function} [options.onReady] Called when engine is ready
      * @param {Function} [options.onError] Error callback
@@ -124,6 +126,7 @@ const WebLLMEngine = {
         const {
             modelId = DEFAULT_CONFIG.modelId,
             systemPrompt = "",
+            temperature = DEFAULT_CONFIG.temperature,
             onProgress = () => {},
             onReady = () => {},
             onError = () => {},
@@ -131,6 +134,7 @@ const WebLLMEngine = {
 
         this.isLoading = true;
         this.config.modelId = modelId;
+        this.config.temperature = temperature;
         this.systemPrompt = systemPrompt;
 
         try {
@@ -245,6 +249,7 @@ const WebLLMEngine = {
             const chunks = await this.engine.chat.completions.create({
                 messages: this.conversationHistory,
                 stream: true,
+                temperature: this.config.temperature,
             });
 
             let fullResponse = "";

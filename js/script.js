@@ -755,6 +755,7 @@ const AIChat = {
         const success = await WebLLMEngine.init({
             modelId: this.config?.modelId || 'Llama-3.2-1B-Instruct-q4f16_1-MLC',
             systemPrompt,
+            temperature: this.config?.temperature ?? 0.2,
             onProgress: ({ percent }) => {
                 this.setProgress(percent);
             },
