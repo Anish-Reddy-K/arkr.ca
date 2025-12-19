@@ -4,3 +4,5 @@ api/spotify_config.php
 api/spotify_cache.json
 data/chat_logs.json
 todo.md
+.env
+.vscode
